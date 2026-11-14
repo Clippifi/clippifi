@@ -50,7 +50,7 @@ export default function AdminOverviewPage() {
       <SectionHeader title="Recent Signups" href="/admin/users" />
       {loading ? (
         <div className="flex items-center justify-center py-10">
-          <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-amber-500 dark:border-white/10 dark:border-t-yellow-400" />
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-brand-500 dark:border-white/10 dark:border-t-brand-400" />
         </div>
       ) : recentSignups.length === 0 ? (
         <EmptyState icon={Users} title="No users yet" text="New signups will show up here." />
@@ -102,7 +102,7 @@ export default function AdminOverviewPage() {
               <p className="text-sm font-semibold text-slate-900 dark:text-white">{c.title}</p>
               <p className="text-xs text-slate-500 dark:text-slate-400">by {c.brandName}</p>
               <div className="mt-3 flex items-center justify-between text-xs">
-                <span className="font-semibold text-amber-600 dark:text-yellow-400">₦{c.budget.toFixed(2)}</span>
+                <span className="font-semibold text-brand-600 dark:text-brand-400">₦{c.budget.toFixed(2)}</span>
                 {c.deadline && <span className="text-slate-500 dark:text-slate-400">{c.deadline}</span>}
               </div>
             </div>
@@ -137,7 +137,7 @@ function SectionHeader({ title, href }: { title: string; href: string }) {
       <h2 className="text-lg font-semibold text-slate-900 dark:text-white">{title}</h2>
       <Link
         href={href}
-        className="group flex items-center gap-1 text-sm font-medium text-amber-600 hover:text-amber-700 dark:text-yellow-400"
+        className="group flex items-center gap-1 text-sm font-medium text-brand-600 hover:text-brand-700 dark:text-brand-400"
       >
         View all
         <ChevronRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />

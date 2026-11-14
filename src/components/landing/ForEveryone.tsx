@@ -3,15 +3,15 @@ import { Briefcase, Clapperboard, Sparkle, Star } from "lucide-react";
 const audiences = [
   {
     icon: Clapperboard,
-    iconBg: "bg-yellow-100 text-black",
-    iconBgDark: "dark:bg-yellow-400/10 dark:text-yellow-400",
+    iconBg: "bg-brand-100 text-black",
+    iconBgDark: "dark:bg-brand-400/10 dark:text-brand-400",
     title: "Content Creators",
     text: "Find viral-ready clips to save time and boost your content.",
   },
   {
     icon: Star,
-    iconBg: "bg-amber-100 text-amber-600",
-    iconBgDark: "dark:bg-amber-400/10 dark:text-amber-400",
+    iconBg: "bg-brand-100 text-brand-600",
+    iconBgDark: "dark:bg-brand-400/10 dark:text-brand-400",
     title: "Brands & Marketers",
     text: "Access premium clips or hire clippers for your campaigns.",
   },
@@ -37,7 +37,7 @@ export default function ForEveryone() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl dark:text-white">
-            For <span className="text-amber-600 dark:text-yellow-400">Everyone</span>
+            For <span className="text-brand-600 dark:text-brand-400">Everyone</span>
           </h2>
           <p className="mt-3 text-slate-500 dark:text-slate-400">
             Whether you&apos;re a content creator, brand, or business — Clippifi has you covered.

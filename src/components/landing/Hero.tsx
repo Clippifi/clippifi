@@ -1,8 +1,15 @@
-import Image from "next/image";
+import Link from "next/link";
 import { Heart, Play } from "lucide-react";
 import { btnPrimary, btnSecondary } from "@/lib/button-styles";
 
-const brands = ["YouTube", "TikTok", "Instagram", "Shopify", "Twitch", "Canva"];
+const HERO_TONES: Record<string, string> = {
+  "clip-podcast-studio": "bg-[radial-gradient(circle_at_30%_25%,#ffb199_0%,#ff6b5e_40%,#3b1d1a_100%)]",
+  "clip-streetball": "bg-[radial-gradient(circle_at_70%_30%,#9ad7ff_0%,#3b82f6_45%,#0f1b3d_100%)]",
+  "clip-mountain-lake": "bg-[radial-gradient(circle_at_40%_20%,#c7f9cc_0%,#2fa36b_45%,#0e2a1f_100%)]",
+  default: "bg-gradient-to-br from-brand-400 to-slate-900",
+};
+
+const platforms = ["TikTok", "Instagram", "YouTube"];
 
 export default function Hero() {
   return (
@@ -14,50 +21,46 @@ export default function Hero() {
 
       <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-4 pb-16 pt-14 sm:px-6 lg:grid-cols-2 lg:gap-8 lg:px-8 lg:pb-24 lg:pt-20">
         <div className="max-w-xl">
-          <h1 className="animate-fade-in-up font-display text-4xl font-bold leading-tight tracking-tight text-slate-900 dark:text-white sm:text-5xl">
-            The marketplace for{" "}
-            <Highlight>streamers</Highlight> and <Highlight>clip editors</Highlight>
+          <h1 className="animate-fade-in-up text-4xl font-bold leading-tight tracking-tight text-slate-900 dark:text-white sm:text-5xl">
+            Real views.
+            <br />
+            <Highlight>Real pay.</Highlight>
           </h1>
           <p
             className="animate-fade-in-up mt-5 text-base text-slate-500 dark:text-slate-400 sm:text-lg"
             style={{ animationDelay: "120ms" }}
           >
-            Streamers, Brand and Creators launches campaign, clippers post. Connecting creators to trusted clip editors and high impact content partners.
+            Brands launch clipping, sound, logo and UGC campaigns. Creators post on TikTok,
+            Instagram and YouTube. Clippifi checks every video, counts every view and pays per
+            1,000 verified views.
           </p>
 
           <div
             className="animate-fade-in-up mt-8 flex flex-col gap-3 sm:flex-row"
             style={{ animationDelay: "240ms" }}
           >
-            <a href="#clips" className={`group rounded-lg px-6 py-3 text-center text-sm ${btnPrimary}`}>
-              Explore Clips{" "}
+            <Link href="/login" className={`group rounded-lg px-6 py-3 text-center text-sm ${btnPrimary}`}>
+              Start earning{" "}
               <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">
                 →
               </span>
-            </a>
-            <a href="#creators" className={`rounded-lg px-6 py-3 text-center text-sm ${btnSecondary}`}>
-              Campaigns
-            </a>
+            </Link>
+            <Link href="/login" className={`rounded-lg px-6 py-3 text-center text-sm ${btnSecondary}`}>
+              Launch a campaign
+            </Link>
           </div>
 
           <div
             className="animate-fade-in-up mt-12"
             style={{ animationDelay: "360ms" }}
           >
-            <p className="text-xs uppercase tracking-wide text-slate-500">
-              Trusted by creators and brands worldwide
-            </p>
-            <div className="mt-4 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-              <div className="animate-marquee flex w-max items-center gap-x-10 hover:[animation-play-state:paused]">
-                {[...brands, ...brands].map((brand, i) => (
-                  <span
-                    key={`${brand}-${i}`}
-                    className="text-sm font-semibold tracking-wide text-slate-500 opacity-70"
-                  >
-                    {brand}
-                  </span>
-                ))}
-              </div>
+            <p className="text-xs uppercase tracking-wide text-slate-500">Creators post on</p>
+            <div className="mt-4 flex items-center gap-x-10">
+              {platforms.map((platform) => (
+                <span key={platform} className="text-sm font-semibold tracking-wide text-slate-500 opacity-70">
+                  {platform}
+                </span>
+              ))}
             </div>
           </div>
         </div>
@@ -74,7 +77,6 @@ export default function Hero() {
             author="Alex Clips"
             likes="12.4K"
             imageSeed="clip-podcast-studio"
-            priority
           />
           <ClipCard
             className="right-0 top-6 w-[38%]"
@@ -127,7 +129,6 @@ function ClipCard({
   likes,
   imageSeed,
   compact,
-  priority,
   floatDelay,
 }: {
   className: string;
@@ -137,7 +138,6 @@ function ClipCard({
   likes?: string;
   imageSeed: string;
   compact?: boolean;
-  priority?: boolean;
   floatDelay: string;
 }) {
   return (
@@ -145,14 +145,8 @@ function ClipCard({
       className={`animate-float absolute overflow-hidden rounded-2xl border border-slate-200 shadow-2xl shadow-slate-300/50 dark:border-white/10 dark:shadow-black/50 ${className}`}
       style={{ aspectRatio: "9 / 16", animationDelay: floatDelay }}
     >
-      <Image
-        src={`https://picsum.photos/seed/${imageSeed}/400/720`}
-        alt=""
-        fill
-        sizes="(min-width: 640px) 320px, 60vw"
-        className="object-cover"
-        priority={priority}
-      />
+      {/* Drawn with CSS so the hero never waits on a photo download. */}
+      <div className={`absolute inset-0 ${HERO_TONES[imageSeed] ?? HERO_TONES.default}`} />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/40" />
       <div className="relative flex h-full flex-col justify-between p-3">
         <div className="flex items-center justify-between">
@@ -192,7 +186,7 @@ function ClipCard({
 
 function Highlight({ children }: { children: React.ReactNode }) {
   return (
-    <span className="relative inline-block -rotate-1 rounded-md border-2 border-black bg-yellow-400 px-2 py-0.5 text-slate-900 shadow-[3px_3px_0_0_#000] dark:border-yellow-200 dark:text-slate-900 dark:shadow-[3px_3px_0_0_#fde68a]">
+    <span className="relative inline-block -rotate-1 rounded-md border-2 border-black bg-brand-400 px-2 py-0.5 text-slate-900 shadow-[3px_3px_0_0_#000] dark:border-brand-200 dark:text-slate-900 dark:shadow-[3px_3px_0_0_#ffd0cb]">
       {children}
     </span>
   );

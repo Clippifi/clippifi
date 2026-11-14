@@ -2,9 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { activatePaidCampaign } from "@/app/api/_lib/campaign-checkout";
 import { verifyFlutterwaveWebhook } from "@/app/api/_lib/flutterwave";
 
-// Web-only route — see scripts/build-mobile.mjs.
-// Same shape as src/app/api/bachs/webhook/route.ts. Flutterwave's "verif-hash" header
-// is a plain shared secret (not a computed signature) — see verifyFlutterwaveWebhook.
+// Flutterwave's "verif-hash" header is a plain shared secret (not a computed signature) —
+// see verifyFlutterwaveWebhook.
 export async function POST(request: NextRequest) {
   const rawBody = await request.text();
   const header = request.headers.get("verif-hash");

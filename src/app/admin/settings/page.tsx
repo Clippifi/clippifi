@@ -12,7 +12,7 @@ import {
 } from "@/lib/platform-settings";
 
 const inputClass =
-  "mt-1.5 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/30 dark:border-white/10 dark:bg-white/5 dark:text-white";
+  "mt-1.5 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-400/30 dark:border-white/10 dark:bg-white/5 dark:text-white";
 const labelClass = "text-sm font-medium text-slate-700 dark:text-slate-300";
 
 export default function AdminSettingsPage() {
@@ -47,14 +47,14 @@ export default function AdminSettingsPage() {
   if (loading) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
-        <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-amber-500 dark:border-white/10 dark:border-t-yellow-400" />
+        <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-brand-500 dark:border-white/10 dark:border-t-brand-400" />
       </div>
     );
   }
 
   return (
     <div className="mx-auto max-w-3xl">
-      <h1 className="font-display text-2xl font-bold text-slate-900 dark:text-white">Settings</h1>
+      <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Settings</h1>
       <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
         Platform configuration, fees, and moderation rules.
       </p>
@@ -151,13 +151,13 @@ export default function AdminSettingsPage() {
 
           <Link
             href="/admin/manage-payments"
-            className="mt-5 flex items-center justify-between gap-3 rounded-lg border border-dashed border-slate-200 px-3 py-2.5 text-sm text-slate-600 transition-colors hover:border-yellow-400 hover:text-slate-900 dark:border-white/15 dark:text-slate-300 dark:hover:text-white"
+            className="mt-5 flex items-center justify-between gap-3 rounded-lg border border-dashed border-slate-200 px-3 py-2.5 text-sm text-slate-600 transition-colors hover:border-brand-400 hover:text-slate-900 dark:border-white/15 dark:text-slate-300 dark:hover:text-white"
           >
             <span className="flex items-center gap-2">
               <KeyRound className="h-4 w-4 text-slate-400" />
               Connect payment providers &amp; API keys
             </span>
-            <span className="text-xs font-medium text-amber-600 dark:text-yellow-400">
+            <span className="text-xs font-medium text-brand-600 dark:text-brand-400">
               Manage Payments →
             </span>
           </Link>
@@ -263,7 +263,7 @@ function SettingToggle({
           checked
             ? danger
               ? "bg-red-500"
-              : "bg-gradient-to-r from-yellow-400 to-amber-500"
+              : "bg-gradient-to-r from-brand-400 to-brand-500"
             : "bg-slate-200 dark:bg-white/10"
         }`}
       >

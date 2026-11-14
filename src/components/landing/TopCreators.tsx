@@ -6,7 +6,7 @@ import { ChevronRight, Eye } from "lucide-react";
 import { loadLandingStats, type TopCreator } from "@/lib/landing-stats";
 
 const palette = [
-  "bg-amber-500 text-black",
+  "bg-brand-500 text-black",
   "bg-slate-800 text-white",
   "bg-orange-500 text-white",
   "bg-sky-500 text-white",
@@ -31,12 +31,12 @@ export default function TopCreators() {
     <section id="creators" className="bg-slate-50 py-20 dark:bg-[#0a0a0a]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          <h2 className="font-display text-2xl font-bold text-slate-900 dark:text-white sm:text-3xl">
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white sm:text-3xl">
             Top Clipper Creators
           </h2>
           <Link
             href="/dashboard/browse"
-            className="group flex items-center gap-1 text-sm font-medium text-amber-600 hover:text-amber-700 dark:text-yellow-400 dark:hover:text-yellow-300"
+            className="group flex items-center gap-1 text-sm font-medium text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300"
           >
             Browse clips{" "}
             <ChevronRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
@@ -59,7 +59,7 @@ export default function TopCreators() {
                   <p className="mt-3 truncate text-sm font-semibold text-slate-900 dark:text-white">
                     {c.creatorName}
                   </p>
-                  <p className="mt-0.5 text-xs font-medium text-amber-600 dark:text-yellow-400">#{i + 1} this month</p>
+                  <p className="mt-0.5 text-xs font-medium text-brand-600 dark:text-brand-400">#{i + 1} this month</p>
                   <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
                     {c.clipCount} {c.clipCount === 1 ? "clip" : "clips"}
                   </p>

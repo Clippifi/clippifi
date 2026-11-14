@@ -2,9 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createPendingCampaign } from "@/app/api/_lib/campaign-checkout";
 import { createFlutterwaveCheckout } from "@/app/api/_lib/flutterwave";
 
-// Web-only route — see scripts/build-mobile.mjs.
-// Same shape as src/app/api/bachs/checkout/route.ts — creates the campaign as
-// "awaiting_payment" and opens a Flutterwave Standard hosted checkout for the
+// Creates the campaign as "awaiting_payment" and opens a Flutterwave Standard hosted checkout for the
 // server-computed total. The campaign goes live only when the signed webhook
 // confirms payment (src/app/api/flutterwave/webhook/route.ts).
 export const runtime = "nodejs";

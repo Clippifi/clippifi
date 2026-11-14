@@ -1,30 +1,34 @@
+# Clippifi
 
-## Getting Started
+Clipping and UGC campaign marketplace. Brands launch campaigns; creators post on
+TikTok, Instagram and YouTube; Clippifi checks, counts and pays per verified view.
 
-First, run the development server:
+## Run it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Other scripts: `npm run build`, `npm run lint`, `npm run typecheck`, `npm test`,
+`npm run make-admin -- someone@example.com`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Environment variables go in `.env.local` (never committed).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Stack
 
-## Learn More
+- Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4.
+  Next 16 changed APIs: read `node_modules/next/dist/docs/` before writing code (see `AGENTS.md`).
+- UI: shadcn/ui (Radix), config in `components.json`, components in `src/components/ui`.
+  Theme tokens and the `brand` color scale live in `src/app/globals.css`.
+- Today's website and dashboard run on Firebase (auth + Firestore). This is temporary,
+  to get the TikTok app approved quickly.
+- Clippifi 2.0 backend (being built): Better Auth, Drizzle ORM on Postgres
+  (PGlite locally, Neon in CI and production), Hono, Zod, TanStack Query, Vitest.
+  Plan: `docs/designs/clippifi-2-cpm-money-loop.md`.
 
-To learn more about Next.js, take a look at the following resources:
+## Brand
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
+Source files: `clippifi-brand-kit/`. Web copies: `public/brand/`.
+The coral brand color is a development placeholder; change it in one place,
+the `--color-brand-*` scale in `src/app/globals.css`.

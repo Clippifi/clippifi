@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Banknote, Check, CreditCard, Eye, EyeOff, KeyRound, Landmark, ShieldAlert, Wallet, Zap } from "lucide-react";
+import { Banknote, Check, CreditCard, Eye, EyeOff, KeyRound, Landmark, ShieldAlert, Zap } from "lucide-react";
 import { btnPrimary } from "@/lib/button-styles";
 import {
   defaultPlatformSettings,
@@ -17,7 +17,7 @@ import {
 } from "@/lib/platform-settings";
 
 const inputClass =
-  "mt-1.5 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/30 dark:border-white/10 dark:bg-white/5 dark:text-white";
+  "mt-1.5 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-400/30 dark:border-white/10 dark:bg-white/5 dark:text-white";
 const labelClass = "text-sm font-medium text-slate-700 dark:text-slate-300";
 
 const providerIcon: Record<ProviderId, typeof CreditCard> = {
@@ -25,7 +25,6 @@ const providerIcon: Record<ProviderId, typeof CreditCard> = {
   flutterwave: Zap,
   paystack: Banknote,
   bank: Landmark,
-  bachs: Wallet,
 };
 
 export default function ManagePaymentsPage() {
@@ -77,20 +76,20 @@ export default function ManagePaymentsPage() {
   if (loading) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
-        <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-amber-500 dark:border-white/10 dark:border-t-yellow-400" />
+        <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-brand-500 dark:border-white/10 dark:border-t-brand-400" />
       </div>
     );
   }
 
   return (
     <div className="mx-auto max-w-3xl">
-      <h1 className="font-display text-2xl font-bold text-slate-900 dark:text-white">Manage Payments</h1>
+      <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Manage Payments</h1>
       <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
         Connect payment providers with their API keys so brands and creators can pay for
         campaigns on the platform.
       </p>
 
-      <div className="mt-5 flex items-start gap-2.5 rounded-xl border border-dashed border-amber-300 bg-yellow-50 p-3 text-xs text-amber-800 dark:border-yellow-400/30 dark:bg-yellow-400/5 dark:text-yellow-300">
+      <div className="mt-5 flex items-start gap-2.5 rounded-xl border border-dashed border-brand-300 bg-brand-50 p-3 text-xs text-brand-800 dark:border-brand-400/30 dark:bg-brand-400/5 dark:text-brand-300">
         <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0" />
         <p>
           These keys are stored in Firestore and readable by any signed-in admin. For a real
@@ -110,7 +109,7 @@ export default function ManagePaymentsPage() {
           const status = connected && config.enabled && canCheckout
             ? { label: "Live", cls: "bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-400" }
             : connected
-              ? { label: "Configured", cls: "bg-amber-100 text-amber-700 dark:bg-yellow-400/10 dark:text-yellow-400" }
+              ? { label: "Configured", cls: "bg-brand-100 text-brand-700 dark:bg-brand-400/10 dark:text-brand-400" }
               : { label: "Not connected", cls: "bg-slate-100 text-slate-500 dark:bg-white/10 dark:text-slate-400" };
 
           return (
@@ -120,7 +119,7 @@ export default function ManagePaymentsPage() {
             >
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-yellow-100 text-black dark:bg-yellow-400/10 dark:text-yellow-400">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-100 text-black dark:bg-brand-400/10 dark:text-brand-400">
                     <Icon className="h-5 w-5" />
                   </span>
                   <div>
@@ -132,7 +131,7 @@ export default function ManagePaymentsPage() {
                     </div>
                     <p className="text-xs text-slate-500 dark:text-slate-400">{meta.description}</p>
                     {!canCheckout && (
-                      <p className="mt-0.5 text-xs text-amber-600 dark:text-yellow-400">
+                      <p className="mt-0.5 text-xs text-brand-600 dark:text-brand-400">
                         Keys can be saved here, but checkout isn&apos;t wired up for this
                         provider yet — it won&apos;t appear as a payment option for brands.
                       </p>
@@ -153,7 +152,7 @@ export default function ManagePaymentsPage() {
                   aria-label={`Enable ${meta.name}`}
                   onClick={() => toggleEnabled(id)}
                   className={`relative flex h-6 w-11 shrink-0 items-center rounded-full transition-colors duration-200 ${
-                    config.enabled ? "bg-gradient-to-r from-yellow-400 to-amber-500" : "bg-slate-200 dark:bg-white/10"
+                    config.enabled ? "bg-gradient-to-r from-brand-400 to-brand-500" : "bg-slate-200 dark:bg-white/10"
                   }`}
                 >
                   <span
@@ -201,7 +200,7 @@ export default function ManagePaymentsPage() {
         <KeyRound className="h-3.5 w-3.5" />
         A provider only appears as a payment option at campaign checkout once it&apos;s
         connected (all keys filled, where it has any), enabled here, <em>and</em> has real
-        checkout processing built — Bachs, Paystack, and Flutterwave right now. More than one
+        checkout processing built — Paystack and Flutterwave right now. More than one
         can be enabled at a time; a brand picks between whichever are live when paying.
       </div>
     </div>

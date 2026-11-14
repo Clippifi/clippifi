@@ -43,3 +43,11 @@ firebase-adminsdk*.json
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local research captures (contain session cookies, never commit)
+/playground
+
+# local embedded Postgres (PGlite)
+/.data
+
+!.env.example

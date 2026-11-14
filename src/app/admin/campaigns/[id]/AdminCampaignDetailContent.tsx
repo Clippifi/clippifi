@@ -28,14 +28,14 @@ const statusOptions: CampaignStatus[] = ["draft", "active", "completed", "cancel
 
 const statusStyle: Record<CampaignStatus, string> = {
   draft: "bg-slate-100 text-slate-600 dark:bg-white/10 dark:text-slate-300",
-  awaiting_payment: "bg-amber-100 text-amber-700 dark:bg-yellow-400/10 dark:text-yellow-400",
+  awaiting_payment: "bg-brand-100 text-brand-700 dark:bg-brand-400/10 dark:text-brand-400",
   active: "bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-400",
   completed: "bg-sky-100 text-sky-700 dark:bg-sky-400/10 dark:text-sky-400",
   cancelled: "bg-red-100 text-red-700 dark:bg-red-500/10 dark:text-red-400",
 };
 
 const inputClass =
-  "mt-1.5 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/30 dark:border-white/10 dark:bg-white/5 dark:text-white";
+  "mt-1.5 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-400/30 dark:border-white/10 dark:bg-white/5 dark:text-white";
 const labelClass = "text-sm font-medium text-slate-700 dark:text-slate-300";
 
 export default function AdminCampaignDetailContent() {
@@ -172,7 +172,7 @@ export default function AdminCampaignDetailContent() {
   if (campaign === undefined) {
     return (
       <div className="flex items-center justify-center py-16">
-        <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-amber-500 dark:border-white/10 dark:border-t-yellow-400" />
+        <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-brand-500 dark:border-white/10 dark:border-t-brand-400" />
       </div>
     );
   }
@@ -181,7 +181,7 @@ export default function AdminCampaignDetailContent() {
     return (
       <div className="mx-auto max-w-2xl">
         <p className="text-sm text-slate-500 dark:text-slate-400">Campaign not found — it may have been removed.</p>
-        <Link href="/admin/campaigns" className="mt-4 flex items-center gap-1.5 text-sm text-amber-600 hover:underline dark:text-yellow-400">
+        <Link href="/admin/campaigns" className="mt-4 flex items-center gap-1.5 text-sm text-brand-600 hover:underline dark:text-brand-400">
           <ArrowLeft className="h-4 w-4" /> Back to Campaigns
         </Link>
       </div>
@@ -211,7 +211,7 @@ export default function AdminCampaignDetailContent() {
             {editing ? (
               <input value={title} onChange={(e) => setTitle(e.target.value)} className={`${inputClass} mt-0 text-lg font-bold`} />
             ) : (
-              <h1 className="font-display text-2xl font-bold text-slate-900 dark:text-white">{campaign.title}</h1>
+              <h1 className="text-2xl font-bold text-slate-900 dark:text-white">{campaign.title}</h1>
             )}
             <select
               value={campaign.status}
@@ -233,7 +233,7 @@ export default function AdminCampaignDetailContent() {
             <button
               onClick={checkPayment}
               disabled={checkingPayment}
-              className="mt-2 flex items-center gap-1.5 text-xs font-medium text-amber-600 hover:underline disabled:opacity-60 dark:text-yellow-400"
+              className="mt-2 flex items-center gap-1.5 text-xs font-medium text-brand-600 hover:underline disabled:opacity-60 dark:text-brand-400"
             >
               {checkingPayment ? <Loader2 className="h-3 w-3 animate-spin" /> : <RefreshCw className="h-3 w-3" />}
               Check payment status
@@ -260,7 +260,7 @@ export default function AdminCampaignDetailContent() {
                 href={campaign.channelLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-2 flex items-center gap-1.5 text-sm text-amber-600 hover:underline dark:text-yellow-400"
+                className="mt-2 flex items-center gap-1.5 text-sm text-brand-600 hover:underline dark:text-brand-400"
               >
                 {campaign.channelLink}
                 <ExternalLink className="h-3.5 w-3.5" />
@@ -331,7 +331,7 @@ export default function AdminCampaignDetailContent() {
                     ? "Participation requests"
                     : `${requests.length} participation ${requests.length === 1 ? "request" : "requests"}`}
                   {pendingRequests.length > 0 && (
-                    <span className="ml-2 rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-medium text-amber-700 dark:bg-yellow-400/10 dark:text-yellow-400">
+                    <span className="ml-2 rounded-full bg-brand-100 px-2 py-0.5 text-[11px] font-medium text-brand-700 dark:bg-brand-400/10 dark:text-brand-400">
                       {pendingRequests.length} pending
                     </span>
                   )}

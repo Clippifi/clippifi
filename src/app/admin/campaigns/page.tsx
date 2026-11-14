@@ -18,14 +18,14 @@ type SortOption = "newest" | "budget-desc" | "budget-asc" | "title";
 
 const statusStyle: Record<CampaignStatus, string> = {
   draft: "bg-slate-100 text-slate-600 dark:bg-white/10 dark:text-slate-300",
-  awaiting_payment: "bg-amber-100 text-amber-700 dark:bg-yellow-400/10 dark:text-yellow-400",
+  awaiting_payment: "bg-brand-100 text-brand-700 dark:bg-brand-400/10 dark:text-brand-400",
   active: "bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-400",
   completed: "bg-sky-100 text-sky-700 dark:bg-sky-400/10 dark:text-sky-400",
   cancelled: "bg-red-100 text-red-700 dark:bg-red-500/10 dark:text-red-400",
 };
 
 const inputClass =
-  "w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/30 dark:border-white/10 dark:bg-white/5 dark:text-white";
+  "w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-400/30 dark:border-white/10 dark:bg-white/5 dark:text-white";
 
 export default function AdminCampaignsPage() {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
@@ -123,11 +123,11 @@ export default function AdminCampaignsPage() {
 
       {loading ? (
         <div className="mt-6 flex items-center justify-center py-16">
-          <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-amber-500 dark:border-white/10 dark:border-t-yellow-400" />
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-brand-500 dark:border-white/10 dark:border-t-brand-400" />
         </div>
       ) : campaigns.length === 0 ? (
         <div className="mt-6 flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-white px-6 py-16 text-center dark:border-white/10 dark:bg-[#111]">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-yellow-100 text-black dark:bg-yellow-400/10 dark:text-yellow-400">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-100 text-black dark:bg-brand-400/10 dark:text-brand-400">
             <Briefcase className="h-6 w-6" />
           </span>
           <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">No campaigns have been posted yet.</p>
@@ -154,7 +154,7 @@ export default function AdminCampaignsPage() {
                 <tr key={c.id} className="border-b border-slate-50 last:border-0 dark:border-white/5">
                   <td className="whitespace-nowrap px-4 py-3 font-medium text-slate-900 dark:text-white">
                     <Link href={`/admin/campaigns/${c.id}`} className="flex items-center gap-2 hover:underline">
-                      <Briefcase className="h-3.5 w-3.5 shrink-0 text-amber-500 dark:text-yellow-400" />
+                      <Briefcase className="h-3.5 w-3.5 shrink-0 text-brand-500 dark:text-brand-400" />
                       {c.title}
                     </Link>
                     {c.channelLink && (
@@ -162,7 +162,7 @@ export default function AdminCampaignsPage() {
                         href={c.channelLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mt-0.5 flex items-center gap-1 text-xs font-normal text-amber-600 hover:underline dark:text-yellow-400"
+                        className="mt-0.5 flex items-center gap-1 text-xs font-normal text-brand-600 hover:underline dark:text-brand-400"
                       >
                         <span className="max-w-[180px] truncate">{c.channelLink}</span>
                         <ExternalLink className="h-3 w-3 shrink-0" />
@@ -182,7 +182,7 @@ export default function AdminCampaignsPage() {
                       onBlur={() => savePayout(c)}
                       disabled={rowBusy[c.id]}
                       placeholder="e.g. 500"
-                      className="w-24 rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-xs text-slate-900 focus:border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/30 disabled:opacity-60 dark:border-white/10 dark:bg-white/5 dark:text-white"
+                      className="w-24 rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-xs text-slate-900 focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-400/30 disabled:opacity-60 dark:border-white/10 dark:bg-white/5 dark:text-white"
                     />
                   </td>
                   <td className="whitespace-nowrap px-4 py-3">

@@ -44,7 +44,7 @@ export default function RequireAuth({
     return (
       <div className="flex min-h-screen items-center justify-center bg-white dark:bg-[#0a0a0a]">
         <div className="flex items-center gap-3 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
-          <div className="h-4 w-4 animate-spin rounded-full border-2 border-slate-200 border-t-amber-500 dark:border-white/10 dark:border-t-yellow-400" />
+          <div className="h-4 w-4 animate-spin rounded-full border-2 border-slate-200 border-t-brand-500 dark:border-white/10 dark:border-t-brand-400" />
           {isLoading ? "Loading your account…" : "Checking access…"}
         </div>
       </div>

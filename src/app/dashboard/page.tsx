@@ -72,7 +72,7 @@ function DashboardHomeContent() {
       counts.set(clip.creatorId, entry);
     }
     const colors = [
-      "bg-amber-500 text-black",
+      "bg-brand-500 text-black",
       "bg-slate-800 text-white",
       "bg-orange-500 text-white",
       "bg-sky-500 text-white",
@@ -135,7 +135,7 @@ function DashboardHomeContent() {
                   onClick={() => setRoleView("brand")}
                   className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${
                     activeView === "brand"
-                      ? "bg-amber-500 text-black"
+                      ? "bg-brand-500 text-black"
                       : "text-slate-600 dark:text-slate-300"
                   }`}
                 >
@@ -148,7 +148,7 @@ function DashboardHomeContent() {
                   onClick={() => setRoleView("creator")}
                   className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${
                     activeView === "creator"
-                      ? "bg-amber-500 text-black"
+                      ? "bg-brand-500 text-black"
                       : "text-slate-600 dark:text-slate-300"
                   }`}
                 >
@@ -157,7 +157,7 @@ function DashboardHomeContent() {
               )}
             </div>
           )}
-          <span className="rounded-full bg-yellow-100 px-3 py-1 text-xs font-semibold text-amber-700 dark:bg-yellow-400/10 dark:text-yellow-400">
+          <span className="rounded-full bg-brand-100 px-3 py-1 text-xs font-semibold text-brand-700 dark:bg-brand-400/10 dark:text-brand-400">
             {roleLabel[user.role]}
           </span>
         </div>
@@ -318,7 +318,7 @@ function SectionHeader({ title, href }: { title: string; href: string }) {
       <h2 className="text-lg font-semibold text-slate-900 dark:text-white">{title}</h2>
       <Link
         href={href}
-        className="group flex items-center gap-1 text-sm font-medium text-amber-600 hover:text-amber-700 dark:text-yellow-400"
+        className="group flex items-center gap-1 text-sm font-medium text-brand-600 hover:text-brand-700 dark:text-brand-400"
       >
         View all
         <ChevronRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
@@ -341,16 +341,16 @@ function PromoBanner({
   href: string;
 }) {
   return (
-    <div className="flex items-center justify-between gap-4 rounded-2xl bg-gradient-to-br from-yellow-400 to-amber-500 p-6 dark:from-[#171308] dark:to-[#0a0a0a] dark:border dark:border-yellow-400/20">
+    <div className="flex items-center justify-between gap-4 rounded-2xl bg-gradient-to-br from-brand-400 to-brand-500 p-6 dark:from-[#171308] dark:to-[#0a0a0a] dark:border dark:border-brand-400/20">
       <div>
-        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-black/10 text-black dark:bg-yellow-400/10 dark:text-yellow-400">
+        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-black/10 text-black dark:bg-brand-400/10 dark:text-brand-400">
           <Icon className="h-5 w-5" />
         </span>
         <p className="mt-3 text-base font-bold text-black dark:text-white">{title}</p>
         <p className="mt-1 text-sm text-black/70 dark:text-slate-400">{text}</p>
         <Link
           href={href}
-          className="mt-4 inline-block rounded-lg bg-black px-4 py-2 text-xs font-semibold text-yellow-400 transition-transform duration-200 hover:scale-105 dark:bg-gradient-to-r dark:from-yellow-400 dark:to-amber-500 dark:text-black"
+          className="mt-4 inline-block rounded-lg bg-black px-4 py-2 text-xs font-semibold text-brand-400 transition-transform duration-200 hover:scale-105 dark:bg-gradient-to-r dark:from-brand-400 dark:to-brand-500 dark:text-black"
         >
           {cta}
         </Link>

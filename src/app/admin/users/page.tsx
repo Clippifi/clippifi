@@ -80,7 +80,7 @@ export default function AdminUsersPage() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search users..."
-            className="w-full rounded-lg border border-slate-200 bg-white py-2.5 pl-10 pr-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/30 dark:border-white/10 dark:bg-[#111] dark:text-white"
+            className="w-full rounded-lg border border-slate-200 bg-white py-2.5 pl-10 pr-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-400/30 dark:border-white/10 dark:bg-[#111] dark:text-white"
           />
         </div>
 
@@ -92,7 +92,7 @@ export default function AdminUsersPage() {
               onClick={() => setRoleFilter(f.value)}
               className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${
                 roleFilter === f.value
-                  ? "bg-amber-500 text-black"
+                  ? "bg-brand-500 text-black"
                   : "bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10"
               }`}
             >
@@ -104,7 +104,7 @@ export default function AdminUsersPage() {
 
       {loading ? (
         <div className="mt-6 flex items-center justify-center py-16">
-          <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-amber-500 dark:border-white/10 dark:border-t-yellow-400" />
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-brand-500 dark:border-white/10 dark:border-t-brand-400" />
         </div>
       ) : (
         <div className="mt-5 overflow-x-auto rounded-2xl border border-slate-100 bg-white dark:border-white/10 dark:bg-[#111]">
@@ -136,7 +136,7 @@ export default function AdminUsersPage() {
                         onChange={(e) => changeRole(u, e.target.value as AppRole)}
                         disabled={busy[u.id] || u.id === currentUser?.id}
                         title={u.id === currentUser?.id ? "You can't change your own role here." : undefined}
-                        className="rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-xs font-medium capitalize text-slate-700 focus:border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/30 disabled:opacity-60 dark:border-white/10 dark:bg-[#0a0a0a] dark:text-slate-200"
+                        className="rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-xs font-medium capitalize text-slate-700 focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-400/30 disabled:opacity-60 dark:border-white/10 dark:bg-[#0a0a0a] dark:text-slate-200"
                       >
                         {roleOptions.map((r) => (
                           <option key={r} value={r} className="capitalize">

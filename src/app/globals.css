@@ -1,29 +1,150 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Brand color. Coral is a development placeholder: to rebrand, change this scale
+ * (400 is the main brand color) and the --brand tokens below. Nothing else in the
+ * app hard-codes the brand color.
+ */
+@theme {
+  --color-brand-50: #fff4f2;
+  --color-brand-100: #ffe6e3;
+  --color-brand-200: #ffd0cb;
+  --color-brand-300: #ffa79f;
+  --color-brand-400: #ff6b5e;
+  --color-brand-500: #f2503f;
+  --color-brand-600: #db3b2b;
+  --color-brand-700: #b42d20;
+  --color-brand-800: #8f261c;
+  --color-brand-900: #6e2119;
+  --color-brand-950: #3d0f0a;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-display: var(--font-space-grotesk);
+/* shadcn/ui theme tokens, following a marketplace convention: charcoal ink is the
+   primary, the brand color is an accent used sparingly. */
+:root {
+  --radius: 0.5rem;
+  --background: #ffffff;
+  --foreground: #252525;
+  --card: #ffffff;
+  --card-foreground: #252525;
+  --popover: #ffffff;
+  --popover-foreground: #252525;
+  --primary: #252525;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f4;
+  --secondary-foreground: #252525;
+  --muted: #f5f5f4;
+  --muted-foreground: #6e6e6e;
+  --accent: #f5f5f4;
+  --accent-foreground: #252525;
+  --brand: var(--color-brand-400);
+  --brand-foreground: #252525;
+  --destructive: #e5341a;
+  --success: #12b76a;
+  --border: #ebebea;
+  --input: #e2e2e0;
+  --ring: var(--color-brand-400);
+  --chart-1: var(--color-brand-400);
+  --chart-2: #252525;
+  --chart-3: #12b76a;
+  --chart-4: #0b3d35;
+  --chart-5: #a3a3a3;
+  --sidebar: #fafafa;
+  --sidebar-foreground: #252525;
+  --sidebar-primary: #252525;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f5f5f4;
+  --sidebar-accent-foreground: #252525;
+  --sidebar-border: #ebebea;
+  --sidebar-ring: var(--color-brand-400);
 }
 
 .dark {
   --background: #0a0a0a;
   --foreground: #ededed;
+  --card: #141414;
+  --card-foreground: #ededed;
+  --popover: #141414;
+  --popover-foreground: #ededed;
+  --primary: #ededed;
+  --primary-foreground: #141414;
+  --secondary: #1f1f1f;
+  --secondary-foreground: #ededed;
+  --muted: #1f1f1f;
+  --muted-foreground: #a1a1a1;
+  --accent: #1f1f1f;
+  --accent-foreground: #ededed;
+  --brand: var(--color-brand-400);
+  --brand-foreground: #141414;
+  --destructive: #ff6a4d;
+  --success: #32d583;
+  --border: rgb(255 255 255 / 10%);
+  --input: rgb(255 255 255 / 15%);
+  --ring: var(--color-brand-400);
+  --chart-1: var(--color-brand-400);
+  --chart-2: #ededed;
+  --chart-3: #32d583;
+  --chart-4: #3ccbb4;
+  --chart-5: #737373;
+  --sidebar: #111111;
+  --sidebar-foreground: #ededed;
+  --sidebar-primary: #ededed;
+  --sidebar-primary-foreground: #141414;
+  --sidebar-accent: #1f1f1f;
+  --sidebar-accent-foreground: #ededed;
+  --sidebar-border: rgb(255 255 255 / 10%);
+  --sidebar-ring: var(--color-brand-400);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-geist-sans);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
 html {
@@ -219,19 +340,19 @@ body {
   margin-top: 0.375rem;
 }
 .legal-content li::marker {
-  color: #f59e0b;
+  color: var(--color-brand-400);
 }
 .legal-content strong {
   font-weight: 600;
   color: var(--foreground);
 }
 .legal-content a {
-  color: #d97706;
+  color: var(--color-brand-600);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 .dark .legal-content a {
-  color: #facc15;
+  color: var(--color-brand-300);
 }
 .legal-content code {
   border-radius: 0.25rem;
@@ -241,4 +362,17 @@ body {
 }
 .dark .legal-content code {
   background: rgba(255, 255, 255, 0.08);
+}
+
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
 }

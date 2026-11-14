@@ -3,7 +3,6 @@ import { socialErrorRedirect, socialSuccessRedirect } from "@/app/api/_lib/socia
 import { tiktokLoginErrorRedirect, tiktokLoginSuccessRedirect } from "@/app/api/_lib/tiktok-login";
 import { adminAuth } from "@/app/api/_lib/firebase-admin";
 
-// Web-only route — see scripts/build-mobile.mjs.
 const STATE_COOKIE = "tiktok_oauth_state";
 const INTENT_COOKIE = "tiktok_oauth_intent";
 const ROLE_COOKIE = "tiktok_oauth_role";

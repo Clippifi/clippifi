@@ -55,7 +55,7 @@ export default function TikTokVideoPicker({
                   key={video.id}
                   type="button"
                   onClick={() => onSelect(video)}
-                  className="overflow-hidden rounded-lg border border-slate-200 text-left transition-colors hover:border-yellow-400 dark:border-white/10"
+                  className="overflow-hidden rounded-lg border border-slate-200 text-left transition-colors hover:border-brand-400 dark:border-white/10"
                 >
                   <div className="relative aspect-[9/16] bg-slate-900">
                     {video.thumbnailUrl && (

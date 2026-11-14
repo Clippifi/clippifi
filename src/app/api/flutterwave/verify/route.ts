@@ -3,7 +3,6 @@ import { adminAuth, adminDb } from "@/app/api/_lib/firebase-admin";
 import { verifyFlutterwaveReference } from "@/app/api/_lib/flutterwave";
 import { activatePaidCampaign } from "@/app/api/_lib/campaign-checkout";
 
-// Web-only route — see scripts/build-mobile.mjs.
 // Called by the brand's dashboard when it lands back on ?paid=<campaignId> after
 // Flutterwave checkout, and from a manual "Check payment status" action on a campaign
 // still stuck on awaiting_payment — see verifyFlutterwaveReference for why this exists

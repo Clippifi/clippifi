@@ -1,3 +1,4 @@
+import { SUPPORT_EMAIL } from "@/lib/site";
 import Link from "next/link";
 import Logo from "@/components/Logo";
 
@@ -12,14 +13,14 @@ const columns = [
   {
     title: "For Creators",
     links: [
-      { label: "Become a Clipper", href: "/signup" },
+      { label: "Become a Clipper", href: "/login" },
       { label: "Creator Dashboard", href: "/dashboard" },
       { label: "Payouts", href: "/refund-policy" },
     ],
   },
   {
     title: "Company",
-    links: [{ label: "Contact", href: "mailto:support@clippii.com" }],
+    links: [{ label: "Contact", href: `mailto:${SUPPORT_EMAIL}` }],
   },
   {
     title: "Legal",

@@ -76,7 +76,7 @@ export default function DashboardShell({
         <div className="flex h-16 items-center justify-between border-b border-slate-100 px-5 dark:border-white/10">
           <Link href="/" className="flex items-center gap-2">
             <Logo className="h-8 w-8" />
-            <span className="font-display text-lg font-bold tracking-tight text-slate-900 dark:text-white">
+            <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
               Clippifi
             </span>
           </Link>
@@ -90,7 +90,7 @@ export default function DashboardShell({
         </div>
 
         {area === "admin" && (
-          <div className="mx-4 mt-4 flex items-center gap-2 rounded-lg bg-yellow-50 px-3 py-2 text-xs font-medium text-amber-700 dark:bg-yellow-400/10 dark:text-yellow-400">
+          <div className="mx-4 mt-4 flex items-center gap-2 rounded-lg bg-brand-50 px-3 py-2 text-xs font-medium text-brand-700 dark:bg-brand-400/10 dark:text-brand-400">
             <ShieldCheck className="h-3.5 w-3.5" />
             Admin console
           </div>
@@ -159,7 +159,7 @@ export default function DashboardShell({
                 onClick={() => setMenuOpen((v) => !v)}
                 className="flex items-center gap-2 rounded-lg py-1 pl-1 pr-2 hover:bg-slate-50 dark:hover:bg-white/5"
               >
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-500 text-xs font-bold text-black">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-500 text-xs font-bold text-black">
                   {user.initials}
                 </span>
                 <span className="hidden text-sm font-medium text-slate-700 dark:text-slate-200 sm:block">
@@ -233,14 +233,14 @@ function MobileTabBar({
             href={item.href}
             className={`relative flex flex-1 flex-col items-center justify-center gap-0.5 text-[11px] font-medium transition-colors ${
               active
-                ? "text-amber-600 dark:text-yellow-400"
+                ? "text-brand-600 dark:text-brand-400"
                 : "text-slate-500 dark:text-slate-400"
             }`}
           >
             <span className="relative">
               <Icon className="h-5 w-5" />
               {item.badge && (
-                <span className="absolute -right-2 -top-1.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-amber-500 text-[8px] font-bold text-black">
+                <span className="absolute -right-2 -top-1.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-brand-500 text-[8px] font-bold text-black">
                   {item.badge}
                 </span>
               )}
@@ -252,7 +252,7 @@ function MobileTabBar({
       <Link
         href={profileHref}
         className={`flex flex-1 flex-col items-center justify-center gap-0.5 text-[11px] font-medium transition-colors ${
-          profileActive ? "text-amber-600 dark:text-yellow-400" : "text-slate-500 dark:text-slate-400"
+          profileActive ? "text-brand-600 dark:text-brand-400" : "text-slate-500 dark:text-slate-400"
         }`}
       >
         <User className="h-5 w-5" />
@@ -283,7 +283,7 @@ function NavLink({
       onClick={onNavigate}
       className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
         active
-          ? "bg-yellow-50 text-amber-700 dark:bg-yellow-400/10 dark:text-yellow-400"
+          ? "bg-brand-50 text-brand-700 dark:bg-brand-400/10 dark:text-brand-400"
           : "text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-white/5 dark:hover:text-white"
       }`}
     >
@@ -292,7 +292,7 @@ function NavLink({
         {item.label}
       </span>
       {item.badge && (
-        <span className="rounded-full bg-amber-500 px-1.5 py-0.5 text-[10px] font-semibold text-black">
+        <span className="rounded-full bg-brand-500 px-1.5 py-0.5 text-[10px] font-semibold text-black">
           {item.badge}
         </span>
       )}

@@ -22,12 +22,12 @@ export default function PopularClips() {
     <section id="clips" className="bg-white py-20 dark:bg-[#0a0a0a]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          <h2 className="font-display text-2xl font-bold text-slate-900 dark:text-white sm:text-3xl">
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white sm:text-3xl">
             Popular Clips
           </h2>
           <Link
             href="/dashboard/browse"
-            className="group flex items-center gap-1 text-sm font-medium text-amber-600 hover:text-amber-700 dark:text-yellow-400 dark:hover:text-yellow-300"
+            className="group flex items-center gap-1 text-sm font-medium text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300"
           >
             View all clips{" "}
             <ChevronRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />

@@ -68,7 +68,7 @@ export default function AdminTransactionsPage() {
             onClick={() => setFilter(f.value)}
             className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${
               filter === f.value
-                ? "bg-amber-500 text-black"
+                ? "bg-brand-500 text-black"
                 : "bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10"
             }`}
           >
@@ -79,7 +79,7 @@ export default function AdminTransactionsPage() {
 
       {loading ? (
         <div className="mt-6 flex items-center justify-center py-16">
-          <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-amber-500 dark:border-white/10 dark:border-t-yellow-400" />
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-brand-500 dark:border-white/10 dark:border-t-brand-400" />
         </div>
       ) : loadError ? (
         <p className="mt-6 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600 dark:bg-red-500/10 dark:text-red-400">

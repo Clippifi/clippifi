@@ -11,7 +11,6 @@ import {
   Link2,
   Loader2,
   Mail,
-  Wallet,
   X,
   Zap,
 } from "lucide-react";
@@ -32,11 +31,10 @@ import {
 } from "@/lib/platform-settings";
 
 const inputClass =
-  "mt-1.5 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/30 dark:border-white/10 dark:bg-white/5 dark:text-white";
+  "mt-1.5 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-400/30 dark:border-white/10 dark:bg-white/5 dark:text-white";
 const labelClass = "text-sm font-medium text-slate-700 dark:text-slate-300";
 
 const methodIcon: Record<ProviderId, typeof CreditCard> = {
-  bachs: Wallet,
   stripe: CreditCard,
   flutterwave: Zap,
   paystack: Banknote,
@@ -272,21 +270,21 @@ function PostCampaignPageContent() {
   if (settingsLoading) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
-        <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-amber-500 dark:border-white/10 dark:border-t-yellow-400" />
+        <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-brand-500 dark:border-white/10 dark:border-t-brand-400" />
       </div>
     );
   }
 
   return (
     <div className="mx-auto max-w-2xl">
-      <h1 className="font-display text-2xl font-bold text-slate-900 dark:text-white">Post a Campaign</h1>
+      <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Post a Campaign</h1>
       <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
         Drop a link to your channel or page so streamers know exactly where to go and start
         clipping.
       </p>
 
       {cancelled && (
-        <p className="mt-4 rounded-lg bg-amber-50 px-3 py-2 text-sm text-amber-700 dark:bg-yellow-400/10 dark:text-yellow-400">
+        <p className="mt-4 rounded-lg bg-brand-50 px-3 py-2 text-sm text-brand-700 dark:bg-brand-400/10 dark:text-brand-400">
           Checkout was cancelled. Your campaign wasn&apos;t posted.
         </p>
       )}
@@ -310,7 +308,7 @@ function PostCampaignPageContent() {
           <div className="mt-5 flex gap-2">
             <button
               onClick={() => router.push("/dashboard/campaigns")}
-              className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition-transform duration-200 hover:scale-[1.02] active:scale-95 dark:bg-yellow-400 dark:text-black"
+              className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition-transform duration-200 hover:scale-[1.02] active:scale-95 dark:bg-brand-400 dark:text-black"
             >
               View My Campaigns
             </button>
@@ -344,7 +342,7 @@ function PostCampaignPageContent() {
             </div>
             <div className="mt-2 flex items-center justify-between border-t border-slate-200 pt-2 dark:border-white/10">
               <span className="font-semibold text-slate-900 dark:text-white">Total</span>
-              <span className="font-bold text-amber-600 dark:text-yellow-400">₦{total.toFixed(2)}</span>
+              <span className="font-bold text-brand-600 dark:text-brand-400">₦{total.toFixed(2)}</span>
             </div>
           </div>
 
@@ -359,7 +357,7 @@ function PostCampaignPageContent() {
                       key={m}
                       className={`flex cursor-pointer items-center gap-2.5 rounded-lg border px-3 py-2.5 text-sm transition-colors ${
                         method === m
-                          ? "border-yellow-400 bg-yellow-50 dark:border-yellow-400/40 dark:bg-yellow-400/5"
+                          ? "border-brand-400 bg-brand-50 dark:border-brand-400/40 dark:bg-brand-400/5"
                           : "border-slate-200 dark:border-white/10"
                       }`}
                     >
@@ -368,7 +366,7 @@ function PostCampaignPageContent() {
                         name="payment-method"
                         checked={method === m}
                         onChange={() => setSelectedMethod(m)}
-                        className="h-4 w-4 accent-amber-500"
+                        className="h-4 w-4 accent-brand-500"
                       />
                       <Icon className="h-4 w-4 text-slate-500 dark:text-slate-400" />
                       <span className="text-slate-700 dark:text-slate-300">{providerMeta[m].name}</span>
@@ -455,7 +453,7 @@ function PostCampaignPageContent() {
                 </button>
               </div>
             ) : (
-              <label className="mt-1.5 flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-lg border border-dashed border-slate-300 bg-slate-50 px-4 py-8 text-center transition-colors hover:border-yellow-400 dark:border-white/15 dark:bg-white/5">
+              <label className="mt-1.5 flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-lg border border-dashed border-slate-300 bg-slate-50 px-4 py-8 text-center transition-colors hover:border-brand-400 dark:border-white/15 dark:bg-white/5">
                 <ImagePlus className="h-6 w-6 text-slate-400" />
                 <span className="text-sm font-medium text-slate-600 dark:text-slate-300">Click to upload a flyer image</span>
                 <span className="text-xs text-slate-400">PNG or JPG, used to promote your campaign</span>

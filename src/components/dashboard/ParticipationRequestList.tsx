@@ -4,7 +4,7 @@ import { Check, CheckCircle2, Loader2, X, XCircle } from "lucide-react";
 import type { ParticipationRequest, ParticipationStatus } from "@/lib/participation";
 
 const statusStyle: Record<ParticipationStatus, { cls: string; icon: typeof CheckCircle2 }> = {
-  pending: { cls: "bg-amber-100 text-amber-700 dark:bg-yellow-400/10 dark:text-yellow-400", icon: Loader2 },
+  pending: { cls: "bg-brand-100 text-brand-700 dark:bg-brand-400/10 dark:text-brand-400", icon: Loader2 },
   approved: { cls: "bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-400", icon: CheckCircle2 },
   rejected: { cls: "bg-red-100 text-red-700 dark:bg-red-500/10 dark:text-red-400", icon: XCircle },
 };

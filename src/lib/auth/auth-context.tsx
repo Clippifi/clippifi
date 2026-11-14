@@ -57,12 +57,7 @@ type AuthState = {
 const AuthContext = createContext<AuthState | null>(null);
 
 function shouldHoldForAuth(pathname: string) {
-  return (
-    pathname.startsWith("/dashboard") ||
-    pathname.startsWith("/admin") ||
-    pathname === "/login" ||
-    pathname === "/signup"
-  );
+  return pathname.startsWith("/dashboard") || pathname.startsWith("/admin");
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {

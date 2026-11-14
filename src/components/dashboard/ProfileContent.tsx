@@ -61,12 +61,12 @@ export default function ProfileContent() {
       <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Profile</h1>
 
       <div className="mt-5 flex flex-col items-center rounded-2xl border border-slate-100 bg-white p-6 text-center dark:border-white/10 dark:bg-[#111]">
-        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-amber-500 text-xl font-bold text-black">
+        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-brand-500 text-xl font-bold text-black">
           {user.initials}
         </span>
         <p className="mt-3 text-lg font-semibold text-slate-900 dark:text-white">{user.name}</p>
         <p className="text-sm text-slate-500 dark:text-slate-400">{user.email}</p>
-        <span className="mt-2 flex items-center gap-1 rounded-full bg-yellow-100 px-3 py-1 text-xs font-semibold text-amber-700 dark:bg-yellow-400/10 dark:text-yellow-400">
+        <span className="mt-2 flex items-center gap-1 rounded-full bg-brand-100 px-3 py-1 text-xs font-semibold text-brand-700 dark:bg-brand-400/10 dark:text-brand-400">
           {user.role === "admin" && <ShieldCheck className="h-3 w-3" />}
           {roleLabel[user.role]}
         </span>
