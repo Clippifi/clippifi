@@ -16,7 +16,7 @@ import { requestToParticipate, subscribeToParticipationForCreator, type Particip
 const statusBadge: Record<ClipStatus, { icon: typeof CheckCircle2; cls: string; label: string }> = {
   pending: {
     icon: Loader2,
-    cls: "bg-amber-100 text-amber-700 dark:bg-yellow-400/10 dark:text-yellow-400",
+    cls: "bg-brand-100 text-brand-700 dark:bg-brand-400/10 dark:text-brand-400",
     label: "Entry submitted",
   },
   approved: {
@@ -57,7 +57,7 @@ export default function CreatorCampaignDetailContent() {
   if (campaign === undefined) {
     return (
       <div className="flex items-center justify-center py-16">
-        <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-amber-500 dark:border-white/10 dark:border-t-yellow-400" />
+        <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-brand-500 dark:border-white/10 dark:border-t-brand-400" />
       </div>
     );
   }
@@ -66,7 +66,7 @@ export default function CreatorCampaignDetailContent() {
     return (
       <div className="mx-auto max-w-2xl">
         <EmptyState icon={Briefcase} title="Campaign not found" text="It may have been removed or isn't open anymore." />
-        <Link href="/dashboard/competitions" className="mt-4 flex items-center gap-1.5 text-sm text-amber-600 hover:underline dark:text-yellow-400">
+        <Link href="/dashboard/competitions" className="mt-4 flex items-center gap-1.5 text-sm text-brand-600 hover:underline dark:text-brand-400">
           <ArrowLeft className="h-4 w-4" /> Back to Campaigns
         </Link>
       </div>
@@ -107,13 +107,13 @@ export default function CreatorCampaignDetailContent() {
             <img src={campaign.flyerUrl} alt="" className="h-full w-full object-cover" />
           </div>
         ) : (
-          <div className="flex h-48 w-full items-center justify-center bg-gradient-to-br from-yellow-400/20 to-amber-500/20 dark:from-yellow-400/10 dark:to-amber-500/10">
-            <Briefcase className="h-10 w-10 text-amber-500/60 dark:text-yellow-400/40" />
+          <div className="flex h-48 w-full items-center justify-center bg-gradient-to-br from-brand-400/20 to-brand-500/20 dark:from-brand-400/10 dark:to-brand-500/10">
+            <Briefcase className="h-10 w-10 text-brand-500/60 dark:text-brand-400/40" />
           </div>
         )}
 
         <div className="p-6">
-          <h1 className="font-display text-2xl font-bold text-slate-900 dark:text-white">{campaign.title}</h1>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">{campaign.title}</h1>
           <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Posted by {campaign.brandName || "a brand"}</p>
 
           {campaign.channelLink && (
@@ -121,7 +121,7 @@ export default function CreatorCampaignDetailContent() {
               href={campaign.channelLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-2 flex items-center gap-1.5 text-sm text-amber-600 hover:underline dark:text-yellow-400"
+              className="mt-2 flex items-center gap-1.5 text-sm text-brand-600 hover:underline dark:text-brand-400"
             >
               <Link2 className="h-3.5 w-3.5" />
               {campaign.channelLink}
@@ -136,7 +136,7 @@ export default function CreatorCampaignDetailContent() {
             <BudgetBar campaign={campaign} />
             <div className="mt-3 flex items-center justify-between text-sm">
               <span className="text-slate-500 dark:text-slate-400">Payout per approved clip</span>
-              <span className="font-semibold text-amber-600 dark:text-yellow-400">₦{campaign.payoutPerClip.toFixed(2)}</span>
+              <span className="font-semibold text-brand-600 dark:text-brand-400">₦{campaign.payoutPerClip.toFixed(2)}</span>
             </div>
             {campaign.deadline && (
               <div className="mt-1.5 flex items-center justify-between text-sm">
@@ -174,7 +174,7 @@ export default function CreatorCampaignDetailContent() {
               Submit a Clip
             </button>
           ) : participationRequest?.status === "pending" ? (
-            <span className="mt-5 flex w-full items-center justify-center gap-1.5 rounded-lg bg-amber-100 py-2.5 text-center text-sm font-semibold text-amber-700 dark:bg-yellow-400/10 dark:text-yellow-400">
+            <span className="mt-5 flex w-full items-center justify-center gap-1.5 rounded-lg bg-brand-100 py-2.5 text-center text-sm font-semibold text-brand-700 dark:bg-brand-400/10 dark:text-brand-400">
               <Clock className="h-4 w-4" />
               Request pending review
             </span>

@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { FieldValue, type DocumentReference } from "firebase-admin/firestore";
 import { adminAuth, adminDb } from "@/app/api/_lib/firebase-admin";
 
-// Shared by every "redirect to a hosted checkout" provider's checkout route (Bachs,
-// Flutterwave, and any future one) — the auth check, request validation, and
+// Shared by every "redirect to a hosted checkout" provider's checkout route (Flutterwave
+// and any future one) — the auth check, request validation, and
 // server-computed total are identical regardless of which provider ends up
 // processing the payment; only the actual checkout-session creation call differs.
 export type PendingCampaign = {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Script from "next/script";
 import { Eye, ExternalLink, Film, Heart, Play, Search, X } from "lucide-react";
 import RequireAuth from "@/components/dashboard/RequireAuth";
@@ -8,7 +8,7 @@ import TikTokEmbed from "@/components/TikTokEmbed";
 import { useAuth } from "@/lib/auth/auth-context";
 import { addFavorite, fetchFavoriteIds, removeFavorite, subscribeToApprovedClips, type Clip } from "@/lib/clips";
 import { extractYouTubeVideoId, youtubeThumbnailUrl } from "@/lib/youtube";
-import { extractTikTokVideoId, fetchTikTokVideoStats, isTikTokLink } from "@/lib/tiktok";
+import { extractTikTokVideoId } from "@/lib/tiktok";
 
 const categories = ["All", "Tech", "Sports", "Motivation", "Nature", "Gaming", "Podcast"];
 
@@ -28,18 +28,6 @@ function BrowseClipsContent() {
   const [loading, setLoading] = useState(true);
   const [favoriteIds, setFavoriteIds] = useState<Set<string>>(new Set());
   const [playingClip, setPlayingClip] = useState<Clip | null>(null);
-  // Thumbnails fetched on the fly for clips that have a link but never got a
-  // thumbnailUrl captured at submission time (e.g. a TikTok fetch failed back then,
-  // or a YouTube API key wasn't configured yet). Not persisted to Firestore — clip
-  // update rules only allow changing `status`, and this is cheap enough to just
-  // recompute per page load. YouTube doesn't even need this map: its thumbnail URL is
-  // a predictable CDN path, derived inline below instead.
-  const [fetchedThumbnails, setFetchedThumbnails] = useState<Record<string, string>>({});
-  // Clips we've already attempted (successfully or not) during this page load, so a
-  // permanently-failing fetch (private/deleted video, TikAPI error) doesn't get retried
-  // on every `clips` snapshot update for as long as the page stays open.
-  const attemptedThumbnailIds = useRef<Set<string>>(new Set());
-  const fetchingThumbnailIds = useRef<Set<string>>(new Set());
 
   useEffect(() => {
     const unsubscribe = subscribeToApprovedClips((next) => {
@@ -48,47 +36,6 @@ function BrowseClipsContent() {
     });
     return () => unsubscribe();
   }, []);
-
-  useEffect(() => {
-    let cancelled = false;
-    const pending = clips.filter(
-      (clip) =>
-        !clip.thumbnailUrl &&
-        clip.link &&
-        isTikTokLink(clip.link) &&
-        !attemptedThumbnailIds.current.has(clip.id) &&
-        !fetchingThumbnailIds.current.has(clip.id),
-    );
-    if (pending.length === 0) return;
-
-    // A page of clips used to fire one TikAPI request per card at once. Three at a
-    // time keeps the grid filling in without saturating the API or the browser.
-    const queue = [...pending];
-    const workerCount = Math.min(3, queue.length);
-    const workers = Array.from({ length: workerCount }, async () => {
-      while (!cancelled) {
-        const clip = queue.shift();
-        if (!clip) return;
-        fetchingThumbnailIds.current.add(clip.id);
-        try {
-          const result = await fetchTikTokVideoStats(clip.link);
-          if (!cancelled && result?.thumbnailUrl) {
-            setFetchedThumbnails((prev) =>
-              prev[clip.id] ? prev : { ...prev, [clip.id]: result.thumbnailUrl },
-            );
-          }
-        } finally {
-          attemptedThumbnailIds.current.add(clip.id);
-          fetchingThumbnailIds.current.delete(clip.id);
-        }
-      }
-    });
-    void Promise.all(workers);
-
-    return () => {
-      cancelled = true;
-    };
-  }, [clips]);
 
   useEffect(() => {
     if (!user) return;
@@ -130,7 +77,7 @@ function BrowseClipsContent() {
 
   return (
     <div className="mx-auto max-w-6xl">
-      <h1 className="font-display text-2xl font-bold text-slate-900 dark:text-white">Browse Clips</h1>
+      <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Browse Clips</h1>
       <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
         See what clippers have submitted for campaigns across the platform.
       </p>
@@ -155,7 +102,7 @@ function BrowseClipsContent() {
             onClick={() => setActive(cat)}
             className={`rounded-full border-2 px-3.5 py-1.5 text-xs font-semibold transition-all duration-150 ${
               active === cat
-                ? "border-black bg-yellow-400 text-black dark:border-yellow-200 dark:shadow-[2px_2px_0_0_#fde68a]"
+                ? "border-black bg-brand-400 text-black dark:border-brand-200 dark:shadow-[2px_2px_0_0_#ffd0cb]"
                 : "border-slate-200 bg-transparent text-slate-600 hover:border-slate-900 hover:text-slate-900 dark:border-white/10 dark:text-slate-300 dark:hover:border-white dark:hover:text-white"
             }`}
           >
@@ -166,11 +113,11 @@ function BrowseClipsContent() {
 
       {loading ? (
         <div className="mt-10 flex items-center justify-center py-16">
-          <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-amber-500 dark:border-white/10 dark:border-t-yellow-400" />
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-brand-500 dark:border-white/10 dark:border-t-brand-400" />
         </div>
       ) : filtered.length === 0 ? (
         <div className="mt-10 flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-white px-6 py-16 text-center dark:border-white/15 dark:bg-[#111]">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-yellow-100 text-black dark:bg-yellow-400/10 dark:text-yellow-400">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-100 text-black dark:bg-brand-400/10 dark:text-brand-400">
             <Film className="h-6 w-6" />
           </span>
           <p className="mt-3 text-sm font-medium text-slate-900 dark:text-white">
@@ -187,7 +134,7 @@ function BrowseClipsContent() {
           {filtered.map((clip) => {
           const youtubeId = clip.link ? extractYouTubeVideoId(clip.link) : null;
           const effectiveThumbnail =
-            clip.thumbnailUrl || (youtubeId ? youtubeThumbnailUrl(youtubeId) : undefined) || fetchedThumbnails[clip.id];
+            clip.thumbnailUrl || (youtubeId ? youtubeThumbnailUrl(youtubeId) : undefined);
           return (
             <div
               key={clip.id}
@@ -214,7 +161,7 @@ function BrowseClipsContent() {
                     )}
                     <span className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-black/10 transition-colors group-hover/play:from-black/80" />
                     <span className="absolute inset-0 flex items-center justify-center">
-                      <span className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-white bg-black/40 backdrop-blur transition-transform group-hover/play:scale-110 group-hover/play:bg-yellow-400 group-hover/play:text-black">
+                      <span className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-white bg-black/40 backdrop-blur transition-transform group-hover/play:scale-110 group-hover/play:bg-brand-400 group-hover/play:text-black">
                         <Play className="h-4 w-4 fill-white text-white group-hover/play:fill-black group-hover/play:text-black" />
                       </span>
                     </span>
@@ -268,7 +215,7 @@ function BrowseClipsContent() {
                   )}
                 </div>
                 {clip.campaignTitle && (
-                  <p className="mt-1 truncate text-[11px] text-amber-600 dark:text-yellow-400">
+                  <p className="mt-1 truncate text-[11px] text-brand-600 dark:text-brand-400">
                     For: {clip.campaignTitle}
                   </p>
                 )}
@@ -303,7 +250,7 @@ function PlayerModal({ clip, onClose }: { clip: Clip; onClose: () => void }) {
         <button
           onClick={onClose}
           aria-label="Close"
-          className="absolute right-2 top-2 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white hover:bg-yellow-400 hover:text-black"
+          className="absolute right-2 top-2 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white hover:bg-brand-400 hover:text-black"
         >
           <X className="h-4 w-4" />
         </button>

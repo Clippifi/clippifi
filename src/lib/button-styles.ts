@@ -1,10 +1,9 @@
 // Shared "sticker" button treatment: solid fill, hard border, hard offset shadow that
 // lifts on hover/press — deliberately not a soft gradient-pill button (the single most
-// repeated element that made the app read as a generic AI-template build). The site's
-// actual brand mark (public/android-chrome-*.png) is a flat graphic yellow-on-black
-// monogram, so buttons lean into that instead of a gradient.
+// repeated element that made the app read as a generic AI-template build). Colors come
+// from the `brand` scale in src/app/globals.css.
 export const btnPrimary =
-  "border-2 border-black bg-yellow-400 font-semibold text-black shadow-[3px_3px_0_0_#000] transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[5px_5px_0_0_#000] active:translate-y-0 active:shadow-[1px_1px_0_0_#000] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-[3px_3px_0_0_#000] dark:border-yellow-200 dark:shadow-[3px_3px_0_0_#fde68a] dark:hover:shadow-[5px_5px_0_0_#fde68a] dark:active:shadow-[1px_1px_0_0_#fde68a] dark:disabled:hover:shadow-[3px_3px_0_0_#fde68a]";
+  "border-2 border-black bg-brand-400 font-semibold text-black shadow-[3px_3px_0_0_#000] transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[5px_5px_0_0_#000] active:translate-y-0 active:shadow-[1px_1px_0_0_#000] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-[3px_3px_0_0_#000] dark:border-brand-200 dark:shadow-[3px_3px_0_0_#ffd0cb] dark:hover:shadow-[5px_5px_0_0_#ffd0cb] dark:active:shadow-[1px_1px_0_0_#ffd0cb] dark:disabled:hover:shadow-[3px_3px_0_0_#ffd0cb]";
 
 // Quieter counterpart for secondary actions (Back/Cancel/outline links) — same hard-edge
 // language at lower emphasis: an ink-fill hover instead of a shadow, so primary actions

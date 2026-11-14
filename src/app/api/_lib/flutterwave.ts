@@ -1,7 +1,7 @@
 import { timingSafeEqual } from "node:crypto";
 import { adminDb } from "@/app/api/_lib/firebase-admin";
 
-// Server-only. Unlike Bachs (env vars), Flutterwave's keys are admin-configured
+// Server-only. Flutterwave's keys are admin-configured
 // through Manage Payments (src/app/admin/manage-payments/page.tsx) and live in the
 // settings/platform Firestore doc — same place the admin already fills in Paystack's
 // keys. Read here with Admin credentials since that doc is admin-only per
@@ -62,8 +62,7 @@ export async function createFlutterwaveCheckout({
 }
 
 /**
- * Verifies a Flutterwave webhook. Unlike Bachs' HMAC signature, Flutterwave's
- * "verif-hash" header is a plain shared secret — the exact string the admin set as
+ * Verifies a Flutterwave webhook. Flutterwave's "verif-hash" header is a plain shared secret — the exact string the admin set as
  * the webhook's secret hash — compared directly (constant-time) rather than computed
  * from the payload. Returns false (never throws) on any mismatch, including a missing
  * header or a configured secret of a different length.

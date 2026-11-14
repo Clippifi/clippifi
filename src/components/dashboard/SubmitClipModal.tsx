@@ -8,7 +8,7 @@ import { createClip, uploadClipThumbnail, uploadClipVideo } from "@/lib/clips";
 import { createNotification } from "@/lib/notifications";
 import { getPublicSettings } from "@/lib/platform-settings";
 import { extractYouTubeVideoId, fetchYouTubeStats } from "@/lib/youtube";
-import { fetchTikTokVideoStats, isTikTokLink, type MyTikTokVideo } from "@/lib/tiktok";
+import { isTikTokLink, type MyTikTokVideo } from "@/lib/tiktok";
 import { getSocialConnection, getValidSocialAccessToken } from "@/lib/socials";
 import TikTokVideoPicker from "@/components/dashboard/TikTokVideoPicker";
 
@@ -17,7 +17,7 @@ type LinkStats = { title: string; thumbnailUrl: string; viewCount: number; likeC
 const categories = ["Tech", "Sports", "Motivation", "Nature", "Gaming", "Podcast"];
 
 const inputClass =
-  "mt-1.5 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/30 dark:border-white/10 dark:bg-white/5 dark:text-white";
+  "mt-1.5 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-400/30 dark:border-white/10 dark:bg-white/5 dark:text-white";
 const labelClass = "text-sm font-medium text-slate-700 dark:text-slate-300";
 
 function formatBytes(bytes: number) {
@@ -111,17 +111,15 @@ export default function SubmitClipModal({
       return;
     }
 
+    // TikTok stats come only from the official API for the creator's own linked
+    // account (the "Choose from TikTok" picker), never from a pasted link.
     if (isTikTokLink(trimmed)) {
-      setFetchingStats(true);
-      setTiktokHint("");
-      try {
-        const result = await fetchTikTokVideoStats(trimmed);
-        setStats(result);
-        if (result && !title.trim()) setTitle(result.title);
-        if (!result) setTiktokHint("Couldn't find that TikTok video. Double-check the link.");
-      } finally {
-        setFetchingStats(false);
-      }
+      setStats(null);
+      setTiktokHint(
+        tiktokConnected
+          ? "Use “Choose from TikTok” to pick this video from your linked account so we can read its stats."
+          : "Link your TikTok account in Creator Settings to submit TikTok videos with their stats.",
+      );
       return;
     }
 
@@ -225,7 +223,7 @@ export default function SubmitClipModal({
             </p>
             <button
               onClick={onClose}
-              className="mt-4 rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white dark:bg-yellow-400 dark:text-black"
+              className="mt-4 rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white dark:bg-brand-400 dark:text-black"
             >
               Done
             </button>
@@ -264,7 +262,7 @@ export default function SubmitClipModal({
                     onClick={() => setMode("link")}
                     className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-colors ${
                       mode === "link"
-                        ? "bg-slate-900 text-white dark:bg-yellow-400 dark:text-black"
+                        ? "bg-slate-900 text-white dark:bg-brand-400 dark:text-black"
                         : "text-slate-500 dark:text-slate-400"
                     }`}
                   >
@@ -275,7 +273,7 @@ export default function SubmitClipModal({
                     onClick={() => setMode("file")}
                     className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-colors ${
                       mode === "file"
-                        ? "bg-slate-900 text-white dark:bg-yellow-400 dark:text-black"
+                        ? "bg-slate-900 text-white dark:bg-brand-400 dark:text-black"
                         : "text-slate-500 dark:text-slate-400"
                     }`}
                   >
@@ -292,7 +290,7 @@ export default function SubmitClipModal({
                           type="button"
                           onClick={openTikTokPicker}
                           disabled={tiktokPickerLoading}
-                          className="flex items-center gap-1 text-xs font-medium text-amber-600 hover:underline disabled:opacity-60 dark:text-yellow-400"
+                          className="flex items-center gap-1 text-xs font-medium text-brand-600 hover:underline disabled:opacity-60 dark:text-brand-400"
                         >
                           {tiktokPickerLoading ? (
                             <Loader2 className="h-3 w-3 animate-spin" />
@@ -346,7 +344,7 @@ export default function SubmitClipModal({
                         </div>
                       </div>
                     ) : tiktokHint ? (
-                      <p className="mt-1.5 text-[11px] text-amber-600 dark:text-yellow-400">{tiktokHint}</p>
+                      <p className="mt-1.5 text-[11px] text-brand-600 dark:text-brand-400">{tiktokHint}</p>
                     ) : (
                       <p className="mt-1.5 text-[11px] text-slate-400">
                         Paste a YouTube or TikTok link to auto-fetch its view and like counts.
@@ -379,7 +377,7 @@ export default function SubmitClipModal({
                         </div>
                       </div>
                     ) : (
-                      <label className="mt-1.5 flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-lg border border-dashed border-slate-300 bg-slate-50 px-4 py-6 text-center transition-colors hover:border-yellow-400 dark:border-white/15 dark:bg-white/5">
+                      <label className="mt-1.5 flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-lg border border-dashed border-slate-300 bg-slate-50 px-4 py-6 text-center transition-colors hover:border-brand-400 dark:border-white/15 dark:bg-white/5">
                         <Upload className="h-6 w-6 text-slate-400" />
                         <span className="text-sm font-medium text-slate-600 dark:text-slate-300">
                           Click to upload a video
@@ -413,7 +411,7 @@ export default function SubmitClipModal({
                     </button>
                   </div>
                 ) : (
-                  <label className="mt-1.5 flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-lg border border-dashed border-slate-300 bg-slate-50 px-4 py-5 text-center transition-colors hover:border-yellow-400 dark:border-white/15 dark:bg-white/5">
+                  <label className="mt-1.5 flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-lg border border-dashed border-slate-300 bg-slate-50 px-4 py-5 text-center transition-colors hover:border-brand-400 dark:border-white/15 dark:bg-white/5">
                     <ImagePlus className="h-5 w-5 text-slate-400" />
                     <span className="text-sm font-medium text-slate-600 dark:text-slate-300">
                       Click to upload a thumbnail

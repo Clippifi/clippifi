@@ -50,7 +50,7 @@ export default function TrendingTikTok() {
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">
             Trending on{" "}
-            <span className="bg-gradient-to-r from-yellow-500 to-amber-600 bg-clip-text text-transparent dark:from-yellow-300 dark:to-amber-400">
+            <span className="bg-gradient-to-r from-brand-500 to-brand-600 bg-clip-text text-transparent dark:from-brand-300 dark:to-brand-400">
               TikTok
             </span>
           </h2>
@@ -65,7 +65,7 @@ export default function TrendingTikTok() {
             videos.map((v) => (
               <div
                 key={v.videoId}
-                className="w-full max-w-[325px] overflow-hidden rounded-2xl bg-neutral-100 shadow-2xl shadow-black/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-yellow-500/10"
+                className="w-full max-w-[325px] overflow-hidden rounded-2xl bg-neutral-100 shadow-2xl shadow-black/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-brand-500/10"
               >
                 <TikTokEmbed
                   url={v.url}

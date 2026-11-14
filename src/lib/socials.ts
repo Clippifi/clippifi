@@ -4,7 +4,7 @@ import { db } from "@/lib/firebase";
 // Storage for every social account a creator links, one doc per platform under
 // users/{uid}/socials/{platform}. Most entries are manual handles; OAuth-connected
 // ones also carry tokens.
-export type SocialPlatform = "tiktok" | "instagram" | "reddit" | "threads" | "x" | "bluesky";
+export type SocialPlatform = "tiktok" | "instagram" | "youtube";
 
 export type SocialConnection = {
   handle: string;
@@ -13,8 +13,7 @@ export type SocialConnection = {
   manual?: boolean;
   accessToken: string;
   refreshToken: string;
-  // 0 means "doesn't expire / no refresh flow for this platform" (e.g. Bluesky's
-  // session tokens are refreshed transparently by the atproto OAuth client instead).
+  // 0 means "doesn't expire / no refresh flow for this platform" (e.g. a manual handle).
   expiresAt: number;
   connectedAt: number;
 };
@@ -33,7 +32,7 @@ export async function getSocialConnection(uid: string, platform: SocialPlatform)
 }
 
 export function subscribeToSocialConnections(uid: string, callback: (connections: Partial<Record<SocialPlatform, SocialConnection>>) => void) {
-  const platforms: SocialPlatform[] = ["tiktok", "instagram", "reddit", "threads", "x", "bluesky"];
+  const platforms: SocialPlatform[] = ["tiktok", "instagram", "youtube"];
   const state: Partial<Record<SocialPlatform, SocialConnection>> = {};
   const unsubscribers = platforms.map((platform) =>
     onSnapshot(
@@ -70,7 +69,7 @@ export async function disconnectSocial(uid: string, platform: SocialPlatform) {
 // Platforms whose long-lived token is refreshed by re-sending the access token itself
 // (Meta's pattern — see src/app/api/instagram/refresh/route.ts) rather than a
 // refresh_token grant.
-const SELF_REFRESH_PLATFORMS: SocialPlatform[] = ["instagram", "threads"];
+const SELF_REFRESH_PLATFORMS: SocialPlatform[] = ["instagram"];
 
 /**
  * Returns a usable access token for this creator's connected account on the given

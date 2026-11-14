@@ -18,14 +18,14 @@ import {
 } from "@/lib/participation";
 
 const inputClass =
-  "w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/30 dark:border-white/10 dark:bg-white/5 dark:text-white";
+  "w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-400/30 dark:border-white/10 dark:bg-white/5 dark:text-white";
 
 type SortOption = "newest" | "budget-desc" | "budget-asc";
 
 const statusBadge: Record<ClipStatus, { icon: typeof CheckCircle2; cls: string; label: string }> = {
   pending: {
     icon: Loader2,
-    cls: "bg-amber-100 text-amber-700 dark:bg-yellow-400/10 dark:text-yellow-400",
+    cls: "bg-brand-100 text-brand-700 dark:bg-brand-400/10 dark:text-brand-400",
     label: "Entry submitted",
   },
   approved: {
@@ -116,7 +116,7 @@ function CreatorCampaignsContent() {
 
   return (
     <div className="mx-auto max-w-6xl">
-      <h1 className="font-display text-2xl font-bold text-slate-900 dark:text-white">Campaigns</h1>
+      <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Campaigns</h1>
       <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
         Browse open clipping campaigns posted by brands. Request to participate, and once the
         brand approves, submit a clip — approved clips also list on Browse Clips.
@@ -147,7 +147,7 @@ function CreatorCampaignsContent() {
 
       {loading ? (
         <div className="mt-6 flex items-center justify-center py-16">
-          <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-amber-500 dark:border-white/10 dark:border-t-yellow-400" />
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-brand-500 dark:border-white/10 dark:border-t-brand-400" />
         </div>
       ) : campaigns.length === 0 ? (
         <div className="mt-6">
@@ -181,8 +181,8 @@ function CreatorCampaignsContent() {
                       <img src={campaign.flyerUrl} alt="" className="h-full w-full object-cover" />
                     </div>
                   ) : (
-                    <div className="flex h-32 w-full items-center justify-center bg-gradient-to-br from-yellow-400/20 to-amber-500/20 dark:from-yellow-400/10 dark:to-amber-500/10">
-                      <Briefcase className="h-8 w-8 text-amber-500/60 dark:text-yellow-400/40" />
+                    <div className="flex h-32 w-full items-center justify-center bg-gradient-to-br from-brand-400/20 to-brand-500/20 dark:from-brand-400/10 dark:to-brand-500/10">
+                      <Briefcase className="h-8 w-8 text-brand-500/60 dark:text-brand-400/40" />
                     </div>
                   )}
                 </Link>
@@ -210,7 +210,7 @@ function CreatorCampaignsContent() {
                       href={campaign.channelLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-2 block truncate text-xs text-amber-600 hover:underline dark:text-yellow-400"
+                      className="mt-2 block truncate text-xs text-brand-600 hover:underline dark:text-brand-400"
                     >
                       {campaign.channelLink}
                     </a>
@@ -247,7 +247,7 @@ function CreatorCampaignsContent() {
                       Submit a Clip
                     </button>
                   ) : request?.status === "pending" ? (
-                    <span className="mt-4 flex w-full items-center justify-center gap-1.5 rounded-lg bg-amber-100 py-2.5 text-center text-sm font-semibold text-amber-700 dark:bg-yellow-400/10 dark:text-yellow-400">
+                    <span className="mt-4 flex w-full items-center justify-center gap-1.5 rounded-lg bg-brand-100 py-2.5 text-center text-sm font-semibold text-brand-700 dark:bg-brand-400/10 dark:text-brand-400">
                       <Clock className="h-4 w-4" />
                       Request pending review
                     </span>

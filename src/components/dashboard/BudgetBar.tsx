@@ -10,7 +10,7 @@ export default function BudgetBar({ campaign, className = "" }: { campaign: Camp
         <span>₦{remaining.toFixed(2)} left</span>
       </div>
       <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-white/10">
-        <div className="h-full rounded-full bg-amber-500 dark:bg-yellow-400" style={{ width: `${pct}%` }} />
+        <div className="h-full rounded-full bg-brand-500 dark:bg-brand-400" style={{ width: `${pct}%` }} />
       </div>
     </div>
   );

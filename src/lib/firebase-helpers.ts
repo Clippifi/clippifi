@@ -376,7 +376,7 @@ export async function uploadCampaignFlyer(brandId: string, file: File): Promise<
 }
 
 // "awaiting_payment" is written only by the server at checkout creation and flipped to
-// "active" by the Bachs webhook — it's never a value a user picks.
+// "active" by the payment webhook — it's never a value a user picks.
 export type CampaignStatus = "draft" | "awaiting_payment" | "active" | "completed" | "cancelled";
 
 export type Campaign = {
@@ -554,7 +554,7 @@ export async function setUserStatus(uid: string, status: AccountStatus) {
 // doesn't provide one — so this fills it in wherever an email first becomes necessary
 // (currently just post-job's checkout; see that page's email gate). The Firestore
 // profile's `email` field is the only thing checkout code reads (both client-side
-// Paystack and the server-side Flutterwave/Bachs routes), so this alone is enough —
+// Paystack and the server-side Flutterwave routes), so this alone is enough —
 // no need to also touch the Firebase Auth user record.
 export async function updateUserEmail(uid: string, email: string) {
   await setDoc(doc(db, "users", uid), { email, updatedAt: new Date().toISOString() }, { merge: true });

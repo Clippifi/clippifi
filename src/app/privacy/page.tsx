@@ -1,219 +1,231 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import LegalLayout from "@/components/legal/LegalLayout";
+import { LEGAL_UPDATED, SUPPORT_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Privacy Policy — Clippifi",
-  description: "How Clippifi collects, uses, and protects your information.",
+  description: "What Clippifi collects, why, and how you control it.",
 };
-
-const UPDATED = "September 13, 2026";
 
 export default function PrivacyPage() {
   return (
-    <LegalLayout title="Privacy Policy" updated={UPDATED}>
+    <LegalLayout title="Privacy Policy" updated={LEGAL_UPDATED}>
       <p>
-        This Privacy Policy explains what information Clippifi collects, why, and how it&apos;s
-        used, stored, and protected. It also covers cookies and similar technologies — Clippifi
-        doesn&apos;t maintain a separate cookie policy, since our footprint there is small enough
-        to cover in one place (Section 6).
+        This Privacy Policy explains what personal information Clippifi collects, why we collect
+        it, who we share it with and the choices you have. Clippifi is run by its founders from
+        Nigeria and is not yet incorporated. We are responsible for the information described here.
+        You can reach us at {SUPPORT_EMAIL}.
       </p>
 
       <h2>1. Information we collect</h2>
       <h3>Account information</h3>
       <ul>
-        <li>Name, username, email address, and the role you choose (Brand, Creator, or both).</li>
+        <li>Your name and email address. You sign in with Google or a one-time code sent to your email, so we store no password.</li>
         <li>
-          If you sign up or log in with Google or Apple, we receive your name, email, and profile
-          identifier from that provider — we never see or store your Google/Apple password.
+          If you sign in with Google, the account identifier, name, email and profile picture Google
+          shares with us. We never see your Google password.
         </li>
-        <li>Account status (active/suspended) and role, which an admin can change.</li>
+        <li>Your public display name and profile details you choose to add.</li>
       </ul>
-      <h3>Content you provide</h3>
-      <ul>
-        <li>Clip videos you upload or link, campaign flyers, campaign briefs and budgets.</li>
-        <li>
-          View/like counts we fetch on your behalf for a pasted YouTube or TikTok link.
-        </li>
-      </ul>
-      <h3>Payment and transaction records</h3>
+
+      <h3>Information from TikTok</h3>
+      <p>
+        When you link your TikTok account from your Clippifi settings, and only with your
+        permission, we receive the following through TikTok’s official Login Kit and Display API:
+      </p>
       <ul>
         <li>
-          When a campaign payment is made, we record the amount, the payment provider used, a
-          transaction reference, and whether it succeeded or failed. This is for accounting,
-          support, and fraud-prevention purposes.
+          <strong>Basic profile</strong> (permission <code>user.info.basic</code>): your TikTok
+          account identifier (open ID), display name and profile picture.
         </li>
         <li>
-          <strong>We never receive or store your full card number, CVV, or bank login details.</strong>{" "}
-          Those are entered directly with our payment provider — Bachs, or Paystack where an
-          admin has enabled it — who processes the payment under its own privacy and security
-          terms.
+          <strong>Your videos</strong> (permission <code>video.list</code>): your recent public
+          videos and, for each, its ID, link, caption, cover image, posting time, length and its
+          view, like, comment and share counts.
+        </li>
+        <li>
+          <strong>Access tokens</strong> that let us read the above on your behalf. They are stored
+          encrypted.
         </li>
       </ul>
-      <h3>Technical information</h3>
+
+      <h3>Information from other platforms</h3>
       <ul>
         <li>
-          Basic device/browser information gathered automatically by our hosting and error-logging
-          infrastructure (Firebase/Google Cloud), used only to keep the Platform running and to
-          debug problems.
+          Instagram or YouTube account names and links you add, and the public view and like
+          counts of videos you submit (for YouTube, read through the YouTube Data API).
+        </li>
+      </ul>
+
+      <h3>Campaign and submission information</h3>
+      <ul>
+        <li>Campaigns brands create: briefs, budgets, rates, assets and results.</li>
+        <li>
+          Clips creators submit: the video details above, the checks we ran, review decisions,
+          view counts over time and the earnings calculated from them.
+        </li>
+      </ul>
+
+      <h3>Payment and payout information</h3>
+      <ul>
+        <li>
+          For brands: payment amounts, currency, the payment provider’s reference and the result of
+          each payment. Card details are entered directly with our payment provider and never
+          reach us.
+        </li>
+        <li>
+          For creators: your bank name, account number, country, and the account holder name your
+          bank returns when we check the account (your “legal payout name”). Bank account numbers
+          are shown masked to the last 4 digits.
+        </li>
+        <li>
+          If a bank account name does not match your payout name, the ID document or bank statement
+          you upload so we can confirm it.
+        </li>
+        <li>Your balance, earnings history and withdrawals.</li>
+      </ul>
+
+      <h3>Technical and security information</h3>
+      <ul>
+        <li>
+          IP address, device and browser type, and logs of sign-ins and actions. We use these to
+          keep accounts secure and to detect fraud such as multiple accounts or fake views.
         </li>
       </ul>
 
       <h2>2. How we use your information</h2>
       <ul>
-        <li>To create and operate your account, and to show your content to the right audience.</li>
-        <li>To process campaign payments and track what a creator has earned and is owed.</li>
-        <li>To moderate submitted clips and enforce our Terms of Service.</li>
-        <li>To respond to support requests sent to our contact email.</li>
-        <li>
-          To detect and prevent fraud, abuse, or violations of our Terms — for example, reviewing
-          transaction records for suspicious patterns.
-        </li>
+        <li>To create and run your account and sign you in.</li>
+        <li>To confirm you own the social account a clip was posted from.</li>
+        <li>To check submissions, count views, calculate earnings and check that clips stay live for the required period.</li>
+        <li>To process brand payments, creator withdrawals and refunds, including checking bank account names.</li>
+        <li>To show brands the results of their campaigns.</li>
+        <li>To detect and prevent fraud and abuse, and to enforce our <Link href="/terms">Terms of Service</Link>.</li>
+        <li>To send you service messages (for example, a clip needs attention or a withdrawal was paid) and to answer support requests.</li>
+        <li>To meet legal, accounting and tax obligations.</li>
       </ul>
       <p>
-        We do not sell your personal information to third parties, and we do not use your content
-        or account data for advertising.
+        We do not sell your personal information, and we do not use it for advertising or share it
+        with advertisers.
       </p>
 
-      <h2>3. Third-party platform connections (TikTok and YouTube)</h2>
-      <h3>Social account handles</h3>
-      <p>
-        On your Creator Settings page, you can add the handle or profile link of the social accounts
-        you post clips from (TikTok, Instagram, Reddit, Threads, X, and Bluesky). We store what you
-        enter and show it on your profile. We don&apos;t connect to those platforms on your behalf
-        for these handles, and we don&apos;t collect anything from them. Your use of each platform
-        remains subject to its own privacy policy, including{" "}
-        <a href="https://www.tiktok.com/legal/page/row/privacy-policy/en" target="_blank" rel="noopener noreferrer">
-          TikTok&apos;s own Privacy Policy
-        </a>
-        .
-      </p>
-      <h3>YouTube</h3>
-      <p>
-        When a creator pastes a YouTube link while submitting a clip, Clippifi uses the YouTube
-        Data API to look up that video&apos;s publicly available view and like counts. This
-        doesn&apos;t require you to log in to YouTube or grant us any access to a YouTube account —
-        it&apos;s a lookup of public data about the video itself. This feature is provided using
-        YouTube API Services, and by using it you also agree to be bound by the{" "}
-        <a href="https://www.youtube.com/t/terms" target="_blank" rel="noopener noreferrer">
-          YouTube Terms of Service
-        </a>
-        , and Google&apos;s use of information is governed by the{" "}
-        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
-          Google Privacy Policy
-        </a>
-        .
-      </p>
-      <h3>TikTok video stats</h3>
-      <p>
-        When a creator pastes a TikTok link while submitting a clip, Clippifi looks up that
-        video&apos;s publicly available view and like counts through TikAPI, a third-party service
-        — not an official TikTok API. This also doesn&apos;t require logging in to TikTok or
-        granting access to a TikTok account; it&apos;s a lookup of public data about the video
-        itself, and the only thing shared with TikAPI is the video link or ID. See{" "}
-        <a href="https://tikapi.io" target="_blank" rel="noopener noreferrer">
-          TikAPI&apos;s own site
-        </a>{" "}
-        for how it handles data it processes on our behalf.
-      </p>
-
-      <h2>4. Where your data is stored</h2>
-      <p>
-        Clippifi runs on Firebase and Google Cloud infrastructure (authentication, database, file
-        storage). As a result, your data may be processed or stored on servers located outside
-        Nigeria. We rely on Firebase&apos;s own security and compliance program for the
-        infrastructure layer, and we apply our own access rules on top of it (Section 5) to control
-        who can read or change what.
-      </p>
-
-      <h2>5. Data access and security</h2>
-      <p>
-        Access to your data is controlled by security rules enforced at the database level, not
-        just in the app&apos;s interface. In practice, that means:
-      </p>
-      <ul>
-        <li>You can always read and update your own profile, content, and linked social accounts.</li>
-        <li>
-          A brand can see clips submitted to their own campaigns; other users&apos; private data
-          (like stored platform tokens or transaction history) isn&apos;t exposed to them.
-        </li>
-        <li>
-          Admins have broader access needed to moderate content, manage accounts, and configure the
-          Platform — this access is limited to accounts we&apos;ve explicitly granted the admin
-          role.
-        </li>
-        <li>
-          Payment-provider secret keys are configured by admins and are never exposed to regular
-          users or stored anywhere accessible from the browser.
-        </li>
-      </ul>
-      <p>
-        No system is perfectly secure, and we can&apos;t guarantee absolute security of information
-        transmitted over the internet. If we become aware of a data breach affecting your personal
-        information, we&apos;ll notify you and the relevant regulator as required by law.
-      </p>
-
-      <h2>6. Cookies and local storage</h2>
-      <p>Clippifi doesn&apos;t use advertising or cross-site tracking cookies. What we do use:</p>
+      <h2>3. How we use TikTok data</h2>
       <ul>
         <li>
-          <strong>Sign-in session data</strong> — kept by Firebase Authentication in your
-          browser&apos;s local storage/IndexedDB, so you stay signed in between visits. This is
-          essential to the Platform working and isn&apos;t used for tracking across other sites.
+          We use your TikTok data only to run Clippifi for you: to show which TikTok account is
+          linked, to let you pick a video to submit, and to count the views of clips you submitted
+          so you can be paid. We check submitted clips regularly (about every 6 hours) while they
+          are in a campaign.
+        </li>
+        <li>We only read data. We never post, edit, delete or comment on anything on your TikTok account.</li>
+        <li>
+          Brands see the details and statistics of clips submitted to their own campaigns, and your
+          TikTok display name. They do not see your tokens or your other videos.
         </li>
         <li>
-          <strong>Short-lived OAuth cookies</strong> — set only during the few minutes of a social
-          account &quot;Connect&quot; flow, used to verify the request came from you and not an
-          attacker. They expire automatically after 10 minutes and are deleted as soon as the
-          connection completes.
+          You can unlink TikTok at any time in your Clippifi settings, or remove Clippifi’s access
+          in the TikTok app under Settings and privacy → Security → Apps and services. When you
+          unlink, we delete your TikTok access tokens. We keep the details and view history of
+          clips you already submitted, because they are part of your earnings and the brand’s
+          records.
         </li>
         <li>
-          <strong>A theme preference</strong> (light/dark mode) stored locally in your browser, used
-          only to remember your display preference.
+          Your use of TikTok is also covered by{" "}
+          <a href="https://www.tiktok.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">
+            TikTok’s Privacy Policy
+          </a>
+          .
         </li>
       </ul>
+
+      <h2>4. Who we share information with</h2>
+      <ul>
+        <li>
+          <strong>Brands</strong>: the display name, social account name, clip details and
+          statistics of clips submitted to their campaigns. Never your email, legal payout name,
+          bank details or ID documents.
+        </li>
+        <li>
+          <strong>Payment partners</strong> (Flutterwave, and Paystack where enabled): what they
+          need to take payments, check bank account names and send payouts.
+        </li>
+        <li>
+          <strong>Service providers</strong> who run parts of the Platform for us: hosting
+          (Vercel), databases (Neon, and Google Firebase while we finish moving away from it), email
+          delivery and error monitoring. They may only use the information to provide their service
+          to us.
+        </li>
+        <li>
+          <strong>Authorities</strong>, when the law requires it, or when needed to protect users
+          from fraud or harm.
+        </li>
+      </ul>
+
+      <h2>5. Where your information is stored</h2>
       <p>
-        You can clear local storage or cookies from your browser at any time; doing so will simply
-        sign you out and reset your theme preference.
+        Our service providers may store and process information outside Nigeria, including in the
+        United States and the European Union. When information leaves the country you live in, we
+        rely on our providers’ contractual and security commitments to protect it.
       </p>
 
-      <h2>7. Your rights</h2>
+      <h2>6. How long we keep it</h2>
+      <ul>
+        <li>Account information: while your account is open.</li>
+        <li>TikTok access tokens: until you unlink TikTok or close your account.</li>
+        <li>
+          Submissions, earnings, payments and withdrawals: as long as needed for accounting, tax,
+          fraud prevention and dispute resolution, and as the law requires, even after your account
+          is closed.
+        </li>
+        <li>ID documents and bank statements: only until the review is decided and any dispute about it is resolved, then deleted.</li>
+        <li>Security logs: for a limited period, then deleted.</li>
+      </ul>
+
+      <h2>7. How we protect it</h2>
       <p>
-        Depending on your location, you may have the right to access, correct, or request deletion
-        of your personal information, or to object to certain processing. We aim to honor these
-        rights consistent with the Nigeria Data Protection Act, 2023, and its regulations, as well
-        as other applicable data protection law. To make a request, email{" "}
-        <a href="mailto:support@clippii.com">support@clippii.com</a> from the email address on your
-        account. We may need to verify your identity before acting on a request.
-      </p>
-      <p>
-        Deleting your account removes your profile and stops future processing of your data for
-        the purposes above, but we may retain transaction records and limited account information
-        where we&apos;re legally required to (for example, financial record-keeping) or where
-        needed to resolve an ongoing dispute.
+        Information is encrypted in transit. Social account tokens are encrypted at rest. Access is
+        limited to people who need it, admin accounts require two-factor authentication, and every
+        admin decision about money or accounts is recorded in an audit log. No system is perfectly
+        secure; if a breach affects your personal information, we will tell you and the relevant
+        regulator as the law requires.
       </p>
 
-      <h2>8. Children&apos;s privacy</h2>
+      <h2>8. Cookies and local storage</h2>
+      <p>We do not use advertising or cross-site tracking cookies. We use:</p>
+      <ul>
+        <li>a sign-in session cookie, so you stay signed in, and a short-lived cookie remembering which linked account was used;</li>
+        <li>short-lived security cookies while you sign in with Google or link TikTok, which expire within minutes;</li>
+        <li>your light or dark mode preference, stored in your browser.</li>
+      </ul>
+
+      <h2>9. Your rights</h2>
       <p>
-        Clippifi requires users to be at least 15 years old, and requires parental or guardian
-        consent for anyone under 18 (see our{" "}
-        <a href="/terms">Terms of Service</a>). We do not knowingly collect personal information
-        from anyone under 15. If you believe a child under 15 has created an account, please
-        contact us at <a href="mailto:support@clippii.com">support@clippii.com</a> so we can
-        investigate and remove it if appropriate.
+        Depending on where you live, including under the Nigeria Data Protection Act 2023 and, for
+        people in the EU or UK, the GDPR, you can ask to access, correct, download or delete your
+        personal information, or object to how we use it. Email {SUPPORT_EMAIL} from the email
+        address on your account. We may need to confirm it is you before acting. Some records (for
+        example, financial records) must be kept even after you ask us to delete your account. You
+        can also complain to your local data protection authority, such as the Nigeria Data
+        Protection Commission.
       </p>
 
-      <h2>9. Changes to this policy</h2>
+      <h2>10. Age</h2>
       <p>
-        We may update this Privacy Policy as the Platform changes — for example, if we add a new
-        third-party integration. We&apos;ll update the date at the top of this page when we do, and
-        make a reasonable effort to flag material changes in-app.
+        Clippifi is only for people aged 18 or over. We do not knowingly collect information from
+        anyone younger. If you think someone under 18 has an account, contact {SUPPORT_EMAIL} and we
+        will remove it.
       </p>
 
-      <h2>10. Contact</h2>
+      <h2>11. Changes</h2>
       <p>
-        Questions, requests, or concerns about this Privacy Policy can be sent to{" "}
-        <a href="mailto:support@clippii.com">support@clippii.com</a>.
+        We will update this policy when the Platform changes, for example when we add a new
+        platform or partner. We will change the date at the top and tell you about important
+        changes in the app or by email.
       </p>
+
+      <h2>12. Contact</h2>
+      <p>Questions or requests about your privacy: {SUPPORT_EMAIL}.</p>
     </LegalLayout>
   );
 }

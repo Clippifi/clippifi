@@ -27,14 +27,14 @@ type SortOption = "newest" | "budget-desc" | "budget-asc" | "title";
 
 const statusStyle: Record<CampaignStatus, string> = {
   draft: "bg-slate-100 text-slate-600 dark:bg-white/10 dark:text-slate-300",
-  awaiting_payment: "bg-amber-100 text-amber-700 dark:bg-yellow-400/10 dark:text-yellow-400",
+  awaiting_payment: "bg-brand-100 text-brand-700 dark:bg-brand-400/10 dark:text-brand-400",
   active: "bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-400",
   completed: "bg-sky-100 text-sky-700 dark:bg-sky-400/10 dark:text-sky-400",
   cancelled: "bg-red-100 text-red-700 dark:bg-red-500/10 dark:text-red-400",
 };
 
 const inputClass =
-  "w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/30 dark:border-white/10 dark:bg-white/5 dark:text-white";
+  "w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-400/30 dark:border-white/10 dark:bg-white/5 dark:text-white";
 
 export default function MyCampaignsPage() {
   return (
@@ -181,7 +181,7 @@ function MyCampaignsContent() {
     <div className="mx-auto max-w-6xl">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="font-display text-2xl font-bold text-slate-900 dark:text-white">My Campaigns</h1>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">My Campaigns</h1>
           <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
             Manage your campaigns and approve or reject the clips streamers submit to each one.
           </p>
@@ -196,7 +196,7 @@ function MyCampaignsContent() {
       </div>
 
       {paymentMessage && (
-        <p className="mt-4 rounded-lg bg-amber-50 px-3 py-2 text-sm text-amber-700 dark:bg-yellow-400/10 dark:text-yellow-400">
+        <p className="mt-4 rounded-lg bg-brand-50 px-3 py-2 text-sm text-brand-700 dark:bg-brand-400/10 dark:text-brand-400">
           {paymentMessage}
         </p>
       )}
@@ -234,7 +234,7 @@ function MyCampaignsContent() {
 
       {loading ? (
         <div className="mt-6 flex items-center justify-center py-16">
-          <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-amber-500 dark:border-white/10 dark:border-t-yellow-400" />
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-brand-500 dark:border-white/10 dark:border-t-brand-400" />
         </div>
       ) : campaigns.length === 0 ? (
         <div className="mt-6">
@@ -292,7 +292,7 @@ function MyCampaignsContent() {
                   href={c.channelLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-1 flex items-center gap-1 text-xs text-amber-600 hover:underline dark:text-yellow-400"
+                  className="mt-1 flex items-center gap-1 text-xs text-brand-600 hover:underline dark:text-brand-400"
                 >
                   <span className="max-w-[220px] truncate">{c.channelLink}</span>
                   <ExternalLink className="h-3 w-3 shrink-0" />
@@ -310,7 +310,7 @@ function MyCampaignsContent() {
                         : checkFlutterwavePayment(c.id, "Payment confirmed — campaign is now live.")
                     }
                     disabled={verifyingPaymentFor === c.id}
-                    className="mt-2 flex items-center gap-1.5 text-xs font-medium text-amber-600 hover:underline disabled:opacity-60 dark:text-yellow-400"
+                    className="mt-2 flex items-center gap-1.5 text-xs font-medium text-brand-600 hover:underline disabled:opacity-60 dark:text-brand-400"
                   >
                     {verifyingPaymentFor === c.id ? (
                       <Loader2 className="h-3 w-3 animate-spin" />

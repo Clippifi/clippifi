@@ -1,15 +1,11 @@
 import type { NextConfig } from "next";
 
-const isMobileExport = process.env.BUILD_TARGET === "mobile";
-
 const nextConfig: NextConfig = {
-  ...(isMobileExport ? { output: "export" as const, trailingSlash: true } : {}),
-  images: {
-    unoptimized: isMobileExport,
-    remotePatterns: [
-      new URL("https://picsum.photos/**"),
-      new URL("https://fastly.picsum.photos/**"),
-    ],
+  // Embedded Postgres for local dev ships its own WASM; load it from node_modules as-is.
+  serverExternalPackages: ["@electric-sql/pglite"],
+  async redirects() {
+    // Sign-up and sign-in are one page now.
+    return [{ source: "/signup", destination: "/login", permanent: true }];
   },
 };
 

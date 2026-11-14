@@ -56,7 +56,7 @@ export default function ReportsPage() {
 
       {!counts ? (
         <div className="mt-6 flex items-center justify-center py-16">
-          <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-amber-500 dark:border-white/10 dark:border-t-yellow-400" />
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-brand-500 dark:border-white/10 dark:border-t-brand-400" />
         </div>
       ) : (
         <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">

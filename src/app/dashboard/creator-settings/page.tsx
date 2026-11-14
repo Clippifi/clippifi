@@ -21,14 +21,14 @@ import {
 } from "@/lib/socials";
 
 const inputClass =
-  "mt-1.5 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/30 dark:border-white/10 dark:bg-white/5 dark:text-white";
+  "mt-1.5 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-400/30 dark:border-white/10 dark:bg-white/5 dark:text-white";
 const labelClass = "text-sm font-medium text-slate-700 dark:text-slate-300";
 
-const CONNECTABLE_PLATFORMS: SocialPlatform[] = ["tiktok", "instagram", "reddit", "threads", "x"];
+const CONNECTABLE_PLATFORMS: SocialPlatform[] = ["tiktok", "instagram"];
 // No OAuth flow for these: a creator just enters their handle or profile link.
-const MANUAL_ONLY_PLATFORMS: SocialPlatform[] = ["bluesky"];
-// TikTok is the only one of the OAuth-capable platforms with real developer-portal
-// credentials configured right now (see [[clippifi-social-oauth]]) — the others fall
+const MANUAL_ONLY_PLATFORMS: SocialPlatform[] = ["youtube"];
+// TikTok is the only OAuth-capable platform with real developer-portal credentials
+// configured right now — Instagram falls
 // back to a manual handle because Connect would otherwise just fail with "not
 // configured yet." TikTok doesn't need that escape hatch, so it skips straight to
 // "Connect" only — a manual TikTok handle with no real connection isn't useful for
@@ -38,10 +38,7 @@ const OAUTH_ONLY_PLATFORMS: SocialPlatform[] = ["tiktok"];
 const socialMeta: Record<SocialPlatform, { name: string; monogram: string; badgeClass: string }> = {
   tiktok: { name: "TikTok", monogram: "Tt", badgeClass: "bg-black text-white" },
   instagram: { name: "Instagram", monogram: "IG", badgeClass: "bg-gradient-to-br from-fuchsia-500 via-pink-500 to-orange-400 text-white" },
-  reddit: { name: "Reddit", monogram: "r/", badgeClass: "bg-orange-600 text-white" },
-  threads: { name: "Threads", monogram: "@", badgeClass: "bg-black text-white dark:bg-white dark:text-black" },
-  x: { name: "X", monogram: "X", badgeClass: "bg-black text-white dark:bg-white dark:text-black" },
-  bluesky: { name: "Bluesky", monogram: "Bs", badgeClass: "bg-sky-500 text-white" },
+  youtube: { name: "YouTube", monogram: "YT", badgeClass: "bg-red-600 text-white" },
 };
 
 export default function CreatorSettingsPage() {
@@ -80,7 +77,7 @@ function CreatorSettingsContent() {
   }, [user]);
 
   // Every "Connect" button below sends the browser to a server-side OAuth route
-  // (e.g. /api/reddit/authorize) that redirects back here with the tokens in a URL
+  // (e.g. /api/tiktok/authorize) that redirects back here with the tokens in a URL
   // fragment, never a query string — fragments never reach the server/logs. This is
   // the only place the raw tokens are ever visible in transit. See
   // src/app/api/_lib/social-oauth.ts for the shared redirect-building helper every
@@ -162,17 +159,17 @@ function CreatorSettingsContent() {
 
   return (
     <div className="mx-auto max-w-2xl">
-      <h1 className="font-display text-2xl font-bold text-slate-900 dark:text-white">Creator Settings</h1>
+      <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Creator Settings</h1>
       <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
         Set up how you get paid and connect the accounts where you post clips.
       </p>
 
       {/* --- Payout details --- */}
       <section className="mt-6 rounded-2xl border-2 border-slate-900 bg-white p-6 dark:border-white dark:bg-[#111]">
-        <h2 className="font-display text-lg font-bold text-slate-900 dark:text-white">Payout details</h2>
+        <h2 className="text-lg font-bold text-slate-900 dark:text-white">Payout details</h2>
         <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
           Used by admins to pay out your approved clip earnings — see your{" "}
-          <a href="/dashboard/earnings" className="text-amber-600 underline dark:text-yellow-400">
+          <a href="/dashboard/earnings" className="text-brand-600 underline dark:text-brand-400">
             Earnings
           </a>{" "}
           page for what you&apos;re owed.
@@ -180,7 +177,7 @@ function CreatorSettingsContent() {
 
         {payoutLoading ? (
           <div className="mt-6 flex items-center justify-center py-6">
-            <div className="h-5 w-5 animate-spin rounded-full border-2 border-slate-200 border-t-amber-500 dark:border-white/10 dark:border-t-yellow-400" />
+            <div className="h-5 w-5 animate-spin rounded-full border-2 border-slate-200 border-t-brand-500 dark:border-white/10 dark:border-t-brand-400" />
           </div>
         ) : (
           <form onSubmit={handleSavePayout} className="mt-4 flex flex-col gap-4">
@@ -243,7 +240,7 @@ function CreatorSettingsContent() {
 
       {/* --- Social connections --- */}
       <section className="mt-6">
-        <h2 className="font-display text-lg font-bold text-slate-900 dark:text-white">Connected accounts</h2>
+        <h2 className="text-lg font-bold text-slate-900 dark:text-white">Connected accounts</h2>
         <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
           Add the accounts you post clips from. Enter your handle or profile link for any of them.
         </p>
@@ -332,7 +329,7 @@ function SocialCard({
             <p className="truncate text-xs text-slate-500 dark:text-slate-400">
               {connected ? `Connected${handle ? ` as ${handle}` : ""}` : "Not connected"}
             </p>
-            {message && <p className="mt-1 text-xs text-amber-600 dark:text-yellow-400">{message}</p>}
+            {message && <p className="mt-1 text-xs text-brand-600 dark:text-brand-400">{message}</p>}
           </div>
         </div>
 

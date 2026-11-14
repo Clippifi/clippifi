@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { adminDb } from "@/app/api/_lib/firebase-admin";
 
-// Web-only route — see scripts/build-mobile.mjs.
 // Powers the landing page's Popular Clips / Top Creators sections (both previously
 // hardcoded fake data — real approved clips now exist, so there's no reason to fake
 // it). Firestore rules require sign-in to read /clips, and a logged-out visitor is
@@ -64,6 +63,11 @@ async function loadLandingBody(): Promise<LandingBody> {
 }
 
 export async function GET() {
+  // Firebase is being retired; without its key there is nothing to show, so answer
+  // straight away and the landing sections stay hidden.
+  if (!process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
+    return NextResponse.json({ popularClips: [], topCreators: [] } satisfies LandingBody, { headers: cacheHeaders });
+  }
   if (cached && Date.now() - cached.at < CACHE_MS) {
     return NextResponse.json(cached.body, { headers: cacheHeaders });
   }

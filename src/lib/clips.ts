@@ -40,7 +40,7 @@ export type Clip = {
   // and so Earnings/Payouts never need to read other users' campaign documents, which
   // Firestore rules only allow for a campaign's own brand or an admin.
   payoutAtSubmission?: number;
-  // Auto-fetched from the YouTube Data API (src/lib/youtube.ts) or TikAPI
+  // Auto-fetched from the YouTube Data API (src/lib/youtube.ts) or the TikTok picker
   // (src/lib/tiktok.ts) when `link` is a recognized YouTube/TikTok URL. Absent for
   // other links, uploaded files, or when auto-fetch didn't find a match.
   viewCount?: number;

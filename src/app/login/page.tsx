@@ -1,27 +1,24 @@
-"use client";
+import type { Metadata } from "next";
+import Link from "next/link";
+import Logo from "@/components/Logo";
+import { LoginForm } from "@/components/login-form";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import AuthShell from "@/components/auth/AuthShell";
-import LoginBrandPanel from "@/components/auth/LoginBrandPanel";
-import LoginForm from "@/components/auth/LoginForm";
-import { useAuth } from "@/lib/auth/auth-context";
+export const metadata: Metadata = {
+  title: "Sign in — Clippifi",
+};
 
+// Static so it opens instantly; LoginForm sends signed-in visitors to the app.
 export default function LoginPage() {
-  const router = useRouter();
-  const { user, getDashboardRoute } = useAuth();
-
-  useEffect(() => {
-    if (user) {
-      router.replace(getDashboardRoute(user.role));
-    }
-  }, [router, user, getDashboardRoute]);
-
-  if (user) return null;
-
   return (
-    <AuthShell brand={<LoginBrandPanel />}>
-      <LoginForm />
-    </AuthShell>
+    <main className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
+      <div className="flex w-full max-w-sm flex-col gap-6">
+        <Link href="/" className="flex items-center gap-2 self-center font-semibold">
+          <Logo className="h-7 w-7" />
+          Clippifi
+        </Link>
+        {/* Google shows only once its keys are configured. */}
+        <LoginForm googleEnabled={Boolean(process.env.GOOGLE_CLIENT_ID?.trim())} />
+      </div>
+    </main>
   );
 }

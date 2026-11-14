@@ -1,11 +1,11 @@
 "use client";
 
+import { SUPPORT_EMAIL } from "@/lib/site";
 import { useState } from "react";
 import Link from "next/link";
 import { ChevronDown, Menu, Search, X } from "lucide-react";
-import { useAuth } from "@/lib/auth/auth-context";
+import { authClient } from "@/lib/auth-client";
 import Logo from "@/components/Logo";
-import ThemeToggle from "@/components/ThemeToggle";
 import { btnPrimary } from "@/lib/button-styles";
 
 type NavLink = { label: string; href: string };
@@ -15,24 +15,26 @@ const exploreLinks: NavLink[] = [
   { label: "Hire Clippers", href: "/dashboard/hire" },
 ];
 const resourceLinks: NavLink[] = [
-  { label: "Creator Dashboard", href: "/dashboard" },
-  { label: "Help Center", href: "mailto:support@clippii.com" },
+  { label: "Creator Dashboard", href: "/c" },
+  { label: "Help Center", href: `mailto:${SUPPORT_EMAIL}` },
 ];
 
 const navLink =
-  "relative text-sm text-slate-600 hover:text-amber-600 transition-colors after:absolute after:inset-x-0 after:-bottom-1 after:h-0.5 after:origin-left after:scale-x-0 after:bg-amber-500 after:transition-transform after:duration-200 hover:after:scale-x-100 dark:text-slate-300 dark:hover:text-yellow-400 dark:after:bg-yellow-400";
+  "relative text-sm text-slate-600 hover:text-brand-600 transition-colors after:absolute after:inset-x-0 after:-bottom-1 after:h-0.5 after:origin-left after:scale-x-0 after:bg-brand-500 after:transition-transform after:duration-200 hover:after:scale-x-100 dark:text-slate-300 dark:hover:text-brand-400 dark:after:bg-brand-400";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const { user } = useAuth();
-  const dashboardHref = user?.role === "admin" ? "/admin" : "/dashboard";
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
+  const dashboardHref = "/c";
+  const initials = (user?.name || user?.email || "?").slice(0, 2).toUpperCase();
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:border-white/10 dark:bg-[#0a0a0a]/95 dark:supports-[backdrop-filter]:bg-[#0a0a0a]/80">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="group flex items-center gap-2 shrink-0">
           <Logo className="h-8 w-8 transition-transform duration-200 group-hover:rotate-6" />
-          <span className="font-display text-lg font-bold tracking-tight text-slate-900 dark:text-white">Clippifi</span>
+          <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">Clippifi</span>
         </Link>
 
         <nav className="hidden items-center gap-7 lg:flex">
@@ -48,20 +50,19 @@ export default function Navbar() {
 
         <div className="hidden items-center gap-2 lg:flex">
           <Link
-            href={user ? "/dashboard/browse" : "/login"}
+            href={user ? "/c" : "/login"}
             aria-label="Search clips"
-            className="flex h-9 w-9 items-center justify-center text-slate-500 transition-transform duration-200 hover:scale-110 hover:text-amber-600 dark:text-slate-300 dark:hover:text-yellow-400"
+            className="flex h-9 w-9 items-center justify-center text-slate-500 transition-transform duration-200 hover:scale-110 hover:text-brand-600 dark:text-slate-300 dark:hover:text-brand-400"
           >
             <Search className="h-[18px] w-[18px]" />
           </Link>
-          <ThemeToggle />
           {user ? (
             <Link
               href={dashboardHref}
               className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm ${btnPrimary}`}
             >
               <span className="flex h-5 w-5 items-center justify-center rounded-full bg-black/10 text-[10px] font-bold">
-                {user.initials}
+                {initials}
               </span>
               Dashboard
             </Link>
@@ -71,7 +72,7 @@ export default function Navbar() {
                 Log in
               </Link>
               <Link
-                href="/signup"
+                href="/login"
                 className={`rounded-lg px-4 py-2 text-sm ${btnPrimary}`}
               >
                 Sign up
@@ -81,7 +82,6 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-1 lg:hidden">
-          <ThemeToggle />
           <button
             aria-label="Toggle menu"
             aria-expanded={open}
@@ -132,7 +132,7 @@ export default function Navbar() {
                     Log in
                   </Link>
                   <Link
-                    href="/signup"
+                    href="/login"
                     className={`flex-1 rounded-lg px-4 py-2 text-center text-sm ${btnPrimary}`}
                   >
                     Sign up
@@ -150,7 +150,7 @@ export default function Navbar() {
 function NavDropdown({ label, items }: { label: string; items: NavLink[] }) {
   return (
     <div className="group relative">
-      <button className="flex items-center gap-1 text-sm text-slate-600 hover:text-amber-600 dark:text-slate-300 dark:hover:text-yellow-400">
+      <button className="flex items-center gap-1 text-sm text-slate-600 hover:text-brand-600 dark:text-slate-300 dark:hover:text-brand-400">
         {label}
         <ChevronDown className="h-3.5 w-3.5 transition-transform group-hover:rotate-180" />
       </button>

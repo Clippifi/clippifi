@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
 import { socialErrorRedirect } from "@/app/api/_lib/social-oauth";
 
-// Web-only route — see scripts/build-mobile.mjs.
 const STATE_COOKIE = "instagram_oauth_state";
 // Basic profile only — no posting/messaging permissions requested.
 const SCOPE = "instagram_business_basic";
@@ -12,8 +11,8 @@ export async function GET(request: NextRequest) {
   const redirectUri = process.env.INSTAGRAM_REDIRECT_URI;
 
   if (!clientId || !redirectUri) {
-    // See src/app/api/reddit/authorize/route.ts for why this redirects instead of
-    // returning JSON — reached via a full-page navigation, not a fetch().
+    // Redirects instead of returning JSON: this route is reached via a full-page
+    // navigation, not a fetch().
     return socialErrorRedirect(request.nextUrl.origin, "instagram", "Instagram isn't configured yet. Ask an admin to finish setting it up.");
   }
 

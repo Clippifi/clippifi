@@ -47,7 +47,7 @@ export default function ModerationPage() {
 
       {loading ? (
         <div className="mt-6 flex items-center justify-center py-16">
-          <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-amber-500 dark:border-white/10 dark:border-t-yellow-400" />
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-200 border-t-brand-500 dark:border-white/10 dark:border-t-brand-400" />
         </div>
       ) : queue.length === 0 ? (
         <div className="mt-6 flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-white px-6 py-16 text-center dark:border-white/10 dark:bg-[#111]">
@@ -81,7 +81,7 @@ export default function ModerationPage() {
                   by {clip.creatorName} · {clip.category}
                 </p>
                 {clip.campaignTitle && (
-                  <p className="mt-0.5 text-[11px] text-amber-600 dark:text-yellow-400">
+                  <p className="mt-0.5 text-[11px] text-brand-600 dark:text-brand-400">
                     Submitted for campaign: {clip.campaignTitle}
                   </p>
                 )}
@@ -104,7 +104,7 @@ export default function ModerationPage() {
                     href={clip.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-1 block truncate text-xs text-amber-600 hover:underline dark:text-yellow-400"
+                    className="mt-1 block truncate text-xs text-brand-600 hover:underline dark:text-brand-400"
                   >
                     {clip.link}
                   </a>

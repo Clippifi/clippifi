@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// Web-only route — see scripts/build-mobile.mjs.
 // Proxies TikTok's Display API video.list for a creator's own connected account (see
 // src/lib/tiktok.ts fetchMyTikTokVideos, used by TikTokVideoPicker). Takes the
 // creator's own access token from the client (already refreshed via

@@ -45,7 +45,7 @@ export default function NotificationBell() {
       >
         <Bell className="h-5 w-5" />
         {unread.length > 0 && (
-          <span className="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-amber-500 px-1 text-[10px] font-bold text-black">
+          <span className="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-500 px-1 text-[10px] font-bold text-black">
             {unread.length > 9 ? "9+" : unread.length}
           </span>
         )}
@@ -60,7 +60,7 @@ export default function NotificationBell() {
               {unread.length > 0 && (
                 <button
                   onClick={() => markAllNotificationsRead(unread.map((n) => n.id)).catch(console.error)}
-                  className="flex items-center gap-1 text-xs font-medium text-amber-600 hover:underline dark:text-yellow-400"
+                  className="flex items-center gap-1 text-xs font-medium text-brand-600 hover:underline dark:text-brand-400"
                 >
                   <CheckCheck className="h-3.5 w-3.5" />
                   Mark all read
@@ -80,7 +80,7 @@ export default function NotificationBell() {
                     if (!n.read) markNotificationRead(n.id).catch(console.error);
                   }}
                   className={`block rounded-lg px-3 py-2.5 text-sm transition-colors hover:bg-slate-50 dark:hover:bg-white/5 ${
-                    n.read ? "" : "bg-yellow-50 dark:bg-yellow-400/5"
+                    n.read ? "" : "bg-brand-50 dark:bg-brand-400/5"
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2">

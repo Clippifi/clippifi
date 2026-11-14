@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-import Script from "next/script";
-import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
-import { AuthProvider } from "@/lib/auth/auth-context";
-import { ThemeProvider } from "@/lib/theme/theme-context";
+import { Geist, Geist_Mono } from "next/font/google";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
-
-const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem('clippifi-theme');if(t==='dark'){document.documentElement.classList.add('dark');}}catch(e){}})();`;
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,19 +15,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Bold, geometric display face for headlines — the site's actual brand mark (see
-// public/android-chrome-*.png) is a graphic yellow-on-black monogram, not a soft
-// gradient-SaaS logo, so headline type needed more character than Geist alone gives it.
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-  weight: ["500", "700"],
-});
-
 export const metadata: Metadata = {
-  title: "Clippifi — Marketplace for Streamers & Clip Editors",
+  title: "Clippifi — Real views. Real pay.",
   description:
-    "Streamers, Brand and Creators launches campaign, clippers post. Connecting creators to trusted clip editors and high impact content partners.",
+    "Brands launch clipping, sound, logo and UGC campaigns. Creators post on TikTok, Instagram and YouTube and get paid for every verified view.",
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -49,16 +38,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       data-scroll-behavior="smooth"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <head>
-        <Script id="theme-init" strategy="beforeInteractive">
-          {THEME_INIT_SCRIPT}
-        </Script>
-      </head>
       <body className="min-h-full flex flex-col bg-white text-slate-900 dark:bg-[#0a0a0a] dark:text-white">
         <ThemeProvider>
-          <AuthProvider>{children}</AuthProvider>
+          <TooltipProvider>
+            {children}
+          </TooltipProvider>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

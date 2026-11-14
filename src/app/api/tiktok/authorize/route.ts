@@ -3,7 +3,6 @@ import { randomUUID } from "node:crypto";
 import { socialErrorRedirect } from "@/app/api/_lib/social-oauth";
 import { tiktokLoginErrorRedirect } from "@/app/api/_lib/tiktok-login";
 
-// Web-only route — see scripts/build-mobile.mjs.
 const STATE_COOKIE = "tiktok_oauth_state";
 // Set only when ?intent=login — read back by the callback to decide which of the two
 // very different things this authorize call is for: linking an existing Clippifi
@@ -26,8 +25,8 @@ export async function GET(request: NextRequest) {
   const role = requestedRole === "brand" ? "brand" : "creator";
 
   if (!clientKey || !redirectUri) {
-    // See src/app/api/reddit/authorize/route.ts for why this redirects instead of
-    // returning JSON — reached via a full-page navigation, not a fetch().
+    // Redirects instead of returning JSON: this route is reached via a full-page
+    // navigation, not a fetch().
     return intent === "login"
       ? tiktokLoginErrorRedirect(request.nextUrl.origin, "TikTok isn't configured yet. Ask an admin to finish setting it up.")
       : socialErrorRedirect(request.nextUrl.origin, "tiktok", "TikTok isn't configured yet. Ask an admin to finish setting it up.");

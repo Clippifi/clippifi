@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server";
 
-// Shared by every social platform's OAuth callback route (Reddit, X, Instagram,
-// Threads — Bluesky's AT Protocol OAuth is structurally different and doesn't use
-// this). Underscore-prefixed folder so Next's router ignores it as a route (see
-// scripts/build-mobile.mjs for the sibling pattern this generalizes).
+// Shared by every social platform's OAuth routes (TikTok, Instagram). Underscore-prefixed
+// folder so Next's router ignores it as a route.
 //
 // Token hand-off happens via a URL fragment, never a query string — fragments never
 // reach the server/logs. The one page that reads it (src/app/dashboard/creator-settings

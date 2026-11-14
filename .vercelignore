@@ -1,0 +1,12 @@
+# Never upload: research captures contain session cookies
+playground
+.gstack
+.env*
+serviceAccountKey*.json
+firebase-adminsdk*.json
+# Not needed to build the site
+docs
+clippifi-brand-kit
+TODOS.md
+.next
+node_modules
