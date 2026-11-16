@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Clippifi — Real views. Real pay.",
   description:
-    "Brands fund clipping, sound, logo and UGC campaigns and pay a set rate per 1,000 views. Creators post, submit the link and get paid for every view we verify.",
+    "Brands fund clipping, sound, logo and UGC campaigns and pay only for real views. Creators post, submit the link and get paid for every view we verify.",
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },

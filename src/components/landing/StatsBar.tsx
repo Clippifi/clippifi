@@ -3,7 +3,7 @@ import { BadgeDollarSign, CalendarClock, Landmark, Percent, Timer } from "lucide
 // How Clippifi works, in numbers. Every figure here matches the Terms of Service;
 // change them together. (No usage stats until we have real ones.)
 const facts = [
-  { icon: BadgeDollarSign, value: "Per 1,000 views", label: "Paid on verified views only" },
+  { icon: BadgeDollarSign, value: "Real views", label: "Only verified views are paid" },
   { icon: Timer, value: "30 minutes", label: "To submit after you post" },
   { icon: CalendarClock, value: "7 + 3 days", label: "Earning round, then a short hold" },
   { icon: Landmark, value: "$10", label: "Minimum withdrawal to your bank" },

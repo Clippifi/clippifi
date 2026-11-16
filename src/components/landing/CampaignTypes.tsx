@@ -30,7 +30,7 @@ export default function CampaignTypes() {
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold text-balance text-slate-900 sm:text-4xl dark:text-white">Four kinds of campaigns</h2>
           <p className="mt-3 text-slate-500 dark:text-slate-400">
-            Every campaign pays the same way: a set rate for every 1,000 verified views.
+            Every campaign pays creators for the views their clips get.
           </p>
         </div>
 

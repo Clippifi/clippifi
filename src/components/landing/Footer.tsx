@@ -47,7 +47,7 @@ export default function Footer() {
               <span className="text-lg font-semibold text-slate-900 dark:text-white">Clippifi</span>
             </Link>
             <p className="mt-4 max-w-xs text-sm text-slate-500 dark:text-slate-500">
-              Real views. Real pay. Brands pay creators for every 1,000 verified views.
+              Brands pay creators for real, verified views.
             </p>
           </div>
 

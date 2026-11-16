@@ -7,7 +7,7 @@ const creatorSteps: Step[] = [
   {
     icon: Clapperboard,
     title: "Pick a campaign",
-    text: "Choose a brand and see what it pays per 1,000 views.",
+    text: "Choose a brand and see what it pays.",
   },
   {
     icon: Upload,
@@ -30,7 +30,7 @@ const brandSteps: Step[] = [
   {
     icon: Megaphone,
     title: "Write a brief",
-    text: "Set your rate per 1,000 views and a budget from $100.",
+    text: "Set your rate and a budget from $100.",
   },
   {
     icon: ShieldCheck,

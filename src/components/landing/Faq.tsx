@@ -26,7 +26,7 @@ const faqs: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: "What does a campaign cost a brand?",
-    a: "You set the budget (from $100) and the rate per 1,000 views. Our fee is 10%, charged only on the views you receive. When the campaign ends, unspent budget and its fee come back to you.",
+    a: "You set the budget (from $100) and the rate you pay for views. Our fee is 10%, charged only on the views you receive. When the campaign ends, unspent budget and its fee come back to you.",
   },
   {
     q: "Which platforms are supported?",
