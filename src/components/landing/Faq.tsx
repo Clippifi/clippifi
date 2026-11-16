@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown } from "@/components/icons";
 import { SUPPORT_EMAIL } from "@/lib/site";
 
 // Answers must match the Terms of Service and the Refund & Payout Policy.

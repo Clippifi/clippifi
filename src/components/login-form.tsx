@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
+import { Spinner } from "@/components/icons";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -99,7 +99,7 @@ export function LoginForm({ googleEnabled }: { googleEnabled: boolean }) {
             </Field>
             <Field>
               <Button onClick={() => verifyCode(code)} disabled={code.length !== 6 || busy === "verify"}>
-                {busy === "verify" && <Loader2 className="animate-spin" />}
+                {busy === "verify" && <Spinner className="animate-spin" />}
                 Continue
               </Button>
               <FieldDescription className="text-center">
@@ -133,7 +133,7 @@ export function LoginForm({ googleEnabled }: { googleEnabled: boolean }) {
                 <>
                   <Field>
                     <Button variant="outline" type="button" onClick={continueWithGoogle} disabled={busy !== null}>
-                      {busy === "google" ? <Loader2 className="animate-spin" /> : <GoogleIcon />}
+                      {busy === "google" ? <Spinner className="animate-spin" /> : <GoogleIcon />}
                       Continue with Google
                     </Button>
                   </Field>
@@ -154,7 +154,7 @@ export function LoginForm({ googleEnabled }: { googleEnabled: boolean }) {
               </Field>
               <Field>
                 <Button type="submit" disabled={busy !== null}>
-                  {busy === "send" && <Loader2 className="animate-spin" />}
+                  {busy === "send" && <Spinner className="animate-spin" />}
                   Continue with email
                 </Button>
                 <FieldDescription className="text-center">We&apos;ll email you a code. No password needed.</FieldDescription>

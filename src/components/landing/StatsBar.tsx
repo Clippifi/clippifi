@@ -1,12 +1,12 @@
-import { BadgeDollarSign, CalendarClock, Landmark, Percent, Timer } from "lucide-react";
+import { Bank, Calendar, DollarCircle, Percent, Timer } from "@/components/icons";
 
 // How Clippifi works, in numbers. Every figure here matches the Terms of Service;
 // change them together. (No usage stats until we have real ones.)
 const facts = [
-  { icon: BadgeDollarSign, value: "Real views", label: "Only verified views are paid" },
+  { icon: DollarCircle, value: "Real views", label: "Only verified views are paid" },
   { icon: Timer, value: "30 minutes", label: "To submit after you post" },
-  { icon: CalendarClock, value: "7 + 3 days", label: "Earning round, then a short hold" },
-  { icon: Landmark, value: "$10", label: "Minimum withdrawal to your bank" },
+  { icon: Calendar, value: "7 + 3 days", label: "Earning round, then a short hold" },
+  { icon: Bank, value: "$10", label: "Minimum withdrawal to your bank" },
   { icon: Percent, value: "10%", label: "Brand fee, only on delivered views" },
 ];
 

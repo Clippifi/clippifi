@@ -1,7 +1,6 @@
-import { Banknote, Clapperboard, Eye, Link2, Megaphone, ShieldCheck, Upload, Wallet } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { Banknote, Clapperboard, Eye, type IconComponent, Link as LinkIcon, Megaphone, ShieldCheck, Upload, Wallet } from "@/components/icons";
 
-type Step = { icon: LucideIcon; title: string; text: string };
+type Step = { icon: IconComponent; title: string; text: string };
 
 const creatorSteps: Step[] = [
   {
@@ -38,7 +37,7 @@ const brandSteps: Step[] = [
     text: "We check every clip. You approve the ones you like.",
   },
   {
-    icon: Link2,
+    icon: LinkIcon,
     title: "Track the results",
     text: "See views, spend and your top clips in one report.",
   },

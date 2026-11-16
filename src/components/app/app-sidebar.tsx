@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ChevronsUpDown, Home, Link2, LogOut, Settings } from "lucide-react";
+import { ChevronsUpDown, Home, Link as LinkIcon, LogOut, Settings } from "@/components/icons";
 import Logo from "@/components/Logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -29,7 +29,7 @@ import { authClient } from "@/lib/auth-client";
 
 const nav = [
   { title: "Home", href: "/c", icon: Home },
-  { title: "Connections", href: "/c/connections", icon: Link2 },
+  { title: "Connections", href: "/c/connections", icon: LinkIcon },
   { title: "Settings", href: "/c/settings", icon: Settings },
 ];
 

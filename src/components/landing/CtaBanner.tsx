@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Eye } from "lucide-react";
+import { Eye } from "@/components/icons";
 import { btnPrimary, btnSecondary } from "@/lib/button-styles";
 
 export default function CtaBanner() {
@@ -20,10 +20,10 @@ export default function CtaBanner() {
           </div>
         </div>
         <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-          <Link href="/login" className={`rounded-lg px-6 py-3 text-center text-sm ${btnPrimary}`}>
+          <Link href="/login" className={`rounded-full px-6 py-3 text-center text-sm ${btnPrimary}`}>
             Start earning
           </Link>
-          <Link href="/login" className={`rounded-lg px-6 py-3 text-center text-sm ${btnSecondary}`}>
+          <Link href="/login" className={`rounded-full px-6 py-3 text-center text-sm ${btnSecondary}`}>
             Launch a campaign
           </Link>
         </div>

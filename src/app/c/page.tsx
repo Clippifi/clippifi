@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Megaphone } from "lucide-react";
+import { ArrowRight, Megaphone } from "@/components/icons";
 import { PageHeader } from "@/components/app/page-header";
 import { TikTokIcon } from "@/components/app/platform-icons";
 import { Button } from "@/components/ui/button";

@@ -1,4 +1,4 @@
-import { Music, Scissors, Stamp, Video } from "lucide-react";
+import { Music, Scissors, Stamp, Video } from "@/components/icons";
 
 const types = [
   {

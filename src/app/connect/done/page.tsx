@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Loader2 } from "lucide-react";
+import { Spinner } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { LINK_MESSAGE } from "@/lib/link-account";
 
@@ -41,7 +41,7 @@ export default function ConnectDonePage() {
         </>
       ) : (
         <p className="flex items-center gap-2">
-          <Loader2 className="size-4 animate-spin" />
+          <Spinner className="size-4 animate-spin" />
           Finishing up…
         </p>
       )}

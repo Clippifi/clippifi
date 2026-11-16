@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
+import { Spinner } from "@/components/icons";
 import { toast } from "sonner";
 import { TikTokIcon } from "@/components/app/platform-icons";
 import { Button } from "@/components/ui/button";
@@ -97,7 +97,7 @@ export function ConnectTikTokButton({ label = "Connect TikTok" }: { label?: stri
 
   return (
     <Button onClick={connect} disabled={busy}>
-      {busy ? <Loader2 className="animate-spin" /> : <TikTokIcon />}
+      {busy ? <Spinner className="animate-spin" /> : <TikTokIcon />}
       {label}
     </Button>
   );
@@ -121,7 +121,7 @@ export function DisconnectTikTokButton({ accountId }: { accountId: string }) {
 
   return (
     <Button variant="outline" onClick={disconnect} disabled={busy}>
-      {busy && <Loader2 className="animate-spin" />}
+      {busy && <Spinner className="animate-spin" />}
       Disconnect
     </Button>
   );

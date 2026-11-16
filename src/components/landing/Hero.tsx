@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Eye, Play } from "lucide-react";
+import { Eye, Play } from "@/components/icons";
 import { btnPrimary, btnSecondary } from "@/lib/button-styles";
 
 const HERO_TONES: Record<string, string> = {
@@ -42,13 +42,13 @@ export default function Hero() {
             className="animate-fade-in-up mt-8 flex flex-col gap-3 sm:flex-row"
             style={{ animationDelay: "240ms" }}
           >
-            <Link href="/login" className={`group rounded-lg px-6 py-3 text-center text-sm ${btnPrimary}`}>
+            <Link href="/login" className={`group rounded-full px-6 py-3 text-center text-sm ${btnPrimary}`}>
               Start earning{" "}
               <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">
                 →
               </span>
             </Link>
-            <Link href="/login" className={`rounded-lg px-6 py-3 text-center text-sm ${btnSecondary}`}>
+            <Link href="/login" className={`rounded-full px-6 py-3 text-center text-sm ${btnSecondary}`}>
               Launch a campaign
             </Link>
           </div>
@@ -198,7 +198,7 @@ function ClipCard({
 
 function Highlight({ children }: { children: React.ReactNode }) {
   return (
-    <span className="relative inline-block -rotate-1 rounded-md border-2 border-black bg-brand-400 px-2 py-0.5 text-slate-900 shadow-[3px_3px_0_0_#000] dark:border-brand-200 dark:text-slate-900 dark:shadow-[3px_3px_0_0_#fff5b8]">
+    <span className="relative inline-block rounded-xl bg-brand-400 px-2.5 pb-1 text-[#252525]">
       {children}
     </span>
   );

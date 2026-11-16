@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { CircleAlert, Eye, Heart } from "lucide-react";
+import { AlertCircle, Eye, Heart } from "@/components/icons";
 import { PageHeader } from "@/components/app/page-header";
 import { InstagramIcon, TikTokIcon, YouTubeIcon } from "@/components/app/platform-icons";
 import { ConnectTikTokButton, DisconnectTikTokButton } from "@/components/app/tiktok-connect-buttons";
@@ -31,7 +31,7 @@ export default async function ConnectionsPage({ searchParams }: PageProps<"/c/co
 
       {errorMessage && (
         <div className="flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive">
-          <CircleAlert className="size-4 shrink-0" />
+          <AlertCircle className="size-4 shrink-0" />
           {errorMessage}
         </div>
       )}

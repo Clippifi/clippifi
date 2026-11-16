@@ -51,3 +51,6 @@ next-env.d.ts
 /.data
 
 !.env.example
+
+# Competitor reference screenshots (may contain account data; repo is public)
+/reference_screens

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Close, Menu } from "@/components/icons";
 import { authClient } from "@/lib/auth-client";
 import Logo from "@/components/Logo";
 import { btnPrimary } from "@/lib/button-styles";
@@ -46,7 +46,7 @@ export default function Navbar() {
           {user ? (
             <Link
               href={dashboardHref}
-              className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm ${btnPrimary}`}
+              className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm ${btnPrimary}`}
             >
               <span className="flex h-5 w-5 items-center justify-center rounded-full bg-black/10 text-[10px] font-bold">
                 {initials}
@@ -60,7 +60,7 @@ export default function Navbar() {
               </Link>
               <Link
                 href="/login"
-                className={`rounded-lg px-4 py-2 text-sm ${btnPrimary}`}
+                className={`rounded-full px-4 py-2 text-sm ${btnPrimary}`}
               >
                 Sign up
               </Link>
@@ -79,7 +79,7 @@ export default function Navbar() {
               <Menu
                 className={`absolute inset-0 h-6 w-6 transition-all duration-200 ${open ? "rotate-90 opacity-0" : "rotate-0 opacity-100"}`}
               />
-              <X
+              <Close
                 className={`absolute inset-0 h-6 w-6 transition-all duration-200 ${open ? "rotate-0 opacity-100" : "-rotate-90 opacity-0"}`}
               />
             </span>
@@ -111,7 +111,7 @@ export default function Navbar() {
               {user ? (
                 <Link
                   href={dashboardHref}
-                  className={`flex-1 rounded-lg px-4 py-2 text-center text-sm ${btnPrimary}`}
+                  className={`flex-1 rounded-full px-4 py-2 text-center text-sm ${btnPrimary}`}
                 >
                   Go to Dashboard
                 </Link>
@@ -122,7 +122,7 @@ export default function Navbar() {
                   </Link>
                   <Link
                     href="/login"
-                    className={`flex-1 rounded-lg px-4 py-2 text-center text-sm ${btnPrimary}`}
+                    className={`flex-1 rounded-full px-4 py-2 text-center text-sm ${btnPrimary}`}
                   >
                     Sign up
                   </Link>
