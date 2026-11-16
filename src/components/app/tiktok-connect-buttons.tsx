@@ -11,9 +11,9 @@ import { LINK_MESSAGE, LINK_RETURN_PATH, linkErrorMessage } from "@/lib/link-acc
 
 const POPUP_NAME = "clippifi-connect";
 
-// false: TikTok opens in this tab and returns to Connections (for screen recordings
-// that capture one window). Set back to true to use the popup.
-const USE_POPUP = false;
+// true: TikTok opens in a popup that closes itself when done. false: TikTok opens in
+// this tab and returns to Connections (useful for screen recordings of one window).
+const USE_POPUP = true;
 
 function openCenteredPopup() {
   const width = 500;
