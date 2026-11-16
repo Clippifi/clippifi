@@ -4,23 +4,27 @@ import Logo from "@/components/Logo";
 
 const columns = [
   {
-    title: "Marketplace",
+    title: "Creators",
     links: [
-      { label: "Find Talent", href: "/dashboard/browse" },
-      { label: "Hire Clippers", href: "/dashboard/hire" },
-    ],
-  },
-  {
-    title: "For Creators",
-    links: [
-      { label: "Become a Clipper", href: "/login" },
-      { label: "Creator Dashboard", href: "/dashboard" },
+      { label: "How creators earn", href: "/#creators" },
+      { label: "Start earning", href: "/login" },
       { label: "Payouts", href: "/refund-policy" },
     ],
   },
   {
-    title: "Company",
-    links: [{ label: "Contact", href: `mailto:${SUPPORT_EMAIL}` }],
+    title: "Brands",
+    links: [
+      { label: "How campaigns work", href: "/#brands" },
+      { label: "Campaign types", href: "/#campaigns" },
+      { label: "Launch a campaign", href: "/login" },
+    ],
+  },
+  {
+    title: "Help",
+    links: [
+      { label: "Questions", href: "/#faq" },
+      { label: "Contact", href: `mailto:${SUPPORT_EMAIL}` },
+    ],
   },
   {
     title: "Legal",
@@ -43,7 +47,7 @@ export default function Footer() {
               <span className="text-lg font-semibold text-slate-900 dark:text-white">Clippifi</span>
             </Link>
             <p className="mt-4 max-w-xs text-sm text-slate-500 dark:text-slate-500">
-              The marketplace for streamers and clip editors.
+              Real views. Real pay. Brands pay creators for every 1,000 verified views.
             </p>
           </div>
 
@@ -76,7 +80,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 flex items-center justify-center border-t border-slate-200 py-6 dark:border-white/10">
-          <p className="text-xs text-slate-500">© 2026 Clippifi. All rights reserved.</p>
+          <p className="text-xs text-slate-500">© 2026 Clippifi. Not affiliated with TikTok, Instagram or YouTube.</p>
         </div>
       </div>
     </footer>

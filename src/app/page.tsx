@@ -2,10 +2,8 @@ import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
 import StatsBar from "@/components/landing/StatsBar";
 import HowItWorks from "@/components/landing/HowItWorks";
-import ForEveryone from "@/components/landing/ForEveryone";
-import PopularClips from "@/components/landing/PopularClips";
-import TrendingTikTok from "@/components/landing/TrendingTikTok";
-import TopCreators from "@/components/landing/TopCreators";
+import CampaignTypes from "@/components/landing/CampaignTypes";
+import Faq from "@/components/landing/Faq";
 import CtaBanner from "@/components/landing/CtaBanner";
 import Footer from "@/components/landing/Footer";
 import Reveal from "@/components/landing/Reveal";
@@ -23,16 +21,10 @@ export default function Home() {
           <HowItWorks />
         </Reveal>
         <Reveal>
-          <ForEveryone />
+          <CampaignTypes />
         </Reveal>
         <Reveal>
-          <PopularClips />
-        </Reveal>
-        <Reveal>
-          <TrendingTikTok />
-        </Reveal>
-        <Reveal>
-          <TopCreators />
+          <Faq />
         </Reveal>
         <Reveal>
           <CtaBanner />

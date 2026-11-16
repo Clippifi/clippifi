@@ -1,58 +1,96 @@
-import { Download, Rocket, Search, ShoppingCart } from "lucide-react";
+import { Banknote, Clapperboard, Eye, Link2, Megaphone, ShieldCheck, Upload, Wallet } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
-const steps = [
+type Step = { icon: LucideIcon; title: string; text: string };
+
+const creatorSteps: Step[] = [
   {
-    icon: Search,
-    title: "1. Discover",
-    text: "Browse streamer profiles and find the right match for your content needs.",
+    icon: Clapperboard,
+    title: "Pick a campaign",
+    text: "Choose a brand and see what it pays per 1,000 views.",
   },
   {
-    icon: ShoppingCart,
-    title: "2. Connect & Hire",
-    text: "Post a job and connect with top clip editors and streamers for custom work.",
+    icon: Upload,
+    title: "Post and submit",
+    text: "Post your clip, then submit the link within 30 minutes.",
   },
   {
-    icon: Download,
-    title: "3. Receive",
-    text: "Review the work, approve the edits, and get your content delivered.",
+    icon: Eye,
+    title: "We count the views",
+    text: "Your clip earns on its views for 30 days.",
   },
   {
-    icon: Rocket,
-    title: "4. Publish & Grow",
-    text: "Create amazing content and grow your audience.",
+    icon: Wallet,
+    title: "Withdraw to your bank",
+    text: "Cash out from $10, straight to your bank.",
+  },
+];
+
+const brandSteps: Step[] = [
+  {
+    icon: Megaphone,
+    title: "Write a brief",
+    text: "Set your rate per 1,000 views and a budget from $100.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Approve the clips",
+    text: "We check every clip. You approve the ones you like.",
+  },
+  {
+    icon: Link2,
+    title: "Track the results",
+    text: "See views, spend and your top clips in one report.",
+  },
+  {
+    icon: Banknote,
+    title: "Pay for views only",
+    text: "Unspent budget comes back to you.",
   },
 ];
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="bg-white py-20 dark:bg-[#0a0a0a]">
+    <section id="how-it-works" className="scroll-mt-20 bg-white py-20 dark:bg-[#0a0a0a]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl dark:text-white">
-            How it <span className="text-brand-600 dark:text-brand-400">works</span>
-          </h2>
+          <h2 className="text-3xl font-bold text-balance text-slate-900 sm:text-4xl dark:text-white">How Clippifi works</h2>
           <p className="mt-3 text-slate-500 dark:text-slate-400">
-            Connect with the right streamers and clip editors in just a few simple steps.
+            Brands pay for views, not promises. Creators get paid for the views their clips actually get.
           </p>
         </div>
 
-        <div className="mt-14 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-          {steps.map(({ icon: Icon, title, text }, i) => (
-            <div key={title} className="relative">
-              {i < steps.length - 1 && (
-                <span className="pointer-events-none absolute left-full top-7 hidden w-6 -translate-x-3 border-t-2 border-dashed border-brand-200 lg:block dark:border-brand-400/20" />
-              )}
-              <div className="group rounded-2xl border border-slate-100 bg-white p-6 text-center shadow-sm shadow-slate-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-white/10 dark:bg-[#111] dark:shadow-none">
-                <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-400 to-brand-500 shadow-lg shadow-brand-200 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6 dark:shadow-none">
-                  <Icon className="h-6 w-6 text-black" />
-                </span>
-                <h3 className="mt-4 font-semibold text-slate-900 dark:text-white">{title}</h3>
-                <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">{text}</p>
-              </div>
-            </div>
-          ))}
+        <div className="mt-14 grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-8">
+          <Track id="creators" label="For creators" steps={creatorSteps} />
+          <Track id="brands" label="For brands" steps={brandSteps} />
         </div>
       </div>
     </section>
+  );
+}
+
+function Track({ id, label, steps }: { id: string; label: string; steps: Step[] }) {
+  return (
+    <div id={id} className="scroll-mt-24 rounded-2xl border border-slate-100 bg-slate-50 p-6 sm:p-8 dark:border-white/10 dark:bg-[#111]">
+      <h3 className="inline-flex rounded-full bg-brand-400 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-slate-900">
+        {label}
+      </h3>
+      <ol className="mt-6 flex flex-col gap-6">
+        {steps.map(({ icon: Icon, title, text }, i) => (
+          <li key={title} className="flex gap-4">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-slate-900 shadow-sm dark:bg-white/10 dark:text-white">
+              <Icon className="h-5 w-5" />
+            </span>
+            <div className="min-w-0">
+              <p className="font-semibold text-slate-900 dark:text-white">
+                <span className="mr-1.5 text-slate-400 tabular-nums">{i + 1}.</span>
+                {title}
+              </p>
+              <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
   );
 }

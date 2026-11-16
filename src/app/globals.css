@@ -5,22 +5,22 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
- * Brand color. Coral is a development placeholder: to rebrand, change this scale
- * (400 is the main brand color) and the --brand tokens below. Nothing else in the
- * app hard-codes the brand color.
+ * Brand color: Clippifi yellow #FFE873 (400). It is light, so use it as a fill with
+ * charcoal text on top; for yellow text on light backgrounds use 600 or darker
+ * (700+ for small text). Nothing else in the app hard-codes the brand color.
  */
 @theme {
-  --color-brand-50: #fff4f2;
-  --color-brand-100: #ffe6e3;
-  --color-brand-200: #ffd0cb;
-  --color-brand-300: #ffa79f;
-  --color-brand-400: #ff6b5e;
-  --color-brand-500: #f2503f;
-  --color-brand-600: #db3b2b;
-  --color-brand-700: #b42d20;
-  --color-brand-800: #8f261c;
-  --color-brand-900: #6e2119;
-  --color-brand-950: #3d0f0a;
+  --color-brand-50: #fffdf0;
+  --color-brand-100: #fffadb;
+  --color-brand-200: #fff5b8;
+  --color-brand-300: #ffef94;
+  --color-brand-400: #ffe873;
+  --color-brand-500: #f7d43a;
+  --color-brand-600: #b88a04;
+  --color-brand-700: #8f6a05;
+  --color-brand-800: #6e5208;
+  --color-brand-900: #52400b;
+  --color-brand-950: #2e2305;
 }
 
 /* shadcn/ui theme tokens, following a marketplace convention: charcoal ink is the
@@ -47,7 +47,7 @@
   --success: #12b76a;
   --border: #ebebea;
   --input: #e2e2e0;
-  --ring: var(--color-brand-400);
+  --ring: var(--color-brand-500);
   --chart-1: var(--color-brand-400);
   --chart-2: #252525;
   --chart-3: #12b76a;
@@ -60,7 +60,7 @@
   --sidebar-accent: #f5f5f4;
   --sidebar-accent-foreground: #252525;
   --sidebar-border: #ebebea;
-  --sidebar-ring: var(--color-brand-400);
+  --sidebar-ring: var(--color-brand-500);
 }
 
 .dark {

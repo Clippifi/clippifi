@@ -1,22 +1,19 @@
 "use client";
 
-import { SUPPORT_EMAIL } from "@/lib/site";
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronDown, Menu, Search, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import Logo from "@/components/Logo";
 import { btnPrimary } from "@/lib/button-styles";
 
 type NavLink = { label: string; href: string };
 
-const exploreLinks: NavLink[] = [
-  { label: "Find Talent", href: "/dashboard/browse" },
-  { label: "Hire Clippers", href: "/dashboard/hire" },
-];
-const resourceLinks: NavLink[] = [
-  { label: "Creator Dashboard", href: "/c" },
-  { label: "Help Center", href: `mailto:${SUPPORT_EMAIL}` },
+const sectionLinks: NavLink[] = [
+  { label: "How it works", href: "/#how-it-works" },
+  { label: "For creators", href: "/#creators" },
+  { label: "For brands", href: "/#brands" },
+  { label: "Questions", href: "/#faq" },
 ];
 
 const navLink =
@@ -38,24 +35,14 @@ export default function Navbar() {
         </Link>
 
         <nav className="hidden items-center gap-7 lg:flex">
-          <NavDropdown label="Explore" items={exploreLinks} />
-          <a href="#how-it-works" className={navLink}>
-            How it Works
-          </a>
-          <a href="#creators" className={navLink}>
-            For Creators
-          </a>
-          <NavDropdown label="Resources" items={resourceLinks} />
+          {sectionLinks.map((link) => (
+            <Link key={link.href} href={link.href} className={navLink}>
+              {link.label}
+            </Link>
+          ))}
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
-          <Link
-            href={user ? "/c" : "/login"}
-            aria-label="Search clips"
-            className="flex h-9 w-9 items-center justify-center text-slate-500 transition-transform duration-200 hover:scale-110 hover:text-brand-600 dark:text-slate-300 dark:hover:text-brand-400"
-          >
-            <Search className="h-[18px] w-[18px]" />
-          </Link>
           {user ? (
             <Link
               href={dashboardHref}
@@ -109,14 +96,16 @@ export default function Navbar() {
         <div className="min-h-0 overflow-hidden">
           <div className="px-4 pb-6 pt-2">
             <nav className="flex flex-col gap-1">
-              <MobileGroup label="Explore" items={exploreLinks} />
-              <a href="#how-it-works" className="rounded-md px-2 py-2 text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/5 dark:hover:text-white">
-                How it Works
-              </a>
-              <a href="#creators" className="rounded-md px-2 py-2 text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/5 dark:hover:text-white">
-                For Creators
-              </a>
-              <MobileGroup label="Resources" items={resourceLinks} />
+              {sectionLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  className="rounded-md px-2 py-2 text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/5 dark:hover:text-white"
+                >
+                  {link.label}
+                </Link>
+              ))}
             </nav>
             <div className="mt-4 flex items-center gap-3 border-t border-slate-200 pt-4 dark:border-white/10">
               {user ? (
@@ -144,77 +133,5 @@ export default function Navbar() {
         </div>
       </div>
     </header>
-  );
-}
-
-function NavDropdown({ label, items }: { label: string; items: NavLink[] }) {
-  return (
-    <div className="group relative">
-      <button className="flex items-center gap-1 text-sm text-slate-600 hover:text-brand-600 dark:text-slate-300 dark:hover:text-brand-400">
-        {label}
-        <ChevronDown className="h-3.5 w-3.5 transition-transform group-hover:rotate-180" />
-      </button>
-      <div className="invisible absolute left-1/2 top-full z-50 w-52 -translate-x-1/2 translate-y-1 rounded-xl border border-slate-200 bg-white p-2 opacity-0 shadow-xl shadow-slate-200/60 transition-all duration-200 group-hover:visible group-hover:translate-y-2 group-hover:opacity-100 dark:border-white/10 dark:bg-[#141414] dark:shadow-black/40">
-        {items.map((item) =>
-          item.href.startsWith("/") ? (
-            <Link
-              key={item.label}
-              href={item.href}
-              className="block rounded-lg px-3 py-2 text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/5 dark:hover:text-white"
-            >
-              {item.label}
-            </Link>
-          ) : (
-            <a
-              key={item.label}
-              href={item.href}
-              className="block rounded-lg px-3 py-2 text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/5 dark:hover:text-white"
-            >
-              {item.label}
-            </a>
-          ),
-        )}
-      </div>
-    </div>
-  );
-}
-
-function MobileGroup({ label, items }: { label: string; items: NavLink[] }) {
-  const [expanded, setExpanded] = useState(false);
-  return (
-    <div>
-      <button
-        onClick={() => setExpanded((v) => !v)}
-        className="flex w-full items-center justify-between rounded-md px-2 py-2 text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/5 dark:hover:text-white"
-      >
-        {label}
-        <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-200 ${expanded ? "rotate-180" : ""}`} />
-      </button>
-      <div
-        className={`grid overflow-hidden transition-[grid-template-rows] duration-200 ease-out ${expanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
-      >
-        <div className="ml-3 min-h-0 flex flex-col border-l border-slate-200 pl-3 dark:border-white/10">
-          {items.map((item) =>
-            item.href.startsWith("/") ? (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="rounded-md px-2 py-2 text-sm text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
-              >
-                {item.label}
-              </Link>
-            ) : (
-              <a
-                key={item.label}
-                href={item.href}
-                className="rounded-md px-2 py-2 text-sm text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
-              >
-                {item.label}
-              </a>
-            ),
-          )}
-        </div>
-      </div>
-    </div>
   );
 }

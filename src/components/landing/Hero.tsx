@@ -1,15 +1,19 @@
 import Link from "next/link";
-import { Heart, Play } from "lucide-react";
+import { Eye, Play } from "lucide-react";
 import { btnPrimary, btnSecondary } from "@/lib/button-styles";
 
 const HERO_TONES: Record<string, string> = {
-  "clip-podcast-studio": "bg-[radial-gradient(circle_at_30%_25%,#ffb199_0%,#ff6b5e_40%,#3b1d1a_100%)]",
+  "clip-podcast-studio": "bg-[radial-gradient(circle_at_30%_25%,#fff5b8_0%,#f7d43a_40%,#2e2305_100%)]",
   "clip-streetball": "bg-[radial-gradient(circle_at_70%_30%,#9ad7ff_0%,#3b82f6_45%,#0f1b3d_100%)]",
   "clip-mountain-lake": "bg-[radial-gradient(circle_at_40%_20%,#c7f9cc_0%,#2fa36b_45%,#0e2a1f_100%)]",
   default: "bg-gradient-to-br from-brand-400 to-slate-900",
 };
 
-const platforms = ["TikTok", "Instagram", "YouTube"];
+const platforms = [
+  { name: "TikTok", status: "Live" },
+  { name: "Instagram", status: "Soon" },
+  { name: "YouTube", status: "Soon" },
+];
 
 export default function Hero() {
   return (
@@ -30,9 +34,8 @@ export default function Hero() {
             className="animate-fade-in-up mt-5 text-base text-slate-500 dark:text-slate-400 sm:text-lg"
             style={{ animationDelay: "120ms" }}
           >
-            Brands launch clipping, sound, logo and UGC campaigns. Creators post on TikTok,
-            Instagram and YouTube. Clippifi checks every video, counts every view and pays per
-            1,000 verified views.
+            Brands fund a campaign and set a rate per 1,000 views. Creators post a clip, submit
+            the link, and get paid for every view we verify. No pitching, no follower minimum.
           </p>
 
           <div
@@ -54,11 +57,20 @@ export default function Hero() {
             className="animate-fade-in-up mt-12"
             style={{ animationDelay: "360ms" }}
           >
-            <p className="text-xs uppercase tracking-wide text-slate-500">Creators post on</p>
-            <div className="mt-4 flex items-center gap-x-10">
-              {platforms.map((platform) => (
-                <span key={platform} className="text-sm font-semibold tracking-wide text-slate-500 opacity-70">
-                  {platform}
+            <p className="text-xs uppercase tracking-wide text-slate-500">Campaigns run on</p>
+            <div className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-2">
+              {platforms.map(({ name, status }) => (
+                <span key={name} className="flex items-center gap-2 text-sm font-semibold tracking-wide text-slate-600 dark:text-slate-300">
+                  {name}
+                  <span
+                    className={`rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide ${
+                      status === "Live"
+                        ? "bg-brand-400 text-slate-900"
+                        : "bg-slate-100 text-slate-500 dark:bg-white/10 dark:text-slate-400"
+                    }`}
+                  >
+                    {status}
+                  </span>
                 </span>
               ))}
             </div>
@@ -72,27 +84,27 @@ export default function Hero() {
           <ClipCard
             className="left-1/2 top-0 w-[68%] -translate-x-[62%]"
             floatDelay="0s"
-            duration="00:28"
-            title="Mindset Shift That Changes Everything"
-            author="Alex Clips"
-            likes="12.4K"
+            duration="$1.50 / 1K views"
+            title="Podcast highlights"
+            author="@studio.clips"
+            likes="48.2K views"
             imageSeed="clip-podcast-studio"
           />
           <ClipCard
             className="right-0 top-6 w-[38%]"
             floatDelay="-1.4s"
-            duration="00:20"
-            title="Insane Dunk!"
-            author="Hoop Clips"
+            duration="$2.00 / 1K"
+            title="Sneaker drop"
+            author="@kicks.daily"
             imageSeed="clip-streetball"
             compact
           />
           <ClipCard
             className="right-2 top-[62%] w-[46%]"
             floatDelay="-3s"
-            duration="00:20"
-            title="Breathtaking Views"
-            author="Nature Clips"
+            duration="$1.00 / 1K"
+            title="New single"
+            author="@sound.on"
             imageSeed="clip-mountain-lake"
             compact
           />
@@ -174,7 +186,7 @@ function ClipCard({
             </span>
             {likes && (
               <span className="flex items-center gap-1 text-[11px] text-slate-300">
-                <Heart className="h-3 w-3" /> {likes}
+                <Eye className="h-3 w-3" /> {likes}
               </span>
             )}
           </div>
@@ -186,7 +198,7 @@ function ClipCard({
 
 function Highlight({ children }: { children: React.ReactNode }) {
   return (
-    <span className="relative inline-block -rotate-1 rounded-md border-2 border-black bg-brand-400 px-2 py-0.5 text-slate-900 shadow-[3px_3px_0_0_#000] dark:border-brand-200 dark:text-slate-900 dark:shadow-[3px_3px_0_0_#ffd0cb]">
+    <span className="relative inline-block -rotate-1 rounded-md border-2 border-black bg-brand-400 px-2 py-0.5 text-slate-900 shadow-[3px_3px_0_0_#000] dark:border-brand-200 dark:text-slate-900 dark:shadow-[3px_3px_0_0_#fff5b8]">
       {children}
     </span>
   );
