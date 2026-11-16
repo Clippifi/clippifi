@@ -11,6 +11,10 @@ import { LINK_MESSAGE, LINK_RETURN_PATH, linkErrorMessage } from "@/lib/link-acc
 
 const POPUP_NAME = "clippifi-connect";
 
+// false: TikTok opens in this tab and returns to Connections (for screen recordings
+// that capture one window). Set back to true to use the popup.
+const USE_POPUP = false;
+
 function openCenteredPopup() {
   const width = 500;
   const height = 720;
@@ -19,7 +23,7 @@ function openCenteredPopup() {
   return window.open("", POPUP_NAME, `popup,width=${width},height=${height},left=${left},top=${top}`);
 }
 
-// Opens TikTok in a popup. When the user approves or cancels, the popup lands on
+// Opens TikTok in a popup (when USE_POPUP is on). When the user approves or cancels, the popup lands on
 // /connect/done, which sends the result back and closes. If the browser blocks the
 // popup, TikTok opens in this tab and returns straight to Connections.
 export function ConnectTikTokButton({ label = "Connect TikTok" }: { label?: string }) {
@@ -29,7 +33,7 @@ export function ConnectTikTokButton({ label = "Connect TikTok" }: { label?: stri
   async function connect() {
     setBusy(true);
     // Open the window during the click so the browser doesn't block it.
-    const popup = openCenteredPopup();
+    const popup = USE_POPUP ? openCenteredPopup() : null;
     const usePopup = Boolean(popup && !popup.closed);
     const returnTo = usePopup ? LINK_RETURN_PATH : "/c/connections";
 
