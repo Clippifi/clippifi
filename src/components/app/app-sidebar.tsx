@@ -25,6 +25,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { authClient } from "@/lib/auth-client";
 
@@ -43,17 +44,29 @@ export function AppSidebar({ user }: { user: SidebarUser }) {
 
   return (
     <Sidebar collapsible="icon">
+      {/* Logo and the collapse toggle live together, so the toggle never scrolls away.
+          Expanded: one row, toggle beside the divider. Collapsed: a column, toggle under the symbol. */}
+      {/* Logo and the collapse toggle live together, so the toggle never scrolls away.
+          Expanded: one row, toggle beside the divider. Collapsed: a column, toggle under the symbol. */}
       <SidebarHeader className="group-data-[collapsible=icon]:px-4">
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild className="group-data-[collapsible=icon]:justify-center">
-              <Link href="/c">
-                <Logo className="size-6" />
-                <span className="text-[17px] font-bold tracking-[-0.02em] text-foreground group-data-[collapsible=icon]:hidden">Clippifi</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+        <div className="flex items-center gap-1 group-data-[collapsible=icon]:flex-col">
+          <SidebarMenu className="min-w-0 flex-1">
+            <SidebarMenuItem>
+              <SidebarMenuButton size="lg" asChild className="group-data-[collapsible=icon]:justify-center">
+                <Link href="/c">
+                  <Logo className="size-6" />
+                  <span className="text-[17px] font-bold tracking-[-0.02em] text-foreground group-data-[collapsible=icon]:hidden">
+                    Clippifi
+                  </span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+          <SidebarTrigger
+            title="Collapse or expand the sidebar (Ctrl+B)"
+            className="size-9 shrink-0 rounded-xl text-muted-foreground hover:bg-sidebar-accent/55 hover:text-foreground group-data-[collapsible=icon]:size-10 [&_svg]:size-5"
+          />
+        </div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup className="px-3 group-data-[collapsible=icon]:px-4">

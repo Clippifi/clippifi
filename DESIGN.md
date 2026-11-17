@@ -74,8 +74,10 @@ off-white text, never pure white. Easier on the eyes and more professional.
 - **State banners** use tinted fills (`Notice`), never outlined boxes.
 - The one structural line: a **faint vertical divider** between the desktop sidebar and
   the content (`--sidebar-border`, ~6% opacity). Nothing else gets an edge line.
-- **Collapsed sidebar** (72px): only the symbol logo, centred icons with room for their
-  hover and selected fills, labels as tooltips; no text is ever cut off.
+- **Sidebar:** 288px open, 72px collapsed. The collapse toggle lives inside the sidebar
+  (never in the page, where it would scroll away): beside the logo when open, under the
+  symbol in the icon column when collapsed. Collapsed shows only the symbol logo,
+  centred icons with room for their fills, labels as tooltips; no text is ever cut off.
 
 **Before finishing any UI work, check:** is there a visible border around a card or
 container? If yes, replace it with a shade difference.
