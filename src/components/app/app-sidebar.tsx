@@ -26,6 +26,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
   SidebarTrigger,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { authClient } from "@/lib/auth-client";
 
@@ -34,6 +35,7 @@ type SidebarUser = { name: string; email: string; image?: string | null };
 
 export function AppSidebar({ user }: { user: SidebarUser }) {
   const pathname = usePathname();
+  const { state: sidebarState } = useSidebar();
   const router = useRouter();
 
   async function signOut() {
@@ -62,9 +64,11 @@ export function AppSidebar({ user }: { user: SidebarUser }) {
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
+          {/* Fades in at its new spot instead of sliding across while the sidebar resizes. */}
           <SidebarTrigger
+            key={sidebarState}
             title="Collapse or expand the sidebar (Ctrl+B)"
-            className="size-9 shrink-0 rounded-xl text-muted-foreground hover:bg-sidebar-accent/55 hover:text-foreground group-data-[collapsible=icon]:size-10 [&_svg]:size-5"
+            className="size-9 shrink-0 rounded-xl text-muted-foreground hover:bg-sidebar-accent/55 hover:text-foreground group-data-[collapsible=icon]:size-10 [&_svg]:size-5 animate-in fade-in-0 duration-200 [animation-delay:180ms] [animation-fill-mode:backwards]"
           />
         </div>
       </SidebarHeader>
