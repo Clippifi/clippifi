@@ -72,17 +72,18 @@ export const auth = betterAuth({
     },
   },
   // Limits are counted in the database so they hold across every server instance.
-  // Sign-in codes cost money to send and can be used to spam someone's inbox, so they
-  // get tight limits per IP (here) and per email address (in the hook below).
+  // The tight limit is per email address (5 codes an hour, in the hook below): it stops
+  // inbox spam and email costs. Per-IP limits stay loose because mobile networks put
+  // many people behind one shared IP; they only stop a single machine flooding us.
   rateLimit: {
     enabled: true,
     storage: "database",
     window: 60,
-    max: 100,
+    max: 300,
     customRules: {
-      "/email-otp/send-verification-otp": { window: 60, max: 3 },
-      "/sign-in/email-otp": { window: 60, max: 10 },
-      "/sign-in/social": { window: 60, max: 10 },
+      "/email-otp/send-verification-otp": { window: 60, max: 30 },
+      "/sign-in/email-otp": { window: 60, max: 60 },
+      "/sign-in/social": { window: 60, max: 60 },
     },
   },
   advanced: {
