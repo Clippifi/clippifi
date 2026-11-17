@@ -132,7 +132,7 @@ export function LoginForm({ googleEnabled }: { googleEnabled: boolean }) {
               {googleEnabled && (
                 <>
                   <Field>
-                    <Button variant="outline" type="button" onClick={continueWithGoogle} disabled={busy !== null}>
+                    <Button variant="secondary" type="button" onClick={continueWithGoogle} disabled={busy !== null}>
                       {busy === "google" ? <Spinner className="animate-spin" /> : <GoogleIcon />}
                       Continue with Google
                     </Button>

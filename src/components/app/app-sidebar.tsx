@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ChevronsUpDown, Home, Link as LinkIcon, LogOut, Settings } from "@/components/icons";
+import { ChevronsUpDown, Home, Plug, LogOut, Settings } from "@/components/icons";
 import Logo from "@/components/Logo";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { UserAvatar } from "@/components/app/user-avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,15 +29,11 @@ import { authClient } from "@/lib/auth-client";
 
 const nav = [
   { title: "Home", href: "/c", icon: Home },
-  { title: "Connections", href: "/c/connections", icon: LinkIcon },
+  { title: "Connections", href: "/c/connections", icon: Plug },
   { title: "Settings", href: "/c/settings", icon: Settings },
 ];
 
 type SidebarUser = { name: string; email: string; image?: string | null };
-
-export function initialsOf(user: SidebarUser) {
-  return (user.name || user.email).slice(0, 2).toUpperCase();
-}
 
 export function AppSidebar({ user }: { user: SidebarUser }) {
   const pathname = usePathname();
@@ -57,14 +53,14 @@ export function AppSidebar({ user }: { user: SidebarUser }) {
             <SidebarMenuButton size="lg" asChild>
               <Link href="/c">
                 <Logo className="size-6" />
-                <span className="font-semibold">Clippifi</span>
+                <span className="text-[17px] font-bold tracking-[-0.02em] text-foreground">Clippifi</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
+        <SidebarGroup className="px-3">
           <SidebarGroupContent>
             <SidebarMenu>
               {nav.map((item) => (
@@ -91,12 +87,9 @@ export function AppSidebar({ user }: { user: SidebarUser }) {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton size="lg" className="data-[state=open]:bg-sidebar-accent">
-                  <Avatar className="size-8 rounded-lg">
-                    {user.image && <AvatarImage src={user.image} alt="" />}
-                    <AvatarFallback className="rounded-lg">{initialsOf(user)}</AvatarFallback>
-                  </Avatar>
+                  <UserAvatar user={user} className="size-8" />
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-medium">{user.name || "Your account"}</span>
+                    <span className="truncate font-medium text-foreground">{user.name || "Your account"}</span>
                     <span className="truncate text-xs text-muted-foreground">{user.email}</span>
                   </div>
                   <ChevronsUpDown className="ml-auto size-4" />

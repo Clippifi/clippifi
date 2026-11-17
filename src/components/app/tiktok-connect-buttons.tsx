@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Spinner } from "@/components/icons";
 import { toast } from "sonner";
 import { TikTokIcon } from "@/components/app/platform-icons";
+import { Confirm } from "@/components/app/confirm";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 import { LINK_MESSAGE, LINK_RETURN_PATH, linkErrorMessage } from "@/lib/link-account";
@@ -26,7 +27,7 @@ function openCenteredPopup() {
 // Opens TikTok in a popup (when USE_POPUP is on). When the user approves or cancels, the popup lands on
 // /connect/done, which sends the result back and closes. If the browser blocks the
 // popup, TikTok opens in this tab and returns straight to Connections.
-export function ConnectTikTokButton({ label = "Connect TikTok" }: { label?: string }) {
+export function ConnectTikTokButton({ label = "Connect TikTok", className }: { label?: string; className?: string }) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
 
@@ -96,7 +97,8 @@ export function ConnectTikTokButton({ label = "Connect TikTok" }: { label?: stri
   }
 
   return (
-    <Button onClick={connect} disabled={busy}>
+    // Core brand action → yellow (DESIGN.md → Buttons).
+    <Button variant="brand" onClick={connect} disabled={busy} className={className}>
       {busy ? <Spinner className="animate-spin" /> : <TikTokIcon />}
       {label}
     </Button>
@@ -105,24 +107,25 @@ export function ConnectTikTokButton({ label = "Connect TikTok" }: { label?: stri
 
 export function DisconnectTikTokButton({ accountId }: { accountId: string }) {
   const router = useRouter();
-  const [busy, setBusy] = useState(false);
 
   async function disconnect() {
-    setBusy(true);
     const { error } = await authClient.unlinkAccount({ accountId });
-    setBusy(false);
     if (error) {
       toast.error(error.message ?? "Couldn't disconnect TikTok. Try again.");
-      return;
+      return false;
     }
     toast.success("TikTok disconnected. We deleted its access tokens.");
     router.refresh();
   }
 
   return (
-    <Button variant="outline" onClick={disconnect} disabled={busy}>
-      {busy && <Spinner className="animate-spin" />}
-      Disconnect
-    </Button>
+    <Confirm
+      trigger={<Button variant="secondary">Disconnect</Button>}
+      title="Disconnect TikTok?"
+      description="We'll delete our access to your TikTok account. Clips you already submitted can't earn until you connect again."
+      confirmLabel="Disconnect"
+      destructive
+      onConfirm={disconnect}
+    />
   );
 }

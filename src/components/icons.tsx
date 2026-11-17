@@ -1,99 +1,113 @@
 import type { ComponentProps } from "react";
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
+import type { Icon as PhosphorIcon } from "@phosphor-icons/react";
 import {
-  Alert02Icon,
-  AlertCircleIcon,
-  ArrowDown01Icon,
-  ArrowRight01Icon,
-  BankIcon,
-  BanknoteIcon,
-  Calendar03Icon,
-  CancelCircleIcon,
-  Cancel01Icon,
-  CheckmarkCircle02Icon,
-  ClapperboardIcon,
-  ComputerIcon,
-  DollarCircleIcon,
-  EyeIcon,
-  FavouriteIcon,
-  Home01Icon,
-  InformationCircleIcon,
-  Link01Icon,
-  Loading03Icon,
-  Logout01Icon,
-  Megaphone01Icon,
-  Menu01Icon,
-  MinusSignIcon,
-  Moon02Icon,
-  MusicNote01Icon,
-  PercentIcon,
-  PlayIcon,
-  ScissorIcon,
-  SecurityCheckIcon,
-  Settings01Icon,
-  SidebarLeft01Icon,
-  Stamp01Icon,
-  Sun03Icon,
-  Tick02Icon,
-  Timer02Icon,
-  UnfoldMoreIcon,
-  Upload04Icon,
-  Video01Icon,
-  Wallet01Icon,
-} from "@hugeicons/core-free-icons";
+  ArrowRight as ArrowRightIcon,
+  Bank as BankIcon,
+  CalendarDots,
+  CaretDown,
+  CaretRight,
+  CaretUpDown,
+  Check as CheckIcon,
+  CheckCircle as CheckCircleIcon,
+  CircleNotch,
+  CurrencyCircleDollar,
+  Desktop,
+  Eye as EyeIcon,
+  FilmSlate,
+  Gear,
+  Heart as HeartIcon,
+  House,
+  Info as InfoIcon,
+  LinkSimple,
+  List,
+  Megaphone as MegaphoneIcon,
+  Minus as MinusIcon,
+  Money,
+  Moon as MoonIcon,
+  MusicNotes,
+  Percent as PercentIcon,
+  Play as PlayIcon,
+  Plugs,
+  Scissors as ScissorsIcon,
+  ShieldCheck as ShieldCheckIcon,
+  SidebarSimple,
+  SignOut,
+  SquaresFour,
+  Stamp as StampIcon,
+  Sun as SunIcon,
+  Timer as TimerIcon,
+  UploadSimple,
+  User as UserIcon,
+  VideoCamera,
+  Wallet as WalletIcon,
+  Warning as WarningIcon,
+  WarningCircle,
+  X,
+  XCircle,
+} from "@phosphor-icons/react/ssr";
+import { cn } from "@/lib/utils";
 
-// Every icon in the app comes from here (Hugeicons, stroke rounded). Screens import
-// by name from "@/components/icons", so the icon set can change in one file.
-// Default: 1.5 stroke, sized by CSS (size-4/size-5), coloured by currentColor.
+// Every icon in the app comes from here: Phosphor, filled with soft rounded corners
+// (DESIGN.md → Icons). Screens import by name from "@/components/icons", so the set
+// can change in one file. Sized by CSS (size-5 by default), coloured by currentColor.
+// Small directional marks (carets, arrows, close, check) use the bold weight, which
+// reads better than a filled shape at small sizes.
 
-export type IconProps = Omit<ComponentProps<typeof HugeiconsIcon>, "icon">;
+export type IconProps = Omit<ComponentProps<PhosphorIcon>, "ref">;
 export type IconComponent = (props: IconProps) => React.JSX.Element;
+type Weight = NonNullable<IconProps["weight"]>;
 
-function make(icon: IconSvgElement, name: string): IconComponent {
-  const Icon = ({ strokeWidth = 1.5, ...props }: IconProps) => (
-    <HugeiconsIcon icon={icon} strokeWidth={strokeWidth} aria-hidden="true" {...props} />
+function make(Icon: PhosphorIcon, name: string, defaultWeight: Weight = "fill"): IconComponent {
+  const Wrapped = ({ weight = defaultWeight, className, ...props }: IconProps) => (
+    <Icon weight={weight} aria-hidden="true" className={cn("size-5", className)} {...props} />
   );
-  Icon.displayName = name;
-  return Icon;
+  Wrapped.displayName = name;
+  return Wrapped;
 }
 
-export const AlertCircle = make(AlertCircleIcon, "AlertCircle");
-export const ArrowRight = make(ArrowRight01Icon, "ArrowRight");
+// Objects and places: filled.
+export const AlertCircle = make(WarningCircle, "AlertCircle");
 export const Bank = make(BankIcon, "Bank");
-export const Banknote = make(BanknoteIcon, "Banknote");
-export const Calendar = make(Calendar03Icon, "Calendar");
-export const Check = make(Tick02Icon, "Check");
-export const CheckCircle = make(CheckmarkCircle02Icon, "CheckCircle");
-export const ChevronDown = make(ArrowDown01Icon, "ChevronDown");
-export const ChevronRight = make(ArrowRight01Icon, "ChevronRight");
-export const ChevronsUpDown = make(UnfoldMoreIcon, "ChevronsUpDown");
-export const Clapperboard = make(ClapperboardIcon, "Clapperboard");
-export const Close = make(Cancel01Icon, "Close");
-export const DollarCircle = make(DollarCircleIcon, "DollarCircle");
-export const ErrorCircle = make(CancelCircleIcon, "ErrorCircle");
+export const Banknote = make(Money, "Banknote");
+export const Calendar = make(CalendarDots, "Calendar");
+export const CheckCircle = make(CheckCircleIcon, "CheckCircle");
+export const Clapperboard = make(FilmSlate, "Clapperboard");
+export const DollarCircle = make(CurrencyCircleDollar, "DollarCircle");
+export const ErrorCircle = make(XCircle, "ErrorCircle");
 export const Eye = make(EyeIcon, "Eye");
-export const Heart = make(FavouriteIcon, "Heart");
-export const Home = make(Home01Icon, "Home");
-export const Info = make(InformationCircleIcon, "Info");
-export const Link = make(Link01Icon, "Link");
-export const LogOut = make(Logout01Icon, "LogOut");
-export const Megaphone = make(Megaphone01Icon, "Megaphone");
-export const Menu = make(Menu01Icon, "Menu");
-export const Minus = make(MinusSignIcon, "Minus");
-export const Monitor = make(ComputerIcon, "Monitor");
-export const Moon = make(Moon02Icon, "Moon");
-export const Music = make(MusicNote01Icon, "Music");
-export const PanelLeft = make(SidebarLeft01Icon, "PanelLeft");
-export const Percent = make(PercentIcon, "Percent");
+export const Grid = make(SquaresFour, "Grid");
+export const Heart = make(HeartIcon, "Heart");
+export const Home = make(House, "Home");
+export const Info = make(InfoIcon, "Info");
+export const Link = make(LinkSimple, "Link", "bold");
+export const LogOut = make(SignOut, "LogOut");
+export const Megaphone = make(MegaphoneIcon, "Megaphone");
+export const Monitor = make(Desktop, "Monitor");
+export const Moon = make(MoonIcon, "Moon");
+export const Music = make(MusicNotes, "Music");
+export const PanelLeft = make(SidebarSimple, "PanelLeft");
+export const Percent = make(PercentIcon, "Percent", "bold");
 export const Play = make(PlayIcon, "Play");
-export const Scissors = make(ScissorIcon, "Scissors");
-export const Settings = make(Settings01Icon, "Settings");
-export const ShieldCheck = make(SecurityCheckIcon, "ShieldCheck");
-export const Spinner = make(Loading03Icon, "Spinner");
-export const Stamp = make(Stamp01Icon, "Stamp");
-export const Sun = make(Sun03Icon, "Sun");
-export const Timer = make(Timer02Icon, "Timer");
-export const Upload = make(Upload04Icon, "Upload");
-export const Video = make(Video01Icon, "Video");
-export const Wallet = make(Wallet01Icon, "Wallet");
-export const Warning = make(Alert02Icon, "Warning");
+export const Plug = make(Plugs, "Plug");
+export const Scissors = make(ScissorsIcon, "Scissors");
+export const Settings = make(Gear, "Settings");
+export const ShieldCheck = make(ShieldCheckIcon, "ShieldCheck");
+export const Stamp = make(StampIcon, "Stamp");
+export const Sun = make(SunIcon, "Sun");
+export const Timer = make(TimerIcon, "Timer");
+export const Upload = make(UploadSimple, "Upload", "bold");
+export const User = make(UserIcon, "User");
+export const Video = make(VideoCamera, "Video");
+export const Wallet = make(WalletIcon, "Wallet");
+export const Warning = make(WarningIcon, "Warning");
+
+// Small directional marks: bold line.
+export const ArrowRight = make(ArrowRightIcon, "ArrowRight", "bold");
+export const Check = make(CheckIcon, "Check", "bold");
+export const ChevronDown = make(CaretDown, "ChevronDown", "bold");
+export const ChevronRight = make(CaretRight, "ChevronRight", "bold");
+export const ChevronsUpDown = make(CaretUpDown, "ChevronsUpDown", "bold");
+export const Close = make(X, "Close", "bold");
+export const Menu = make(List, "Menu", "bold");
+export const Minus = make(MinusIcon, "Minus", "bold");
+export const Spinner = make(CircleNotch, "Spinner", "bold");

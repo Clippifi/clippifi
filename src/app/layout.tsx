@@ -5,9 +5,12 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
+// Inter variable: every weight in one file, plus the optical-size axis so large
+// headings get display spacing and small text stays open (like SF Display / SF Text).
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+  axes: ["opsz"],
 });
 
 const geistMono = Geist_Mono({
@@ -40,7 +43,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
       className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-white text-slate-900 dark:bg-[#0a0a0a] dark:text-white">
+      <body className="min-h-full flex flex-col bg-background text-foreground">
         <ThemeProvider>
           <TooltipProvider>
             {children}

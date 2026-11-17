@@ -2,166 +2,169 @@
 
 How every Clippifi screen looks and behaves. **Layouts follow the proven patterns of
 creator marketplaces** (campaign rails, status tabs, earnings timelines); **the look and
-feel follows Apple** (Human Interface Guidelines): calm surfaces, clear type, one accent,
-soft motion. Built on shadcn/ui (`src/components/ui`) with Tailwind 4.
+feel follows Apple** (Human Interface Guidelines): calm layered surfaces, clear type,
+one accent, soft motion. Built on shadcn/ui with Tailwind 4.
 
-Tokens live in `src/app/globals.css`. Icons live in `src/components/icons.tsx`.
-Never hard-code a colour, radius or icon in a screen; use the tokens and the icon module.
+- Tokens: `src/app/globals.css`. Icons: `src/components/icons.tsx` (Phosphor).
+- Never hard-code a colour, radius or icon in a screen; use tokens, the icon module and
+  the components below.
 
 ---
+
+## 0. Rule one: reuse before you build
+
+1. **Look for a shadcn component first** (`npx shadcn search`, the docs, or
+   `src/components/ui`). Dashboard, tabs, switch, spinner, skeleton, drawer, dialog,
+   tooltip, dropdown, table, chart and more already exist.
+2. **Then the shadcn registries** for a better-styled or animated version:
+   Animate UI (`@animate-ui`, already in use for tabs and switch), and others such as
+   Watermelon UI. Install with the shadcn CLI so the code lands in our repo and we own it.
+3. **Then our Clippifi parts** in `src/components/app/` (list in section 7).
+4. **Only then build something new**, and make it a reusable part, not a one-off.
+
+When installing, never let the CLI overwrite our customised files (`button.tsx`,
+`card.tsx`, `badge.tsx`, `sidebar.tsx`, `dialog.tsx`, `drawer.tsx`): answer **no**.
+Pin new packages to a release at least two weeks old.
 
 ## 1. Principles
 
 1. **Content first.** The number or the clip is the hero of each card. Chrome is quiet.
-2. **One accent.** Brand yellow appears a few times per screen, never as decoration.
-3. **Say what will happen.** Buttons say the action ("Submit clip"); empty states say
-   what will appear and why; disabled buttons say what's missing.
-4. **Same parts everywhere.** Reuse the components below before making a new one.
+2. **Surfaces, not borders.** Separate things by shade, never by outlines (section 3).
+3. **One accent, on purpose.** Yellow marks Clippifi's core actions only (section 2).
+4. **Say what will happen.** Buttons name the action; empty states say what to do next;
+   a disabled button says what's missing.
 5. **Honest numbers.** Every money figure shows its currency; estimates say "≈".
 
 ## 2. Colour
 
 | Token | Light | Dark | Use |
 |---|---|---|---|
-| `background` | `#F5F5F7` | `#000000` | Page canvas (app screens) |
-| `card` | `#FFFFFF` | `#1C1C1E` | Cards, panels, table rows |
-| `popover` | `#FFFFFF` | `#2C2C2E` | Menus, dialogs, sheets |
-| `foreground` | `#252525` charcoal | `#F5F5F7` | Text, icons |
-| `muted-foreground` | `#6E6E73` | `#98989D` | Secondary text, labels |
-| `primary` | `#252525` | `#F5F5F7` | **Main action buttons**, selected tab text |
-| `secondary` / `muted` | `#EBEBEF` / `#F0F0F3` | `#2C2C2E` | Quiet buttons, input fill, segmented track |
-| `border` | `#E5E5EA` | white 10% | Hairlines around cards and inputs |
-| `brand` (`brand-400`) | **`#FFE873`** | same | Brand moments (see below), always with charcoal on top |
-| `success` / `success-muted` | `#1A8F4C` / `#E3F5EA` | `#30D158` | **Money and rates only**, approved, paid |
-| `warning` / `warning-muted` | `#A35B00` / `#FFF1D6` | `#FFB340` | Pending, under review, needs attention |
-| `destructive` / `destructive-muted` | `#D70015` / `#FFE8E8` | `#FF453A` | Rejected, failed, delete |
-| `info` / `info-muted` | `#0A64D8` / `#E5EFFF` | `#409CFF` | Neutral notices, links in text |
+| `background` | `#F6F5F1` warm off-white | `#1E1E1D` | Page canvas |
+| `card` | `#FFFFFF` | `#282826` | Raised surfaces: cards, sections, the mobile tab bar |
+| `muted` | `#EFEDE7` | `#33332F` | Inner blocks inside cards, tracks, tiles, input fill |
+| `popover` | `#FFFFFF` | `#2F2F2D` | Menus, dialogs, drawers (with shadow) |
+| `foreground` | `#252525` charcoal | `#ECEBE7` | Headings, primary text, icons |
+| `muted-foreground` | `#6F6D67` | `#A3A29C` | Descriptions, labels, meta, unselected nav |
+| `primary` | `#252525` | `#ECEBE7` | Neutral main buttons |
+| `brand` | **`#FFE873`** | same | Core brand actions and brand moments, with charcoal on top |
+| `success` / `-muted` | `#1A8F4C` / `#E3F5EA` | `#4CC77A` | Money, rates, approved, paid, connected |
+| `warning` / `-muted` | `#A35B00` / `#FFF1D6` | `#F2B24C` | Pending, needs attention |
+| `destructive` / `-muted` | `#D70015` / `#FFE8E8` | `#F06A5E` | Rejected, failed, delete |
+| `info` / `-muted` | `#0A64D8` / `#E5EFFF` | `#5AA2F0` | Neutral notices |
+| `border` | charcoal 7% | white 7% | Inputs and table row dividers **only** |
 
-**Where yellow goes:** the logo tile, the one hero call-to-action on marketing pages,
-progress and budget bars, selected checks and radio cards, the "Live" badge, empty-state
-icon circles, celebratory moments ("You earned $12.40"). **Never** yellow text on white
-(use `brand-700` if you must), never yellow body backgrounds, never more than one
-yellow button per view.
+**Yellow (brand) is for actions that serve Clippifi's purpose**, the money loop:
+Start earning, Launch a campaign, Join campaign, Submit clip, Connect TikTok, Withdraw,
+Fund campaign. Also the logo tile, budget/progress bars, the "Live" chip, empty-state
+circles and celebratory moments. **Everything routine is neutral:** Save changes,
+Continue/Back in forms, Cancel, Disconnect, filters, View details, Export use charcoal or
+grey. Never yellow text on a light surface, never more than one yellow button per view.
 
-**Why actions are charcoal:** `#FFE873` is too light to read as "press me" on white and
-can't carry white text. Charcoal buttons with white text are the app's main action, as
-in Apple's apps.
+**Dark mode is lifted and desaturated**: soft charcoal layers, never pure black, and
+off-white text, never pure white. Easier on the eyes and more professional.
 
-**Stat tile tints** (icon circles only): views `info-muted`/`info`, money
-`success-muted`/`success`, campaigns `brand-100`/`brand-800`, submissions
-`muted`/`foreground`.
+## 3. Surfaces, not borders
 
-## 3. Type
+- **No borders around cards, sections or containers.** Separate by background shade.
+- **Three layers:** page (`background`) → raised (`card`) → inner (`muted`). Each step is
+  a slightly different shade from the one beneath it.
+- Borders exist only on **inputs** and **table row dividers**, at very low opacity (`border`).
+- **Floating things** (mobile tab bar, active tab pill, menus, dialogs, drawers, toasts)
+  get a soft, low-opacity shadow instead of a border.
+- **State banners** use tinted fills (`Notice`), never outlined boxes.
+- The sidebar sits on the page colour with no dividing line.
 
-Font: **Inter** (`font-sans`). Numbers in tables and money use `tabular-nums`.
-Apple's SF Pro is not licensed for the web; don't use it.
+**Before finishing any UI work, check:** is there a visible border around a card or
+container? If yes, replace it with a shade difference.
 
-| Class | Size / line | Weight | Use |
+## 4. Type
+
+**Inter variable** (`font-sans`) with the optical-size axis on, so large headings get
+display spacing and small text stays open. Money and counts use `tabular-nums`.
+
+| Role | Size / line | Weight | Notes |
 |---|---|---|---|
-| `text-display` | 32 / 38 | 700, tight | Page greeting ("Good morning, Ada") |
-| `text-title` | 24 / 30 | 600 | Page and dialog titles |
-| `text-figure` | 40 / 44 | 600 | The big number in a card ("$1,240.00") |
-| `text-headline` | 17 / 24 | 600 | Card titles, section headers |
-| `text-body` | 15 / 22 | 400 | Default text |
-| `text-callout` | 14 / 20 | 400–500 | Form labels, list rows, buttons |
-| `text-footnote` | 13 / 18 | 400 | Help text, meta ("Submitted 2h ago") |
-| `text-caption` | 12 / 16 | 500 | Chips, sidebar section labels, axis labels |
+| Page title | 28 / 34 | 700 | tracking −0.025em (`PageHeader`) |
+| Section title | 20 / 28 | 700 | tracking −0.02em |
+| Card title | 17 / 24 | 600 | tracking −0.01em |
+| Body | 15 / 22 | 400 | |
+| Secondary | 14 / 20 | 400 | `muted-foreground` |
+| Meta | 13 / 18 | 400 | `muted-foreground` |
+| Chip | 12 / 16 | 500 | |
 
-Sentence case everywhere ("Submit clip", not "Submit Clip"). No ALL CAPS except tiny
-eyebrows with letter-spacing.
+Hierarchy comes from weight and colour: titles in `foreground`, everything supporting in
+`muted-foreground`, so screens read calm and refined. Sentence case everywhere.
 
-## 4. Layout and spacing
+## 5. Shape, spacing and motion
 
-- 4px grid. Common gaps: 8, 12, 16, 24, 32.
-- **App shell** (`/c`, `/b`): left sidebar (collapsible) + thin top bar (page title left;
-  help and account pill right) + content column, **max 1040px**, centred, 24px padding
-  (16px on phones).
-- Pages stack **cards** with 16px between them. Card padding 20px (24px for hero cards).
-- **Mobile:** sidebar becomes a sheet; primary sections move to a floating pill tab bar
-  (5 items) with a separate round search button, as in the references.
-- Wizards are full-screen: back link top-left, step name + % + progress bar top-right,
-  sticky bottom bar (blocker message left; Back · Save as draft · Continue right),
-  optional live summary rail on the right (≥1280px).
-
-## 5. Shape, elevation, motion
-
-- Radius: controls `rounded-lg` (12px); cards and dialogs `rounded-xl`/`rounded-2xl`
-  (17–22px); chips, pills, segmented controls and avatars `rounded-full`.
-- Cards are **flat**: white fill + 1px `border` + `shadow-card` at most. Only floating
-  things (menus, dialogs, toasts, the mobile tab bar) get `shadow-float`.
-- Motion: 150ms for hovers and presses, 250ms for panels and sheets, easing
-  `ease-[var(--ease-apple)]`; sheets and dialogs may use `--ease-spring`. Buttons press
-  down to 98%. Respect `prefers-reduced-motion`.
-- Blur (`backdrop-blur`) only on bars that float over content (mobile tab bar, sticky
-  headers).
+- Radius: cards and sections `rounded-3xl`; inner blocks `rounded-2xl`; icon tiles
+  `rounded-[14px]`; **buttons, tabs, chips, filters and avatars are pills** (`rounded-full`).
+- Spacing on a 4px grid. Cards pad 20px. Sibling cards sit 16px apart. **Interactive
+  rows (sidebar items, list rows, menu items) always keep a gap of at least 4px** so
+  hover and selected fills never touch.
+- Hover is lighter than selected: hover uses the selected fill at ~55%.
+- Icons and labels are muted at rest and **darken to `foreground` on hover and when
+  selected**.
+- **Motion is subtle only:** springy popovers and dialogs, smooth layout shifts (sliding
+  tab pill, tab-bar indicator via Motion `layoutId`), buttons press to 97%. No decorative
+  animation. Respect reduced motion.
 
 ## 6. Icons
 
-**Hugeicons**, stroke rounded, 1.5px stroke, from `@/components/icons` only. Sizes:
-16px in buttons, chips and inputs (`size-4`); 20px in nav, list rows and stat tiles
-(`size-5`). Icons inherit `currentColor`. Selected nav items use full-strength
-`foreground`; unselected use `muted-foreground`. Platform logos (TikTok, Instagram,
-YouTube) come from `src/components/app/platform-icons.tsx`, in their own colours only
-inside platform badges.
+**Phosphor**, **filled** (soft, rounded shapes), from `@/components/icons` only. Small
+directional marks (carets, arrows, close, check, spinner) use the bold weight. Default
+size 20px (`size-5`); 16–18px inside buttons and chips; 22px in icon tiles; 24px in the
+mobile tab bar. Icons inherit `currentColor`. Platform logos (TikTok, Instagram, YouTube)
+come from `platform-icons.tsx` and sit on their brand-coloured tiles.
 
-## 7. Components
+## 7. Components (use these, don't rebuild them)
 
-Use the shadcn component first; the notes below are how Clippifi styles and uses it.
+**From shadcn / registries** (`src/components/ui`, `src/components/animate-ui`):
+- **Button** (`ui/button`): pills, no borders. Variants: `brand` (yellow, core actions),
+  `default` (charcoal), `secondary` (grey), `outline` (white with soft shadow, for use on
+  grey), `ghost`, `destructive`, `link`. Sizes: `sm` 32px, `default` 40px, `lg` 48px, icon sizes.
+- **Tabs** (`animate-ui/components/radix/tabs`): pill track in `muted`, white pill that
+  slides to the active tab. Use for every status filter and segmented choice; show counts
+  with `<span data-count>3</span>`.
+- **Switch** (`animate-ui/components/radix/switch`) for settings toggles.
+- **Badge** (`ui/badge`): chips. Variants `secondary` (default), `brand`, `success`,
+  `warning`, `destructive`, `info`. Always a word, never colour alone.
+- **Dialog** and **Drawer** (Vaul): use them through `Confirm` (below), or directly for
+  bigger flows. Drawers on phones, dialogs on larger screens.
+- **Toasts**: Sonner (`toast.success`, `toast.error`), one short past-tense sentence.
+- **Skeleton** for loading states that mirror the real layout.
+- **Sidebar** (`ui/sidebar`): desktop navigation.
 
-- **Button** (`ui/button`): `default` = charcoal (main action, one per area);
-  `secondary` = grey fill; `outline` for low-emphasis actions next to a primary;
-  `ghost` in toolbars; `destructive` for delete. Sizes `sm` 32px, `default` 36px,
-  `lg` 44px (full-width CTAs on mobile). Disabled until valid, with the reason shown nearby.
-  Marketing pages use `btnPrimary` (yellow) and `btnSecondary` from `lib/button-styles`.
-- **Segmented control** (status filters): grey track, white selected pill, label +
-  count ("Pending 1"). Used for every status filter (Submissions, Payouts, Campaigns).
-- **Stat tile:** tinted icon circle (40px) + value (`text-headline` tabular) + label
-  (`text-footnote` muted). Four in a row on desktop, 2×2 on phones.
-- **Hero money card:** label ("Lifetime earned"), `text-figure` amount, action on the
-  right ("Withdraw"), stat tiles below.
-- **Campaign card:** 16:9 banner (rounded top) with overlay chips (dark "Paid from 1.4K
-  views", yellow "Fast review"); brand avatar + name + age; platform icons; title (1 line);
-  budget "$1.5K / $4K"; creator count chip; rate chip in `success-muted` ("$1.00 / 1K");
-  yellow progress bar.
-- **Chip / Badge:** `rounded-full`, `text-caption`, tinted background by meaning:
-  success (Approved, Paid), warning (Pending), destructive (Rejected), muted (Draft),
-  brand (Live, New).
-- **Empty state:** 48px icon in a brand-yellow circle (charcoal icon), `text-headline`
-  title, one `text-callout` muted line saying what will appear, optional primary button.
-- **Skeleton:** mirror the real layout's blocks; never a lone spinner for a page.
-- **Inputs:** filled (`input` background), no border until focus; label above
-  (`text-callout`), help or error below (`text-footnote`); character counter for text
-  limits ("0/300"); lock icon for read-only fields.
-- **Radio / choice cards:** white card, icon circle, title + one line, check in the
-  corner when selected (yellow circle, charcoal tick).
-- **Toggle rows:** title + description left, switch right, in a card.
-- **Dialogs:** centred, `rounded-2xl`, optional illustration on top, title, one or two
-  lines, actions right ("Not now" ghost + primary). Sheets on mobile.
-- **Toasts** (Sonner): dark pill, icon, short past-tense message ("Clip submitted").
-- **Tables:** rows in a card, 52px rows, muted header labels, tabular numbers right-aligned,
-  status chip column, row click opens details.
-- **Charts:** one series in `chart-1` (charcoal) or `chart-2` (yellow), faint grid, dark
-  tooltip, Daily/Cumulative and metric segmented controls above.
+**Clippifi parts** (`src/components/app`):
+- `PageHeader`: page title + muted description.
+- `IconTile`: filled icon on a soft square; tones `brand`, `ink`, `muted`, `success`,
+  `warning`, `info`, `danger`, or a platform colour via `className`.
+- `Notice`: tinted state banner (`info`, `success`, `warning`, `danger`).
+- `EmptyState`: solid yellow circle with a filled icon, bold title, one muted line,
+  at most one action.
+- `UserAvatar`: the photo, or a soft gradient generated from the person (no initials).
+- `Confirm`: asks before consequential actions; drawer on phones, dialog elsewhere.
+- `MobileTabBar`: floating detached pill, blurred, active icon in a grey circle.
+- Cards and sections: `rounded-3xl bg-card p-5`, image-first cards for media with a
+  dark gradient over the image so text stays readable.
 
 ## 8. Money, numbers and time
 
-- USD is the main figure: `$1,234.56` (two decimals for money, always).
-- Local estimate as a second line, only for NGN-corridor viewers:
-  `≈ ₦1,850,000 at today's rate`.
-- Rates: `$1.50 / 1K views` (cards: `$1.50/1K`). Budgets: `$1,469 / $4,000`.
-- Large counts compact: `12.4K`, `1.2M` (exact value in a tooltip).
-- Relative time for recent ("2h ago", "3d"), dates for older ("Nov 11, 2026").
-- Empty values show an em dash `—`, never `0` pretending to be data.
+- USD is the main figure, two decimals: `$1,234.56`. Local estimate as a second line,
+  only for naira-paid viewers: `≈ ₦1,850,000 at today's rate`.
+- Rates `$1.50 / 1K views` (cards `$1.50/1K`); budgets `$1,469 / $4,000`.
+- Large counts compact (`12.4K`) with the exact value in a tooltip.
+- Recent times relative ("2h ago"); older ones dates ("Nov 11, 2026").
+- Missing values show `—`, never a fake `0`.
 
 ## 9. Voice
 
-Short, plain, second person. Say what happens and what to do next.
-"Pick up where you left off." · "Nothing needs changes. When a brand asks for changes,
-the draft shows up here." · "$2,530 still up for grabs." · "Visible once you join."
-Errors say what went wrong and how to fix it; no apologies, no jargon.
+Short, plain, second person. "Pick up where you left off." · "No public videos yet. Post
+on TikTok and your videos will show up here." Errors say what went wrong and how to fix
+it. No apologies, no jargon.
 
 ## 10. Accessibility
 
-Contrast at least 4.5:1 for text (charcoal on yellow passes; white on yellow fails).
-Visible focus ring (`ring`, yellow-500). Hit targets 36px+ (44px on touch). Every icon
-button has a label. Don't rely on colour alone: status chips always have text.
+Text contrast at least 4.5:1 in both themes (charcoal on yellow passes; white on yellow
+fails). Visible focus rings. Hit targets 40px+ (48px on touch). Every icon-only button
+has a label. Status never relies on colour alone.

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Megaphone } from "@/components/icons";
+import { IconTile } from "@/components/app/icon-tile";
 import { PageHeader } from "@/components/app/page-header";
 import { TikTokIcon } from "@/components/app/platform-icons";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { requireSession } from "@/server/session";
 import { getTikTokAccount } from "@/server/tiktok";
 
@@ -23,41 +23,49 @@ export default async function HomePage() {
       />
       <div className="grid gap-4 md:grid-cols-2">
         {!tiktok && (
-          <Card>
-            <CardHeader>
-              <div className="mb-2 flex size-10 items-center justify-center rounded-lg bg-foreground text-background">
-                <TikTokIcon className="size-5" />
-              </div>
-              <CardTitle>Connect your TikTok</CardTitle>
-              <CardDescription>
-                Link the TikTok account you post from. We use it to confirm the clips are yours and to count their
-                views.
-              </CardDescription>
-            </CardHeader>
-            <CardFooter>
-              <Button asChild>
+          <HomeCard
+            tile={<IconTile className="bg-[#161616] text-white"><TikTokIcon /></IconTile>}
+            title="Connect your TikTok"
+            description="Link the account you post from. We use it to confirm your clips are yours and to count their views."
+            action={
+              <Button variant="brand" asChild>
                 <Link href="/c/connections">
                   Connect TikTok
                   <ArrowRight />
                 </Link>
               </Button>
-            </CardFooter>
-          </Card>
+            }
+          />
         )}
-        <Card>
-          <CardHeader>
-            <div className="mb-2 flex size-10 items-center justify-center rounded-lg bg-brand/15 text-brand-600">
-              <Megaphone className="size-5" />
-            </div>
-            <CardTitle>Campaigns are coming</CardTitle>
-            <CardDescription>
-              Brands are setting up their first campaigns. You&apos;ll be able to browse them here and submit your
-              clips.
-            </CardDescription>
-          </CardHeader>
-          <CardContent />
-        </Card>
+        <HomeCard
+          tile={<IconTile tone="brand"><Megaphone /></IconTile>}
+          title="Campaigns are coming"
+          description="Brands are setting up their first campaigns. You'll browse them here and submit your clips."
+        />
       </div>
     </>
+  );
+}
+
+function HomeCard({
+  tile,
+  title,
+  description,
+  action,
+}: {
+  tile: React.ReactNode;
+  title: string;
+  description: string;
+  action?: React.ReactNode;
+}) {
+  return (
+    <section className="flex flex-col gap-4 rounded-3xl bg-card p-5">
+      {tile}
+      <div className="flex flex-col gap-1">
+        <h2 className="text-[17px] leading-6 font-semibold tracking-[-0.01em]">{title}</h2>
+        <p className="text-[14px] leading-5 text-muted-foreground">{description}</p>
+      </div>
+      {action && <div className="mt-auto pt-1">{action}</div>}
+    </section>
   );
 }

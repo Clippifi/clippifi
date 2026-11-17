@@ -11,8 +11,12 @@ const eslintConfig = defineConfig([
     ".next/**",
     "out/**",
     "build/**",
-    "android/**",
     "next-env.d.ts",
+    // Vendored Animate UI internals (installed via the shadcn registry, not our code).
+    // Our styled wrappers in src/components/animate-ui/components/ are still linted.
+    "src/components/animate-ui/primitives/**",
+    "src/hooks/use-auto-height.tsx",
+    "src/hooks/use-controlled-state.tsx",
   ]),
 ]);
 

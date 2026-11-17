@@ -4,6 +4,7 @@ import { useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { LogOut, Monitor, Moon, Sun } from "@/components/icons";
+import { Tabs, TabsList, TabsTrigger } from "@/components/animate-ui/components/radix/tabs";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 
@@ -24,21 +25,18 @@ export function ThemeChooser() {
   const { theme, setTheme } = useTheme();
   const mounted = useMounted();
 
+  // Segmented pill with a sliding highlight (Animate UI tabs).
   return (
-    <div className="inline-flex gap-1 rounded-lg border p-1">
-      {themes.map(({ value, label, icon: Icon }) => (
-        <Button
-          key={value}
-          size="sm"
-          variant={mounted && theme === value ? "secondary" : "ghost"}
-          onClick={() => setTheme(value)}
-          aria-pressed={mounted && theme === value}
-        >
-          <Icon />
-          {label}
-        </Button>
-      ))}
-    </div>
+    <Tabs value={mounted ? (theme ?? "system") : "system"} onValueChange={setTheme}>
+      <TabsList aria-label="Appearance">
+        {themes.map(({ value, label, icon: Icon }) => (
+          <TabsTrigger key={value} value={value}>
+            <Icon className="size-4" />
+            {label}
+          </TabsTrigger>
+        ))}
+      </TabsList>
+    </Tabs>
   );
 }
 
@@ -46,7 +44,7 @@ export function SignOutButton() {
   const router = useRouter();
   return (
     <Button
-      variant="outline"
+      variant="secondary"
       onClick={async () => {
         await authClient.signOut();
         router.push("/login");

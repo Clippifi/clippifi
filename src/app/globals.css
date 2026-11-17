@@ -24,15 +24,15 @@
 }
 
 /*
- * Clippifi tokens (see DESIGN.md). Marketplace layout, Apple look:
- * a soft grey canvas, white cards with hairline borders, charcoal for actions and
- * text, brand yellow as the one accent (a fill, with charcoal on top), green only
- * for money, and status colours only for state.
+ * Clippifi tokens (see DESIGN.md). Surfaces, not borders: three layers that differ only
+ * by shade (page --background, raised --card, inner blocks and tracks --muted). Borders
+ * are near-invisible and used only on inputs and table dividers. Charcoal for neutral
+ * actions and text, brand yellow only for core brand actions, green only for money.
  */
 :root {
   --radius: 0.75rem;
   /* Surfaces */
-  --background: #f5f5f7;
+  --background: #f6f5f1;
   --foreground: #252525;
   --card: #ffffff;
   --card-foreground: #252525;
@@ -41,11 +41,11 @@
   /* Actions */
   --primary: #252525;
   --primary-foreground: #ffffff;
-  --secondary: #ebebef;
+  --secondary: #efede7;
   --secondary-foreground: #252525;
-  --muted: #f0f0f3;
-  --muted-foreground: #6e6e73;
-  --accent: #f0f0f3;
+  --muted: #efede7;
+  --muted-foreground: #6f6d67;
+  --accent: #efede7;
   --accent-foreground: #252525;
   --brand: var(--color-brand-400);
   --brand-foreground: #252525;
@@ -59,8 +59,8 @@
   --info: #0a64d8;
   --info-muted: #e5efff;
   /* Lines and focus */
-  --border: #e5e5ea;
-  --input: #f0f0f3;
+  --border: rgb(37 37 37 / 7%);
+  --input: #efede7;
   --ring: var(--color-brand-500);
   /* Charts */
   --chart-1: #252525;
@@ -69,56 +69,57 @@
   --chart-4: #0a64d8;
   --chart-5: #aeaeb2;
   /* Sidebar */
-  --sidebar: #fbfbfd;
+  --sidebar: #f6f5f1;
   --sidebar-foreground: #252525;
   --sidebar-primary: #252525;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #ececf0;
+  --sidebar-accent: #ebe9e2;
   --sidebar-accent-foreground: #252525;
-  --sidebar-border: #e5e5ea;
+  --sidebar-border: transparent;
   --sidebar-ring: var(--color-brand-500);
 }
 
 .dark {
-  --background: #000000;
-  --foreground: #f5f5f7;
-  --card: #1c1c1e;
-  --card-foreground: #f5f5f7;
-  --popover: #2c2c2e;
-  --popover-foreground: #f5f5f7;
-  --primary: #f5f5f7;
-  --primary-foreground: #1c1c1e;
-  --secondary: #2c2c2e;
-  --secondary-foreground: #f5f5f7;
-  --muted: #2c2c2e;
-  --muted-foreground: #98989d;
-  --accent: #2c2c2e;
-  --accent-foreground: #f5f5f7;
+  /* Lifted, desaturated dark: soft charcoal layers, never pure black or pure white. */
+  --background: #1e1e1d;
+  --foreground: #ecebe7;
+  --card: #282826;
+  --card-foreground: #ecebe7;
+  --popover: #2f2f2d;
+  --popover-foreground: #ecebe7;
+  --primary: #ecebe7;
+  --primary-foreground: #1e1e1d;
+  --secondary: #33332f;
+  --secondary-foreground: #ecebe7;
+  --muted: #33332f;
+  --muted-foreground: #a3a29c;
+  --accent: #33332f;
+  --accent-foreground: #ecebe7;
   --brand: var(--color-brand-400);
-  --brand-foreground: #1c1c1e;
-  --success: #30d158;
-  --success-muted: rgb(48 209 88 / 14%);
-  --warning: #ffb340;
-  --warning-muted: rgb(255 179 64 / 14%);
-  --destructive: #ff453a;
-  --destructive-muted: rgb(255 69 58 / 14%);
-  --info: #409cff;
-  --info-muted: rgb(64 156 255 / 14%);
-  --border: rgb(255 255 255 / 10%);
-  --input: #2c2c2e;
+  --brand-foreground: #1e1e1d;
+  --success: #4cc77a;
+  --success-muted: rgb(76 199 122 / 15%);
+  --warning: #f2b24c;
+  --warning-muted: rgb(242 178 76 / 15%);
+  --destructive: #f06a5e;
+  --destructive-muted: rgb(240 106 94 / 15%);
+  --info: #5aa2f0;
+  --info-muted: rgb(90 162 240 / 15%);
+  --border: rgb(255 255 255 / 7%);
+  --input: #33332f;
   --ring: var(--color-brand-400);
-  --chart-1: #f5f5f7;
+  --chart-1: #ecebe7;
   --chart-2: var(--color-brand-400);
-  --chart-3: #30d158;
-  --chart-4: #409cff;
-  --chart-5: #636366;
-  --sidebar: #0f0f10;
-  --sidebar-foreground: #f5f5f7;
-  --sidebar-primary: #f5f5f7;
-  --sidebar-primary-foreground: #1c1c1e;
-  --sidebar-accent: #2c2c2e;
-  --sidebar-accent-foreground: #f5f5f7;
-  --sidebar-border: rgb(255 255 255 / 10%);
+  --chart-3: #4cc77a;
+  --chart-4: #5aa2f0;
+  --chart-5: #75746f;
+  --sidebar: #1e1e1d;
+  --sidebar-foreground: #ecebe7;
+  --sidebar-primary: #ecebe7;
+  --sidebar-primary-foreground: #1e1e1d;
+  --sidebar-accent: #2f2f2d;
+  --sidebar-accent-foreground: #ecebe7;
+  --sidebar-border: transparent;
   --sidebar-ring: var(--color-brand-400);
 }
 
@@ -207,6 +208,9 @@
 
 html {
   scroll-behavior: smooth;
+  /* Inter's optical size follows the text size automatically. */
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
 }
 
 .no-scrollbar::-webkit-scrollbar {
