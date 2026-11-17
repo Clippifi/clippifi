@@ -1,4 +1,4 @@
-import { boolean, index, pgTable, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
+import { bigint, boolean, index, integer, pgTable, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
 
 // Better Auth's core tables (user, session, account, verification). Column names match
 // Better Auth's defaults so the Drizzle adapter needs no field mapping.
@@ -74,3 +74,12 @@ export const verification = pgTable(
   },
   (t) => [index("verification_identifier_idx").on(t.identifier)],
 );
+
+// Request counts for rate limiting, shared by every server instance. Better Auth uses
+// it for its own limits (by IP and path); src/server/rate-limit.ts adds per-email caps.
+export const rateLimit = pgTable("rate_limit", {
+  id: text("id").primaryKey(),
+  key: text("key").notNull().unique(),
+  count: integer("count").notNull(),
+  lastRequest: bigint("last_request", { mode: "number" }).notNull(),
+});

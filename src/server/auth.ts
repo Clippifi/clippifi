@@ -8,6 +8,7 @@ import type { TiktokProfile } from "better-auth/social-providers";
 import { db } from "@/server/db";
 import * as schema from "@/server/db/schema";
 import { sendEmail } from "@/server/email";
+import { hit } from "@/server/rate-limit";
 
 // Read a setting with stray spaces from copy-pasting removed.
 const env = (name: string) => process.env[name]?.trim() || undefined;
@@ -70,11 +71,40 @@ export const auth = betterAuth({
       allowUnlinkingAll: true,
     },
   },
+  // Limits are counted in the database so they hold across every server instance.
+  // Sign-in codes cost money to send and can be used to spam someone's inbox, so they
+  // get tight limits per IP (here) and per email address (in the hook below).
+  rateLimit: {
+    enabled: true,
+    storage: "database",
+    window: 60,
+    max: 100,
+    customRules: {
+      "/email-otp/send-verification-otp": { window: 60, max: 3 },
+      "/sign-in/email-otp": { window: 60, max: 10 },
+      "/sign-in/social": { window: 60, max: 10 },
+    },
+  },
+  advanced: {
+    // Vercel puts the visitor's real IP in these headers (clients can't forge them there).
+    ipAddress: { ipAddressHeaders: ["x-vercel-forwarded-for", "x-real-ip", "x-forwarded-for"] },
+  },
   hooks: {
-    // TikTok can be linked from inside the app but never used to sign in.
     before: createAuthMiddleware(async (ctx) => {
+      // TikTok can be linked from inside the app but never used to sign in.
       if (ctx.path === "/sign-in/social" && ctx.body?.provider === "tiktok") {
         throw new APIError("FORBIDDEN", { message: "Sign in with Google or an email code, then connect TikTok." });
+      }
+      // At most 5 sign-in codes per email address per hour, whoever asks for them.
+      if (ctx.path === "/email-otp/send-verification-otp" && typeof ctx.body?.email === "string") {
+        const email = ctx.body.email.trim().toLowerCase();
+        const { allowed, retryAfterSeconds } = await hit(`otp-email:${email}`, 5, 60 * 60);
+        if (!allowed) {
+          const minutes = Math.max(1, Math.ceil(retryAfterSeconds / 60));
+          throw new APIError("TOO_MANY_REQUESTS", {
+            message: `Too many codes sent to this email. Try again in ${minutes} minute${minutes === 1 ? "" : "s"}.`,
+          });
+        }
       }
     }),
   },
