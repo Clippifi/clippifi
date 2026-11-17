@@ -75,7 +75,8 @@
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #ebe9e2;
   --sidebar-accent-foreground: #252525;
-  --sidebar-border: transparent;
+  /* The one structural line: a faint divider between the sidebar and the content. */
+  --sidebar-border: rgb(37 37 37 / 6%);
   --sidebar-ring: var(--color-brand-500);
 }
 
@@ -119,7 +120,7 @@
   --sidebar-primary-foreground: #1e1e1d;
   --sidebar-accent: #2f2f2d;
   --sidebar-accent-foreground: #ecebe7;
-  --sidebar-border: transparent;
+  --sidebar-border: rgb(255 255 255 / 6%);
   --sidebar-ring: var(--color-brand-400);
 }
 

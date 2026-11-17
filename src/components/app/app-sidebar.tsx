@@ -43,20 +43,20 @@ export function AppSidebar({ user }: { user: SidebarUser }) {
 
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader>
+      <SidebarHeader className="group-data-[collapsible=icon]:px-4">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
+            <SidebarMenuButton size="lg" asChild className="group-data-[collapsible=icon]:justify-center">
               <Link href="/c">
                 <Logo className="size-6" />
-                <span className="text-[17px] font-bold tracking-[-0.02em] text-foreground">Clippifi</span>
+                <span className="text-[17px] font-bold tracking-[-0.02em] text-foreground group-data-[collapsible=icon]:hidden">Clippifi</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup className="px-3">
+        <SidebarGroup className="px-3 group-data-[collapsible=icon]:px-4">
           <SidebarGroupContent>
             <SidebarMenu>
               {creatorNav.map((item) => (
@@ -77,18 +77,18 @@ export function AppSidebar({ user }: { user: SidebarUser }) {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
+      <SidebarFooter className="group-data-[collapsible=icon]:px-4">
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <SidebarMenuButton size="lg" className="data-[state=open]:bg-sidebar-accent">
+                <SidebarMenuButton size="lg" className="data-[state=open]:bg-sidebar-accent group-data-[collapsible=icon]:justify-center">
                   <UserAvatar user={user} className="size-8" />
-                  <div className="grid flex-1 text-left text-sm leading-tight">
+                  <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
                     <span className="truncate font-medium text-foreground">{user.name || "Your account"}</span>
                     <span className="truncate text-xs text-muted-foreground">{user.email}</span>
                   </div>
-                  <ChevronsUpDown className="ml-auto size-4" />
+                  <ChevronsUpDown className="ml-auto size-4 group-data-[collapsible=icon]:hidden" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent side="top" align="start" className="w-(--radix-dropdown-menu-trigger-width) min-w-56">
