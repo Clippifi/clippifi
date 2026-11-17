@@ -52,5 +52,8 @@ next-env.d.ts
 
 !.env.example
 
-# Competitor reference screenshots (may contain account data; repo is public)
+# Local design references (not published)
 /reference_screens
+
+# Internal research and plans (not published)
+/private-docs

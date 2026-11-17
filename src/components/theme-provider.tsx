@@ -4,9 +4,9 @@ import { usePathname } from "next/navigation";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import type { ComponentProps } from "react";
 
-// Inside the app (/c, and the old /dashboard and /admin) the theme follows the system,
+// Inside the app (/c) the theme follows the system,
 // with a switch in settings. The public site (landing, legal, sign-in) is always light.
-const APP_ROUTES = /^\/(c|dashboard|admin)(\/|$)/;
+const APP_ROUTES = /^\/c(\/|$)/;
 
 export function ThemeProvider(props: ComponentProps<typeof NextThemesProvider>) {
   const pathname = usePathname();

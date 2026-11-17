@@ -25,7 +25,7 @@ Environment variables go in `.env.local` (never committed).
   to get the TikTok app approved quickly.
 - Clippifi 2.0 backend (being built): Better Auth, Drizzle ORM on Postgres
   (PGlite locally, Neon in CI and production), Hono, Zod, TanStack Query, Vitest.
-  Plan: `docs/designs/clippifi-2-cpm-money-loop.md`.
+  Plan: kept outside the repo (ask the team).
 
 ## Brand
 
