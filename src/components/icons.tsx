@@ -10,6 +10,7 @@ import {
   Check as CheckIcon,
   CheckCircle as CheckCircleIcon,
   CircleNotch,
+  Compass as CompassIcon,
   CurrencyCircleDollar,
   Desktop,
   Eye as EyeIcon,
@@ -18,6 +19,7 @@ import {
   Heart as HeartIcon,
   House,
   Info as InfoIcon,
+  Lightning as LightningIcon,
   LinkSimple,
   List,
   Megaphone as MegaphoneIcon,
@@ -72,6 +74,7 @@ export const Banknote = make(Money, "Banknote");
 export const Calendar = make(CalendarDots, "Calendar");
 export const CheckCircle = make(CheckCircleIcon, "CheckCircle");
 export const Clapperboard = make(FilmSlate, "Clapperboard");
+export const Compass = make(CompassIcon, "Compass");
 export const DollarCircle = make(CurrencyCircleDollar, "DollarCircle");
 export const ErrorCircle = make(XCircle, "ErrorCircle");
 export const Eye = make(EyeIcon, "Eye");
@@ -79,6 +82,7 @@ export const Grid = make(SquaresFour, "Grid");
 export const Heart = make(HeartIcon, "Heart");
 export const Home = make(House, "Home");
 export const Info = make(InfoIcon, "Info");
+export const Lightning = make(LightningIcon, "Lightning");
 export const Link = make(LinkSimple, "Link", "bold");
 export const LogOut = make(SignOut, "LogOut");
 export const Megaphone = make(MegaphoneIcon, "Megaphone");

@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { creatorNav, isActive } from "@/components/app/nav";
 import { usePathname, useRouter } from "next/navigation";
-import { ChevronsUpDown, Home, Plug, LogOut, Settings } from "@/components/icons";
+import { ChevronsUpDown, LogOut, Settings } from "@/components/icons";
 import Logo from "@/components/Logo";
 import { UserAvatar } from "@/components/app/user-avatar";
 import {
@@ -27,11 +28,6 @@ import {
 } from "@/components/ui/sidebar";
 import { authClient } from "@/lib/auth-client";
 
-const nav = [
-  { title: "Home", href: "/c", icon: Home },
-  { title: "Connections", href: "/c/connections", icon: Plug },
-  { title: "Settings", href: "/c/settings", icon: Settings },
-];
 
 type SidebarUser = { name: string; email: string; image?: string | null };
 
@@ -63,12 +59,12 @@ export function AppSidebar({ user }: { user: SidebarUser }) {
         <SidebarGroup className="px-3">
           <SidebarGroupContent>
             <SidebarMenu>
-              {nav.map((item) => (
+              {creatorNav.map((item) => (
                 <SidebarMenuItem key={item.href}>
                   <SidebarMenuButton
                     asChild
                     tooltip={item.title}
-                    isActive={item.href === "/c" ? pathname === "/c" : pathname.startsWith(item.href)}
+                    isActive={isActive(item.href, pathname)}
                   >
                     <Link href={item.href}>
                       <item.icon />

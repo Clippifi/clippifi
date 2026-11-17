@@ -1,71 +1,143 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Megaphone } from "@/components/icons";
+import { CampaignCard } from "@/components/app/campaign-card";
+import { CardRail } from "@/components/app/card-rail";
 import { IconTile } from "@/components/app/icon-tile";
-import { PageHeader } from "@/components/app/page-header";
-import { TikTokIcon } from "@/components/app/platform-icons";
+import { MoneyHero } from "@/components/app/money-hero";
+import { PlatformIcons, TikTokIcon } from "@/components/app/platform-icons";
+import { SampleNotice } from "@/components/app/sample-notice";
+import { StatTile, StatTiles } from "@/components/app/stat-tile";
+import { ArrowRight, ChevronRight, Clapperboard, Eye, Megaphone, Wallet } from "@/components/icons";
 import { Button } from "@/components/ui/button";
+import { formatCompact, formatNGNEstimate, formatRate, formatUSD } from "@/lib/format";
+import {
+  SAMPLE_NGN_PER_USD,
+  SAMPLE_NOW,
+  sampleCampaigns,
+  sampleClips,
+  sampleCreatorSummary as summary,
+} from "@/lib/sample-data";
 import { requireSession } from "@/server/session";
 import { getTikTokAccount } from "@/server/tiktok";
 
 export const metadata: Metadata = { title: "Home — Clippifi" };
 
+function greeting(hour: number) {
+  if (hour < 12) return "Good morning";
+  if (hour < 17) return "Good afternoon";
+  return "Good evening";
+}
+
 export default async function HomePage() {
   const { user } = await requireSession();
   const tiktok = await getTikTokAccount(user.id);
   const firstName = user.name?.split(" ")[0];
+  const joined = sampleCampaigns.filter((c) => c.joined).slice(0, 3);
+  const forYou = sampleCampaigns.filter((c) => !c.joined && c.state === "active");
 
   return (
     <>
-      <PageHeader
-        title={firstName ? `Welcome, ${firstName}` : "Welcome to Clippifi"}
-        description="Post clips for brands and get paid for every verified view."
-      />
-      <div className="grid gap-4 md:grid-cols-2">
-        {!tiktok && (
-          <HomeCard
-            tile={<IconTile className="bg-[#161616] text-white"><TikTokIcon /></IconTile>}
-            title="Connect your TikTok"
-            description="Link the account you post from. We use it to confirm your clips are yours and to count their views."
-            action={
-              <Button variant="brand" asChild>
-                <Link href="/c/connections">
-                  Connect TikTok
-                  <ArrowRight />
-                </Link>
-              </Button>
-            }
-          />
-        )}
-        <HomeCard
-          tile={<IconTile tone="brand"><Megaphone /></IconTile>}
-          title="Campaigns are coming"
-          description="Brands are setting up their first campaigns. You'll browse them here and submit your clips."
-        />
+      <div className="flex flex-col gap-2 pt-2">
+        <h1 className="text-[28px] leading-[34px] font-bold tracking-[-0.025em]">
+          {greeting(new Date().getHours())}
+          {firstName ? `, ${firstName}` : ""}
+        </h1>
+        <p className="text-[15px] text-muted-foreground">Pick up where you left off.</p>
+        <SampleNotice />
       </div>
+
+      {!tiktok && (
+        <section className="flex flex-col gap-4 rounded-3xl bg-card p-5 sm:flex-row sm:items-center">
+          <div className="flex min-w-0 flex-1 items-center gap-4">
+          <IconTile className="bg-[#161616] text-white">
+            <TikTokIcon />
+          </IconTile>
+          <div className="min-w-0 flex-1">
+            <h2 className="text-[17px] leading-6 font-semibold tracking-[-0.01em]">Connect your TikTok to start earning</h2>
+            <p className="text-[14px] leading-5 text-muted-foreground">We use it to confirm your clips are yours and count their views.</p>
+          </div>
+          </div>
+          <Button variant="brand" asChild className="w-full sm:w-auto">
+            <Link href="/c/connections">
+              Connect TikTok
+              <ArrowRight />
+            </Link>
+          </Button>
+        </section>
+      )}
+
+      <MoneyHero
+        label="Lifetime earned"
+        amount={formatUSD(summary.lifetimeCents)}
+        estimate={formatNGNEstimate(summary.lifetimeCents, SAMPLE_NGN_PER_USD) + " at today's rate"}
+        action={
+          <Button variant="brand" asChild>
+            <Link href="/c/earnings">
+              <Wallet />
+              Withdraw {formatUSD(summary.availableCents)}
+            </Link>
+          </Button>
+        }
+      >
+        <StatTiles>
+          <StatTile tone="muted" icon={<Wallet />} value={formatUSD(summary.availableCents)} label="Available" />
+          <StatTile tone="info" icon={<Eye />} value={formatCompact(summary.views)} label="Views" />
+          <StatTile tone="brand" icon={<Megaphone />} value={String(summary.campaignsJoined)} label="Campaigns" />
+          <StatTile tone="success" icon={<Clapperboard />} value={String(summary.clips)} label="Clips" />
+        </StatTiles>
+      </MoneyHero>
+
+      <section className="flex flex-col gap-3">
+        <SectionTitle title="Your campaigns" href="/c/campaigns" linkLabel="See all" />
+        <div className="flex flex-col gap-2 rounded-3xl bg-card p-2">
+          {joined.map((c) => {
+            const clips = sampleClips.filter((clip) => clip.campaignId === c.id);
+            const earned = clips.reduce((s, clip) => s + clip.earnedCents, 0);
+            return (
+              <Link
+                key={c.id}
+                href={`/c/campaigns/${c.id}`}
+                className="group flex items-center gap-3 rounded-2xl p-2 transition-colors hover:bg-muted/60"
+              >
+                <span
+                  className="size-14 shrink-0 rounded-2xl"
+                  style={{ backgroundImage: `linear-gradient(135deg, ${c.banner.from}, ${c.banner.to})` }}
+                />
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-[15px] font-semibold">{c.title}</p>
+                  <p className="truncate text-[13px] text-muted-foreground tabular-nums">
+                    {c.brand.name} · {formatRate(c.rateCents, "short")} · {clips.length} clip{clips.length === 1 ? "" : "s"} · earned{" "}
+                    {formatUSD(earned)}
+                  </p>
+                </div>
+                <PlatformIcons platforms={c.platforms} className="hidden sm:flex" />
+                <ChevronRight className="size-4 text-muted-foreground transition-colors group-hover:text-foreground" />
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="flex flex-col gap-3">
+        <SectionTitle title="Campaigns for you" href="/c/campaigns" linkLabel="Discover" />
+        <CardRail>
+          {forYou.map((c) => (
+            <CampaignCard key={c.id} campaign={c} now={SAMPLE_NOW} />
+          ))}
+        </CardRail>
+      </section>
     </>
   );
 }
 
-function HomeCard({
-  tile,
-  title,
-  description,
-  action,
-}: {
-  tile: React.ReactNode;
-  title: string;
-  description: string;
-  action?: React.ReactNode;
-}) {
+function SectionTitle({ title, href, linkLabel }: { title: string; href: string; linkLabel: string }) {
   return (
-    <section className="flex flex-col gap-4 rounded-3xl bg-card p-5">
-      {tile}
-      <div className="flex flex-col gap-1">
-        <h2 className="text-[17px] leading-6 font-semibold tracking-[-0.01em]">{title}</h2>
-        <p className="text-[14px] leading-5 text-muted-foreground">{description}</p>
-      </div>
-      {action && <div className="mt-auto pt-1">{action}</div>}
-    </section>
+    <div className="flex items-center justify-between">
+      <h2 className="text-[20px] leading-7 font-bold tracking-[-0.02em]">{title}</h2>
+      <Link href={href} className="flex items-center gap-0.5 text-[14px] font-medium text-muted-foreground transition-colors hover:text-foreground">
+        {linkLabel}
+        <ChevronRight className="size-4" />
+      </Link>
+    </div>
   );
 }

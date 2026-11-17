@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/app/page-header";
 import { SignOutButton, ThemeChooser } from "@/components/app/settings-controls";
 import { UserAvatar } from "@/components/app/user-avatar";
+import Link from "next/link";
+import { IconTile } from "@/components/app/icon-tile";
+import { TikTokIcon } from "@/components/app/platform-icons";
+import { ChevronRight } from "@/components/icons";
 import { requireSession } from "@/server/session";
 
 export const metadata: Metadata = { title: "Settings — Clippifi" };
@@ -24,6 +28,18 @@ export default async function SettingsPage() {
             </div>
             <SignOutButton />
           </div>
+        </SettingsSection>
+        <SettingsSection title="Connections" description="The accounts you post from. We only read your profile and videos.">
+          <Link
+            href="/c/connections"
+            className="group flex items-center gap-3 rounded-2xl bg-muted p-3 transition-colors hover:bg-[color-mix(in_oklch,var(--muted),var(--foreground)_5%)]"
+          >
+            <IconTile size="sm" className="bg-[#161616] text-white">
+              <TikTokIcon />
+            </IconTile>
+            <span className="flex-1 text-[15px] font-medium">TikTok, Instagram and YouTube</span>
+            <ChevronRight className="size-4 text-muted-foreground transition-colors group-hover:text-foreground" />
+          </Link>
         </SettingsSection>
         <SettingsSection title="Appearance" description="Follow your device, or pick light or dark.">
           <ThemeChooser />
