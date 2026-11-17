@@ -7,4 +7,9 @@ export async function register() {
 }
 
 // Reports errors thrown while rendering pages and handling requests on the server.
-export const onRequestError = Sentry.captureRequestError;
+// Waits (up to 2s) for the report to send: Vercel can pause the function right after
+// the response, which otherwise drops the event before it leaves.
+export async function onRequestError(...args: Parameters<typeof Sentry.captureRequestError>) {
+  Sentry.captureRequestError(...args);
+  await Sentry.flush(2000);
+}
