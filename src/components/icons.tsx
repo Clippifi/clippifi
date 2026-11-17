@@ -1,6 +1,7 @@
 import type { ComponentProps } from "react";
 import type { Icon as PhosphorIcon } from "@phosphor-icons/react";
 import {
+  ArrowLeft as ArrowLeftIcon,
   ArrowRight as ArrowRightIcon,
   Bank as BankIcon,
   CalendarDots,
@@ -14,6 +15,7 @@ import {
   CurrencyCircleDollar,
   Desktop,
   Eye as EyeIcon,
+  FileText,
   FilmSlate,
   Gear,
   Heart as HeartIcon,
@@ -22,6 +24,8 @@ import {
   Lightning as LightningIcon,
   LinkSimple,
   List,
+  Lock as LockIcon,
+  MagnifyingGlass,
   Megaphone as MegaphoneIcon,
   Minus as MinusIcon,
   Money,
@@ -78,13 +82,16 @@ export const Compass = make(CompassIcon, "Compass");
 export const DollarCircle = make(CurrencyCircleDollar, "DollarCircle");
 export const ErrorCircle = make(XCircle, "ErrorCircle");
 export const Eye = make(EyeIcon, "Eye");
+export const File = make(FileText, "File");
 export const Grid = make(SquaresFour, "Grid");
 export const Heart = make(HeartIcon, "Heart");
 export const Home = make(House, "Home");
 export const Info = make(InfoIcon, "Info");
 export const Lightning = make(LightningIcon, "Lightning");
 export const Link = make(LinkSimple, "Link", "bold");
+export const Lock = make(LockIcon, "Lock");
 export const LogOut = make(SignOut, "LogOut");
+export const Search = make(MagnifyingGlass, "Search", "bold");
 export const Megaphone = make(MegaphoneIcon, "Megaphone");
 export const Monitor = make(Desktop, "Monitor");
 export const Moon = make(MoonIcon, "Moon");
@@ -106,6 +113,7 @@ export const Wallet = make(WalletIcon, "Wallet");
 export const Warning = make(WarningIcon, "Warning");
 
 // Small directional marks: bold line.
+export const ArrowLeft = make(ArrowLeftIcon, "ArrowLeft", "bold");
 export const ArrowRight = make(ArrowRightIcon, "ArrowRight", "bold");
 export const Check = make(CheckIcon, "Check", "bold");
 export const ChevronDown = make(CaretDown, "ChevronDown", "bold");

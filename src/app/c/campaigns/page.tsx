@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
-import { EmptyState } from "@/components/app/empty-state";
+import { DiscoverView } from "@/components/app/discover-view";
 import { PageHeader } from "@/components/app/page-header";
-import { Compass } from "@/components/icons";
+import { SampleNotice } from "@/components/app/sample-notice";
+import { SAMPLE_NOW, sampleCampaigns } from "@/lib/sample-data";
 
 export const metadata: Metadata = { title: "Discover — Clippifi" };
 
-// Placeholder until this screen is designed in D2.
-export default function Page() {
+export default function DiscoverPage() {
   return (
     <>
-      <PageHeader title="Discover" description="Campaigns you can join, paid for every 1,000 verified views." />
-      <div className="rounded-3xl bg-card">
-        <EmptyState icon={<Compass />} title="Being designed" description="This screen arrives in the next design batch (D2)." />
+      <div className="flex flex-col gap-2">
+        <PageHeader title="Discover" description="Campaigns you can join. Every one pays for real, verified views." />
+        <SampleNotice />
       </div>
+      <DiscoverView campaigns={sampleCampaigns} now={SAMPLE_NOW} />
     </>
   );
 }

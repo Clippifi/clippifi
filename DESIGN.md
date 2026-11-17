@@ -74,6 +74,13 @@ off-white text, never pure white. Easier on the eyes and more professional.
 - **State banners** use tinted fills (`Notice`), never outlined boxes.
 - The one structural line: a **faint vertical divider** between the desktop sidebar and
   the content (`--sidebar-border`, ~6% opacity). Nothing else gets an edge line.
+- **Page width:** pages are centred (max 1024px) for comfortable reading. Browse pages
+  (Discover) go full width by putting `data-page-width="full"` on their root.
+- **Scrolling rails** (`ScrollRail`): on full-width pages each section is one sideways row
+  at every size: swipe on phones, ← → buttons on larger screens, cards running off the
+  edge to show there's more. Positioned children need a `relative` parent inside the
+  rail, or they widen the page. `CardRail` (grid on desktop) stays for short lists.
+- **Lists on phones:** long lists use compact rows (`CampaignRow`), not a stack of cards.
 - **Sidebar:** 288px open, 72px collapsed. The collapse toggle lives inside the sidebar
   (never in the page, where it would scroll away): beside the logo when open, under the
   symbol in the icon column when collapsed. Collapsed shows only the symbol logo,
