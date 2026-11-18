@@ -74,13 +74,27 @@ off-white text, never pure white. Easier on the eyes and more professional.
 - **State banners** use tinted fills (`Notice`), never outlined boxes.
 - The one structural line: a **faint vertical divider** between the desktop sidebar and
   the content (`--sidebar-border`, ~6% opacity). Nothing else gets an edge line.
-- **Page width:** pages are centred (max 1024px) for comfortable reading. Browse pages
-  (Discover) go full width by putting `data-page-width="full"` on their root.
+- **Fill holds, lines organise:** white cards and fills group content; inside a card, data
+  and structure use hairlines (`border-hairline`, `divide-hairline`): tables, stat strips,
+  timelines, lists. Dashed outline = locked. An element never combines fill, border and shadow.
+- **Campaign page:** the hero's art melts into its own colour and carries brand, title, brief
+  and the main action, edge to edge on phones. Rates are one table with a row per platform.
+  Layout follows the space available (container queries), not the screen width.
+- **Campaign card:** brand row, a one-line title, then paid / pool ("$1.5K / $4K") with the
+  creators and rate chips on the same line, and the budget bar. The rate is a highlighted
+  chip ("up to" when platforms pay differently), not a headline. Every card in a row is the same height.
+- **Verified brands** always use Phosphor's `SealCheck`, never a plain check.
+- **Progress bars** use Animate UI `Progress` (recessed track, lit brand fill).
+- **Page width:** pages are centred (max 1024px) for comfortable reading. Pages with a side
+  panel (the campaign page) use `data-page-width="wide"` (max 1152px); browse pages
+  (Discover) go edge to edge with `data-page-width="full"`.
 - **Scrolling rails** (`ScrollRail`): on full-width pages each section is one sideways row
   at every size: swipe on phones, ← → buttons on larger screens, cards running off the
   edge to show there's more. Positioned children need a `relative` parent inside the
   rail, or they widen the page. `CardRail` (grid on desktop) stays for short lists.
-- **Lists on phones:** long lists use compact rows (`CampaignRow`), not a stack of cards.
+- **Lists on phones:** long campaign lists use `CampaignRow`, which shows everything the
+  campaign card does: square artwork with the type; brand, title, platforms and status beside it; then the same paid / pool amounts ("$1.5K / $4K"),
+  creators, rate chip and budget bar as the campaign card.
 - **Sidebar:** 288px open, 72px collapsed. The collapse toggle lives inside the sidebar
   (never in the page, where it would scroll away): beside the logo when open, under the
   symbol in the icon column when collapsed. Collapsed shows only the symbol logo,

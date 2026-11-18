@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CampaignDetail } from "@/components/app/campaign-detail";
-import { getSampleCampaign, SAMPLE_NOW } from "@/lib/sample-data";
+import { getSampleCampaign, getSampleProof, SAMPLE_NOW } from "@/lib/sample-data";
 import { requireSession } from "@/server/session";
 import { getTikTokAccount } from "@/server/tiktok";
 
@@ -19,5 +19,5 @@ export default async function CampaignPage({ params }: PageProps<"/c/campaigns/[
   const { user } = await requireSession();
   const tiktok = await getTikTokAccount(user.id);
 
-  return <CampaignDetail campaign={campaign} tiktokConnected={Boolean(tiktok)} now={SAMPLE_NOW} />;
+  return <CampaignDetail campaign={campaign} proof={getSampleProof(campaign)} tiktokConnected={Boolean(tiktok)} now={SAMPLE_NOW} />;
 }

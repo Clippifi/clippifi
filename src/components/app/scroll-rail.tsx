@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight } from "@/components/icons";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 // A titled, sideways-scrolling row of cards for full-width pages (DESIGN.md → Rails).
@@ -46,12 +47,12 @@ export function ScrollRail({
         </div>
         {scrollable && (
           <div className="hidden shrink-0 gap-1 sm:flex">
-            <RailButton label="Scroll back" disabled={edges.start} onClick={() => page(-1)}>
-              <ArrowLeft className="size-4" />
-            </RailButton>
-            <RailButton label="Scroll forward" disabled={edges.end} onClick={() => page(1)}>
-              <ArrowRight className="size-4" />
-            </RailButton>
+            <Button variant="outline" size="icon-sm" aria-label="Scroll back" disabled={edges.start} onClick={() => page(-1)}>
+              <ArrowLeft />
+            </Button>
+            <Button variant="outline" size="icon-sm" aria-label="Scroll forward" disabled={edges.end} onClick={() => page(1)}>
+              <ArrowRight />
+            </Button>
           </div>
         )}
       </div>
@@ -67,29 +68,5 @@ export function ScrollRail({
         {children}
       </div>
     </section>
-  );
-}
-
-function RailButton({
-  label,
-  disabled,
-  onClick,
-  children,
-}: {
-  label: string;
-  disabled: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      aria-label={label}
-      disabled={disabled}
-      onClick={onClick}
-      className="flex size-9 items-center justify-center rounded-full bg-card text-foreground shadow-[0_1px_2px_rgb(0_0_0/0.06)] transition-[color,background-color,opacity] hover:bg-muted disabled:pointer-events-none disabled:opacity-35"
-    >
-      {children}
-    </button>
   );
 }

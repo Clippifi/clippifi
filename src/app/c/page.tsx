@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { bestRateCents, ratesDiffer } from "@/lib/campaign-math";
 import { CampaignCard } from "@/components/app/campaign-card";
 import { CardRail } from "@/components/app/card-rail";
 import { IconTile } from "@/components/app/icon-tile";
@@ -106,7 +107,7 @@ export default async function HomePage() {
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-[15px] font-semibold">{c.title}</p>
                   <p className="truncate text-[13px] text-muted-foreground tabular-nums">
-                    {c.brand.name} · {formatRate(c.rateCents, "short")} · {clips.length} clip{clips.length === 1 ? "" : "s"} · earned{" "}
+                    {c.brand.name} · {ratesDiffer(c) ? "up to " : ""}{formatRate(bestRateCents(c), "short")} · {clips.length} clip{clips.length === 1 ? "" : "s"} · earned{" "}
                     {formatUSD(earned)}
                   </p>
                 </div>

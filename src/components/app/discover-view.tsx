@@ -8,7 +8,8 @@ import { ScrollRail } from "@/components/app/scroll-rail";
 import { Tabs, TabsList, TabsTrigger } from "@/components/animate-ui/components/radix/tabs";
 import { Close, Compass, Search } from "@/components/icons";
 import { Button } from "@/components/ui/button";
-import { budgetLeftCents, isAlmostFull, isBeginnerFriendly } from "@/lib/campaign-math";
+import { Input } from "@/components/ui/input";
+import { budgetLeftCents, isAlmostFull, isCampaignBeginnerFriendly } from "@/lib/campaign-math";
 import type { Campaign, CampaignType } from "@/lib/sample-data";
 
 const FILTERS: { value: "all" | CampaignType; label: string }[] = [
@@ -42,7 +43,7 @@ export function DiscoverView({ campaigns, now }: { campaigns: Campaign[]; now: D
   // A campaign can sit on more than one shelf (it fits both); the featured one isn't repeated.
   const featured = [...open].filter((c) => !c.joined).sort((a, b) => budgetLeftCents(b) - budgetLeftCents(a))[0];
   const shelf = (pick: (c: Campaign) => boolean) => open.filter((c) => c.id !== featured?.id && pick(c));
-  const beginner = shelf((c) => isBeginnerFriendly(c) && c.fastReview);
+  const beginner = shelf((c) => isCampaignBeginnerFriendly(c) && c.fastReview);
   const almostFull = shelf((c) => isAlmostFull(c));
   const fresh = shelf((c) => now.getTime() - c.launchedAt.getTime() < WEEK);
 
@@ -51,23 +52,24 @@ export function DiscoverView({ campaigns, now }: { campaigns: Campaign[]; now: D
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div className="relative md:w-80">
           <Search className="pointer-events-none absolute left-3.5 top-1/2 size-[18px] -translate-y-1/2 text-muted-foreground" />
-          <input
+          <Input
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search campaigns or brands"
             aria-label="Search campaigns"
-            className="h-11 w-full rounded-full bg-card pr-10 pl-10 text-[15px] shadow-[0_1px_2px_rgb(0_0_0/0.04)] outline-none placeholder:text-muted-foreground focus-visible:ring-3 focus-visible:ring-ring/40 [&::-webkit-search-cancel-button]:hidden"
+            className="h-11 rounded-full bg-card pr-10 pl-10 text-[15px] shadow-[0_1px_2px_rgb(0_0_0/0.04)] md:text-[15px] [&::-webkit-search-cancel-button]:hidden"
           />
           {query && (
-            <button
-              type="button"
+            <Button
+              variant="ghost"
+              size="icon-xs"
               onClick={() => setQuery("")}
               aria-label="Clear search"
-              className="absolute right-2 top-1/2 flex size-7 -translate-y-1/2 items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
+              className="absolute top-1/2 right-2 -translate-y-1/2"
             >
               <Close className="size-4" />
-            </button>
+            </Button>
           )}
         </div>
         <div className="no-scrollbar -mx-4 overflow-x-auto px-4 md:mx-0 md:px-0">
@@ -126,13 +128,13 @@ export function DiscoverView({ campaigns, now }: { campaigns: Campaign[]; now: D
   );
 }
 
-// Phones: compact rows (no screen-long stack of cards). Larger screens: the card grid.
+// Phones: compact list cards. Larger screens: the card grid.
 function CampaignList({ campaigns, now }: { campaigns: Campaign[]; now: Date }) {
   return (
     <>
-      <div className="flex flex-col gap-1 rounded-3xl bg-card p-2 sm:hidden">
+      <div className="flex flex-col gap-3 sm:hidden">
         {campaigns.map((c) => (
-          <CampaignRow key={c.id} campaign={c} />
+          <CampaignRow key={c.id} campaign={c} now={now} />
         ))}
       </div>
       <div className="hidden gap-4 sm:grid sm:grid-cols-[repeat(auto-fill,minmax(280px,1fr))]">

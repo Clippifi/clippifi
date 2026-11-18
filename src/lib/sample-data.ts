@@ -9,6 +9,13 @@ export type CampaignType = "clipping" | "sound" | "logo" | "ugc";
 export type Platform = "tiktok" | "instagram" | "youtube";
 export type CampaignState = "active" | "submissions_paused" | "ended" | "budget_exhausted";
 
+/** What one platform pays on a campaign. Brands set these per campaign, per platform. */
+export type PlatformRate = {
+  rateCents: number; // per 1,000 verified views
+  minPayoutCents: number;
+  maxPerClipCents: number;
+};
+
 export type Campaign = {
   id: string;
   brand: { name: string; verified: boolean; hue: number };
@@ -17,16 +24,14 @@ export type Campaign = {
   type: CampaignType;
   platforms: Platform[];
   state: CampaignState;
-  rateCents: number; // per 1,000 verified views
+  rates: Partial<Record<Platform, PlatformRate>>;
   budgetCents: number;
   spentCents: number;
   creators: number;
-  minPayoutCents: number;
-  maxPerClipCents: number;
   maxPerCreatorCents: number;
   launchedAt: Date;
   fastReview: boolean;
-  banner: { headline: string; tagline: string; from: string; to: string };
+  banner: { from: string; to: string };
   rules: string[];
   referenceFiles: number;
   joined: boolean;
@@ -77,16 +82,17 @@ export const sampleCampaigns: Campaign[] = [
     type: "clipping",
     platforms: ["tiktok", "instagram"],
     state: "active",
-    rateCents: 150,
+    rates: {
+      tiktok: { rateCents: 150, minPayoutCents: 200, maxPerClipCents: 10000 },
+      instagram: { rateCents: 120, minPayoutCents: 200, maxPerClipCents: 10000 },
+    },
     budgetCents: 400000,
     spentCents: 146900,
     creators: 36,
-    minPayoutCents: 200,
-    maxPerClipCents: 10000,
     maxPerCreatorCents: 50000,
     launchedAt: ago(3),
     fastReview: true,
-    banner: { headline: "FOUNDERS", tagline: "Podcast clips · Season 4", from: "#2b1d4f", to: "#6b4fd8" },
+    banner: { from: "#2b1d4f", to: "#6b4fd8" },
     rules: ["Captions on every clip", "Tag @studionine in the caption", "No other podcast's footage"],
     referenceFiles: 3,
     joined: true,
@@ -100,16 +106,16 @@ export const sampleCampaigns: Campaign[] = [
     type: "ugc",
     platforms: ["tiktok"],
     state: "active",
-    rateCents: 200,
+    rates: {
+      tiktok: { rateCents: 200, minPayoutCents: 300, maxPerClipCents: 15000 },
+    },
     budgetCents: 250000,
     spentCents: 62800,
     creators: 13,
-    minPayoutCents: 300,
-    maxPerClipCents: 15000,
     maxPerCreatorCents: 60000,
     launchedAt: ago(9),
     fastReview: false,
-    banner: { headline: "DROP 07", tagline: "Unboxing reactions", from: "#3a1708", to: "#e2572b" },
+    banner: { from: "#3a1708", to: "#e2572b" },
     rules: ["Your face on camera", "Say the shoe's name", "Post from a personal account"],
     referenceFiles: 1,
     joined: false,
@@ -123,16 +129,16 @@ export const sampleCampaigns: Campaign[] = [
     type: "sound",
     platforms: ["tiktok"],
     state: "active",
-    rateCents: 100,
+    rates: {
+      tiktok: { rateCents: 100, minPayoutCents: 100, maxPerClipCents: 5000 },
+    },
     budgetCents: 150000,
     spentCents: 14100,
     creators: 54,
-    minPayoutCents: 100,
-    maxPerClipCents: 5000,
     maxPerCreatorCents: 20000,
     launchedAt: ago(1),
     fastReview: true,
-    banner: { headline: "MIDNIGHT DANFO", tagline: "Sound campaign", from: "#06261c", to: "#1f9d6b" },
+    banner: { from: "#06261c", to: "#1f9d6b" },
     rules: ["Use the official sound", "Sound plays 10+ seconds", "No explicit content"],
     referenceFiles: 2,
     joined: false,
@@ -146,16 +152,17 @@ export const sampleCampaigns: Campaign[] = [
     type: "logo",
     platforms: ["tiktok", "youtube"],
     state: "submissions_paused",
-    rateCents: 80,
+    rates: {
+      tiktok: { rateCents: 80, minPayoutCents: 100, maxPerClipCents: 4000 },
+      youtube: { rateCents: 40, minPayoutCents: 100, maxPerClipCents: 4000 },
+    },
     budgetCents: 100000,
     spentCents: 81200,
     creators: 22,
-    minPayoutCents: 100,
-    maxPerClipCents: 4000,
     maxPerCreatorCents: 15000,
     launchedAt: ago(16),
     fastReview: false,
-    banner: { headline: "pagewell", tagline: "Logo campaign", from: "#0b2440", to: "#3a86d8" },
+    banner: { from: "#0b2440", to: "#3a86d8" },
     rules: ["Watermark visible all clip", "Study or productivity topics only"],
     referenceFiles: 1,
     joined: true,
@@ -169,16 +176,18 @@ export const sampleCampaigns: Campaign[] = [
     type: "clipping",
     platforms: ["tiktok", "instagram", "youtube"],
     state: "active",
-    rateCents: 120,
+    rates: {
+      tiktok: { rateCents: 120, minPayoutCents: 150, maxPerClipCents: 8000 },
+      instagram: { rateCents: 100, minPayoutCents: 150, maxPerClipCents: 8000 },
+      youtube: { rateCents: 60, minPayoutCents: 150, maxPerClipCents: 8000 },
+    },
     budgetCents: 300000,
     spentCents: 251000,
     creators: 88,
-    minPayoutCents: 150,
-    maxPerClipCents: 8000,
     maxPerCreatorCents: 40000,
     launchedAt: ago(12),
     fastReview: true,
-    banner: { headline: "JOLLOF WARS", tagline: "Cook-off clips", from: "#3b0d0d", to: "#d8452b" },
+    banner: { from: "#3b0d0d", to: "#d8452b" },
     rules: ["Clips from the official stream only", "Captions on", "Credit @mamaputkitchen"],
     referenceFiles: 2,
     joined: false,
@@ -192,16 +201,17 @@ export const sampleCampaigns: Campaign[] = [
     type: "ugc",
     platforms: ["tiktok", "instagram"],
     state: "active",
-    rateCents: 250,
+    rates: {
+      tiktok: { rateCents: 250, minPayoutCents: 500, maxPerClipCents: 20000 },
+      instagram: { rateCents: 200, minPayoutCents: 500, maxPerClipCents: 20000 },
+    },
     budgetCents: 500000,
     spentCents: 41000,
     creators: 9,
-    minPayoutCents: 500,
-    maxPerClipCents: 20000,
     maxPerCreatorCents: 80000,
     launchedAt: ago(0, 20),
     fastReview: false,
-    banner: { headline: "MONEY IN 30", tagline: "UGC · Finance tips", from: "#062a33", to: "#14a3b8" },
+    banner: { from: "#062a33", to: "#14a3b8" },
     rules: ["One tip per video", "Say you use Lumen", "No financial promises"],
     referenceFiles: 4,
     joined: false,
@@ -214,16 +224,16 @@ export const sampleCampaigns: Campaign[] = [
     type: "sound",
     platforms: ["tiktok"],
     state: "active",
-    rateCents: 90,
+    rates: {
+      tiktok: { rateCents: 90, minPayoutCents: 100, maxPerClipCents: 3000 },
+    },
     budgetCents: 120000,
     spentCents: 104000,
     creators: 140,
-    minPayoutCents: 100,
-    maxPerClipCents: 3000,
     maxPerCreatorCents: 12000,
     launchedAt: ago(6),
     fastReview: true,
-    banner: { headline: "LAGOON", tagline: "Sound campaign", from: "#2a0a2e", to: "#c13dbf" },
+    banner: { from: "#2a0a2e", to: "#c13dbf" },
     rules: ["Use the official sound", "Hook plays at least once"],
     referenceFiles: 1,
     joined: false,
@@ -236,16 +246,17 @@ export const sampleCampaigns: Campaign[] = [
     type: "logo",
     platforms: ["tiktok", "instagram"],
     state: "active",
-    rateCents: 70,
+    rates: {
+      tiktok: { rateCents: 70, minPayoutCents: 100, maxPerClipCents: 4000 },
+      instagram: { rateCents: 60, minPayoutCents: 100, maxPerClipCents: 4000 },
+    },
     budgetCents: 200000,
     spentCents: 30000,
     creators: 31,
-    minPayoutCents: 100,
-    maxPerClipCents: 4000,
     maxPerCreatorCents: 16000,
     launchedAt: ago(2),
     fastReview: false,
-    banner: { headline: "FITPAL", tagline: "Logo campaign", from: "#14260a", to: "#6cb42c" },
+    banner: { from: "#14260a", to: "#6cb42c" },
     rules: ["Badge visible the whole clip", "Fitness topics only"],
     referenceFiles: 1,
     joined: false,
@@ -321,3 +332,55 @@ export const sampleCreatorSummary = {
 };
 
 export const getSampleCampaign = (id: string) => sampleCampaigns.find((c) => c.id === id);
+
+/** Results a campaign page shows as proof that it really pays. */
+export type CampaignProof = {
+  totalViews: number;
+  viewsByDay: { day: string; views: number }[]; // running total
+  topClips: { id: string; platform: Platform; views: number; earnedCents: number; hue: number }[];
+  topClippers: { handle: string; earnedCents: number }[];
+  brand: { approvalPercent: number; reviewHours: number; paidCents: number };
+};
+
+const CLIPPER_HANDLES = ["clipsbytobi", "ada.edits", "kingsley.cuts", "viralvee", "mideclips", "zaracuts"];
+
+// Made-up but stable numbers derived from the campaign, so a page looks the same on every visit.
+export function getSampleProof(c: Campaign): CampaignProof {
+  const seed = [...c.id].reduce((sum, ch) => sum + ch.charCodeAt(0), 0);
+  const rates = c.platforms.map((p) => c.rates[p]!.rateCents);
+  const averageRate = rates.reduce((a, b) => a + b, 0) / rates.length;
+  const totalViews = Math.round((c.spentCents / averageRate) * 1000);
+
+  const DAYS = 14;
+  const viewsByDay = Array.from({ length: DAYS }, (_, i) => {
+    const t = (i + 1) / DAYS;
+    const wobble = 1 + Math.sin(i + seed) * 0.03 * (1 - t);
+    return { day: new Date(now.getTime() - (DAYS - 1 - i) * DAY).toISOString(), views: Math.round(totalViews * t ** 1.6 * wobble) };
+  });
+
+  const topClips = Array.from({ length: 6 }, (_, i) => {
+    const platform = c.platforms[(seed + i) % c.platforms.length];
+    const rate = c.rates[platform]!;
+    const earnedCents = Math.round(rate.maxPerClipCents * (0.92 - i * 0.13) * (1 - (seed % 7) / 40));
+    return {
+      id: `${c.id}-clip-${i}`,
+      platform,
+      views: Math.round((earnedCents / rate.rateCents) * 1000),
+      earnedCents,
+      hue: (c.brand.hue + i * 34) % 360,
+    };
+  });
+
+  const topClippers = [0.16, 0.11, 0.07].map((share, i) => ({
+    handle: CLIPPER_HANDLES[(seed + i) % CLIPPER_HANDLES.length],
+    earnedCents: Math.min(Math.round(c.spentCents * share), c.maxPerCreatorCents),
+  }));
+
+  return {
+    totalViews,
+    viewsByDay,
+    topClips,
+    topClippers,
+    brand: { approvalPercent: 82 + (seed % 15), reviewHours: 6 + (seed % 30), paidCents: c.spentCents * (2 + (seed % 5)) },
+  };
+}

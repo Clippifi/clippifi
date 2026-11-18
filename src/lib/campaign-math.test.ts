@@ -1,10 +1,17 @@
 import { describe, expect, it } from "vitest";
 import {
+  bestRateCents,
   budgetLeftCents,
   budgetLeftShare,
+  budgetMessage,
+  budgetUsedPercent,
+  campaignRates,
+  easiestFirstPayoutViews,
   estimateClipEarnings,
   isAlmostFull,
   isBeginnerFriendly,
+  isCampaignBeginnerFriendly,
+  ratesDiffer,
   viewsToCap,
 } from "./campaign-math";
 
@@ -47,5 +54,54 @@ describe("budget", () => {
   it("calls campaigns that pay before 2,000 views beginner friendly", () => {
     expect(isBeginnerFriendly(terms)).toBe(true);
     expect(isBeginnerFriendly({ ...terms, minPayoutCents: 500 })).toBe(false); // 3,334 views
+  });
+});
+
+describe("per-platform rates", () => {
+  const c = {
+    platforms: ["tiktok", "instagram", "youtube"] as ("tiktok" | "instagram" | "youtube")[],
+    rates: {
+      tiktok: { rateCents: 100, minPayoutCents: 500, maxPerClipCents: 10000 }, // first payout at 5,000 views
+      instagram: { rateCents: 150, minPayoutCents: 300, maxPerClipCents: 10000 }, // 2,000 views
+      youtube: { rateCents: 50, minPayoutCents: 500, maxPerClipCents: 10000 }, // 10,000 views
+    },
+  };
+
+  it("keeps each platform's own terms, in the campaign's order", () => {
+    expect(campaignRates(c).map(({ platform }) => platform)).toEqual(["tiktok", "instagram", "youtube"]);
+    expect(campaignRates({ ...c, rates: { tiktok: c.rates.tiktok } })).toHaveLength(1);
+  });
+
+  it("finds the best rate and whether platforms differ", () => {
+    expect(bestRateCents(c)).toBe(150);
+    expect(ratesDiffer(c)).toBe(true);
+    expect(ratesDiffer({ platforms: ["tiktok"], rates: { tiktok: c.rates.tiktok } })).toBe(false);
+  });
+
+  it("uses the easiest platform for the first payout and beginner label", () => {
+    expect(easiestFirstPayoutViews(c)).toBe(2000);
+    expect(isCampaignBeginnerFriendly(c)).toBe(true);
+    expect(isCampaignBeginnerFriendly({ platforms: ["youtube"], rates: { youtube: c.rates.youtube } })).toBe(false);
+  });
+});
+
+describe("budgetUsedPercent", () => {
+  it("rounds down so 100% only means the pool is empty", () => {
+    expect(budgetUsedPercent({ budgetCents: 400000, spentCents: 146900 })).toBe(36);
+    expect(budgetUsedPercent({ budgetCents: 10000, spentCents: 9999 })).toBe(99);
+    expect(budgetUsedPercent({ budgetCents: 10000, spentCents: 12000 })).toBe(100);
+    expect(budgetUsedPercent({ budgetCents: 0, spentCents: 0 })).toBe(0);
+  });
+});
+
+describe("budgetMessage", () => {
+  const left = (share: number) => budgetMessage({ budgetCents: 10000, spentCents: 10000 - share * 10000 });
+
+  it("never says there's plenty of room when the pool is nearly gone", () => {
+    expect(left(0.7)).toBe("Plenty of room to join.");
+    expect(left(0.4)).toBe("Good room left.");
+    expect(left(0.2)).toBe("Filling up fast, post soon.");
+    expect(left(0.05)).toBe("Almost gone, post today.");
+    expect(left(0)).toBe("The budget is used up.");
   });
 });

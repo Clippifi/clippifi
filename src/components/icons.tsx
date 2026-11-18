@@ -10,6 +10,7 @@ import {
   CaretUpDown,
   Check as CheckIcon,
   CheckCircle as CheckCircleIcon,
+  SealCheck as SealCheckIcon,
   CircleNotch,
   Compass as CompassIcon,
   CurrencyCircleDollar,
@@ -22,10 +23,11 @@ import {
   House,
   Info as InfoIcon,
   Lightning as LightningIcon,
-  LinkSimple,
   List,
+  LinkSimple,
   Lock as LockIcon,
   MagnifyingGlass,
+  Medal as MedalIcon,
   Megaphone as MegaphoneIcon,
   Minus as MinusIcon,
   Money,
@@ -77,6 +79,7 @@ export const Bank = make(BankIcon, "Bank");
 export const Banknote = make(Money, "Banknote");
 export const Calendar = make(CalendarDots, "Calendar");
 export const CheckCircle = make(CheckCircleIcon, "CheckCircle");
+export const SealCheck = make(SealCheckIcon, "SealCheck");
 export const Clapperboard = make(FilmSlate, "Clapperboard");
 export const Compass = make(CompassIcon, "Compass");
 export const DollarCircle = make(CurrencyCircleDollar, "DollarCircle");
@@ -90,6 +93,7 @@ export const Info = make(InfoIcon, "Info");
 export const Lightning = make(LightningIcon, "Lightning");
 export const Link = make(LinkSimple, "Link", "bold");
 export const Lock = make(LockIcon, "Lock");
+export const Medal = make(MedalIcon, "Medal");
 export const LogOut = make(SignOut, "LogOut");
 export const Search = make(MagnifyingGlass, "Search", "bold");
 export const Megaphone = make(MegaphoneIcon, "Megaphone");

@@ -60,6 +60,7 @@
   --info-muted: #e5efff;
   /* Lines and focus */
   --border: rgb(37 37 37 / 7%);
+  --hairline: rgb(37 37 37 / 12%);
   --input: #efede7;
   --ring: var(--color-brand-500);
   /* Charts */
@@ -107,6 +108,7 @@
   --info: #5aa2f0;
   --info-muted: rgb(90 162 240 / 15%);
   --border: rgb(255 255 255 / 7%);
+  --hairline: rgb(255 255 255 / 13%);
   --input: #33332f;
   --ring: var(--color-brand-400);
   --chart-1: #ecebe7;
@@ -183,6 +185,7 @@
   --color-info: var(--info);
   --color-info-muted: var(--info-muted);
   --color-border: var(--border);
+  --color-hairline: var(--hairline);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-chart-1: var(--chart-1);
