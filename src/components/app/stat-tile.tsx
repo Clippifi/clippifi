@@ -16,13 +16,13 @@ export function StatTile({
   className?: string;
 }) {
   return (
-    <div className={cn("flex items-center gap-3 rounded-2xl bg-muted/70 p-3", className)}>
+    <div className={cn("flex items-center gap-3 rounded-inner bg-muted/70 p-3", className)}>
       <IconTile tone={tone === "muted" ? "muted" : tone} size="sm" className={tone === "muted" ? "bg-card" : undefined}>
         {icon}
       </IconTile>
       <div className="min-w-0">
         <p className="truncate text-[17px] leading-6 font-semibold tracking-[-0.01em] tabular-nums">{value}</p>
-        <p className="truncate text-[13px] leading-[18px] text-muted-foreground">{label}</p>
+        <p className="line-clamp-2 text-[13px] leading-[18px] text-muted-foreground">{label}</p>
       </div>
     </div>
   );

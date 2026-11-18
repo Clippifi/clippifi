@@ -11,10 +11,12 @@ import { cn } from "@/lib/utils";
 
 const CampaignViewsChart = dynamic(() => import("@/components/app/campaign-views-chart"), {
   ssr: false,
-  loading: () => <Skeleton className="h-48 w-full rounded-2xl" />,
+  loading: () => <Skeleton className="h-48 w-full rounded-inner" />,
 });
 
 const PLATFORM_ICON = { tiktok: TikTokIcon, instagram: InstagramIcon, youtube: YouTubeIcon } as const;
+// Shown when a creator hasn't set a name on their account.
+const DEFAULT_CREATOR_NAME = "Clippifi creator";
 const MEDAL_COLOUR = ["text-[#d9a400]", "text-[#9aa3ad]", "text-[#b8743c]"];
 
 export function CampaignSection({
@@ -27,7 +29,7 @@ export function CampaignSection({
   children: React.ReactNode;
 }) {
   return (
-    <section className="flex min-w-0 flex-col gap-4 rounded-3xl bg-card p-5">
+    <section className="flex min-w-0 flex-col gap-4 rounded-card bg-card p-5">
       <div className="flex items-baseline justify-between gap-3">
         <h2 className="text-[17px] leading-6 font-semibold tracking-[-0.01em]">{title}</h2>
         {aside && <p className="shrink-0 text-[13px] text-muted-foreground tabular-nums">{aside}</p>}
@@ -47,7 +49,7 @@ export function TopClips({ clips }: { clips: Proof["topClips"] }) {
           return (
             <li
               key={clip.id}
-              className="relative flex aspect-[9/16] w-[132px] shrink-0 snap-start flex-col justify-between overflow-hidden rounded-2xl p-2.5 text-white"
+              className="relative flex aspect-[9/16] w-[132px] shrink-0 snap-start flex-col justify-between overflow-hidden rounded-inner p-2.5 text-white"
               style={{ backgroundImage: `linear-gradient(160deg, hsl(${clip.hue} 55% 42%), hsl(${clip.hue + 40} 60% 18%))` }}
             >
               <span className="flex size-6 items-center justify-center rounded-full bg-black/40 backdrop-blur-sm">
@@ -73,17 +75,17 @@ export function TopClippers({ campaign, clippers, joined }: { campaign: Campaign
   const average = campaign.creators > 0 ? Math.round(campaign.spentCents / campaign.creators) : 0;
   return (
     <CampaignSection title="Top clippers" aside={`${formatUSD(average)} average`}>
-      <ol className="grid grid-cols-3 divide-x divide-hairline rounded-2xl border border-hairline">
+      <ol className="grid grid-cols-3 divide-x divide-hairline rounded-inner border border-hairline">
         {clippers.map((clipper, i) => (
-          <li key={clipper.handle} className="flex min-w-0 flex-col items-center gap-1.5 px-2 py-4 text-center">
+          <li key={clipper.id} className="flex min-w-0 flex-col items-center gap-1.5 px-2 py-4 text-center">
             <span className="relative">
-              <UserAvatar user={{ name: clipper.handle }} className="size-12" />
+              <UserAvatar user={{ name: clipper.name ?? clipper.id }} className="size-12" />
               <span className="absolute -right-1.5 -bottom-1 flex size-6 items-center justify-center rounded-full bg-card shadow-[0_1px_3px_rgb(0_0_0/0.18)]">
                 <Medal className={cn("size-4", MEDAL_COLOUR[i])} aria-label={`Rank ${i + 1}`} />
               </span>
             </span>
             {joined ? (
-              <span className="mt-1 w-full truncate text-[13px] font-medium">@{clipper.handle}</span>
+              <span className="mt-1 w-full truncate text-[13px] font-medium">{clipper.name ?? DEFAULT_CREATOR_NAME}</span>
             ) : (
               <span className="mt-1 flex items-center gap-1 text-[12px] text-muted-foreground">
                 <Lock className="size-3" />
@@ -123,7 +125,7 @@ export function BrandTrust({ campaign, brand }: { campaign: Campaign; brand: Pro
   ];
   return (
     <CampaignSection title={`${campaign.brand.name}'s track record`}>
-      <dl className="grid grid-cols-3 divide-x divide-hairline rounded-2xl border border-hairline">
+      <dl className="grid grid-cols-3 divide-x divide-hairline rounded-inner border border-hairline">
         {stats.map((stat) => (
           <div key={stat.label} className="flex min-w-0 flex-col gap-0.5 px-3 py-3.5">
             <dd className="text-[20px] leading-6 font-bold tracking-[-0.02em] tabular-nums">{stat.value}</dd>

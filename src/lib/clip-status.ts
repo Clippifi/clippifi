@@ -75,7 +75,7 @@ export const REJECTION_MESSAGE = {
   handle_reuse: "This TikTok account is linked to another Clippifi user.",
   not_a_member: "Join the campaign first.",
   campaign_not_active: "This campaign isn't taking clips right now.",
-  unsupported_platform: "This campaign takes TikTok clips only.",
+  unsupported_platform: "This campaign doesn't take clips from this platform.",
   review_expired: "The brand didn't review this clip in time.",
   removed_early: "The clip was removed before payout.",
 } as const;

@@ -10,9 +10,8 @@ import { SampleNotice } from "@/components/app/sample-notice";
 import { StatTile, StatTiles } from "@/components/app/stat-tile";
 import { ArrowRight, ChevronRight, Clapperboard, Eye, Megaphone, Wallet } from "@/components/icons";
 import { Button } from "@/components/ui/button";
-import { formatCompact, formatNGNEstimate, formatRate, formatUSD } from "@/lib/format";
+import { formatCompact, formatRate, formatUSD } from "@/lib/format";
 import {
-  SAMPLE_NGN_PER_USD,
   SAMPLE_NOW,
   sampleCampaigns,
   sampleClips,
@@ -48,7 +47,7 @@ export default async function HomePage() {
       </div>
 
       {!tiktok && (
-        <section className="flex flex-col gap-4 rounded-3xl bg-card p-5 sm:flex-row sm:items-center">
+        <section className="flex flex-col gap-4 rounded-card bg-card p-5 sm:flex-row sm:items-center">
           <div className="flex min-w-0 flex-1 items-center gap-4">
           <IconTile className="bg-[#161616] text-white">
             <TikTokIcon />
@@ -70,7 +69,6 @@ export default async function HomePage() {
       <MoneyHero
         label="Lifetime earned"
         amount={formatUSD(summary.lifetimeCents)}
-        estimate={formatNGNEstimate(summary.lifetimeCents, SAMPLE_NGN_PER_USD) + " at today's rate"}
         action={
           <Button variant="brand" asChild>
             <Link href="/c/earnings">
@@ -90,7 +88,7 @@ export default async function HomePage() {
 
       <section className="flex flex-col gap-3">
         <SectionTitle title="Your campaigns" href="/c/campaigns" linkLabel="See all" />
-        <div className="flex flex-col gap-2 rounded-3xl bg-card p-2">
+        <div className="flex flex-col gap-2 rounded-card bg-card p-2">
           {joined.map((c) => {
             const clips = sampleClips.filter((clip) => clip.campaignId === c.id);
             const earned = clips.reduce((s, clip) => s + clip.earnedCents, 0);
@@ -98,10 +96,10 @@ export default async function HomePage() {
               <Link
                 key={c.id}
                 href={`/c/campaigns/${c.id}`}
-                className="group flex items-center gap-3 rounded-2xl p-2 transition-colors hover:bg-muted/60"
+                className="group flex items-center gap-3 rounded-inner p-2 transition-colors hover:bg-muted/60"
               >
                 <span
-                  className="size-14 shrink-0 rounded-2xl"
+                  className="size-14 shrink-0 rounded-inner"
                   style={{ backgroundImage: `linear-gradient(135deg, ${c.banner.from}, ${c.banner.to})` }}
                 />
                 <div className="min-w-0 flex-1">

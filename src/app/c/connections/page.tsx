@@ -66,7 +66,7 @@ export default async function ConnectionsPage({ searchParams }: PageProps<"/c/co
           )}
           {tiktok && overview && !overview.needsReconnect && (
             <>
-              <div className="flex items-center gap-3 rounded-2xl bg-muted p-3">
+              <div className="flex items-center gap-3 rounded-inner bg-muted p-3">
                 <UserAvatar
                   user={{ name: overview.profile.displayName, image: overview.profile.avatarUrl, email: tiktok.id }}
                   className="size-10"
@@ -125,7 +125,7 @@ function PlatformCard({
   children: React.ReactNode;
 }) {
   return (
-    <section className="flex flex-col gap-4 rounded-3xl bg-card p-5">
+    <section className="flex flex-col gap-4 rounded-card bg-card p-5">
       <div className="flex items-center gap-3">
         {tile}
         <div className="min-w-0 flex-1">
@@ -158,7 +158,7 @@ function RecentVideos({ videos }: { videos: TikTokVideo[] }) {
         </p>
       </div>
       {videos.length === 0 ? (
-        <div className="rounded-3xl bg-card">
+        <div className="rounded-card bg-card">
           <EmptyState
             icon={<Video />}
             title="No public videos yet"
@@ -174,7 +174,7 @@ function RecentVideos({ videos }: { videos: TikTokVideo[] }) {
               href={video.shareUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative aspect-[9/16] overflow-hidden rounded-2xl bg-muted outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+              className="group relative aspect-[9/16] overflow-hidden rounded-inner bg-muted outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
             >
               {video.coverImageUrl && (
                 <Image

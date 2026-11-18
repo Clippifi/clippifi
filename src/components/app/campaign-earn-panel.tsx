@@ -23,7 +23,7 @@ export function CampaignEarnPanel({ campaign, action }: { campaign: Campaign; ac
   const earned = estimateClipEarnings(views, rate);
 
   return (
-    <section className="flex flex-col gap-5 rounded-3xl bg-card p-5">
+    <section className="flex flex-col gap-5 rounded-card bg-card p-5">
       <div>
         <p className="text-[14px] font-medium text-muted-foreground">You earn on {PLATFORM_NAME[platform]}</p>
         <p className="text-[30px] leading-9 font-bold tracking-[-0.025em] tabular-nums">
@@ -32,7 +32,7 @@ export function CampaignEarnPanel({ campaign, action }: { campaign: Campaign; ac
         </p>
       </div>
 
-      <div className="flex flex-col gap-3 rounded-2xl bg-muted/70 p-4">
+      <div className="flex flex-col gap-3 rounded-inner bg-muted/70 p-4">
         {rates.length > 1 && (
           <Tabs value={platform} onValueChange={(v) => setPlatform(v as Platform)}>
             <TabsList aria-label="Platform" className="h-9 w-full bg-card/70 dark:bg-background/40">

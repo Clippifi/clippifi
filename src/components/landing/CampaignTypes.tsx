@@ -36,8 +36,8 @@ export default function CampaignTypes() {
 
         <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {types.map(({ icon: Icon, title, text }) => (
-            <div key={title} className="rounded-2xl bg-white p-6 shadow-sm shadow-slate-100 dark:bg-[#111] dark:shadow-none">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-400 text-slate-900">
+            <div key={title} className="rounded-card bg-white p-6 shadow-sm shadow-slate-100 dark:bg-[#111] dark:shadow-none">
+              <span className="flex h-11 w-11 items-center justify-center rounded-inner bg-brand-400 text-slate-900">
                 <Icon className="h-5 w-5" />
               </span>
               <h3 className="mt-4 font-semibold text-slate-900 dark:text-white">{title}</h3>

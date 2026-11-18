@@ -14,9 +14,9 @@ const tones = {
 } as const;
 
 const sizes = {
-  sm: "size-9 rounded-xl [&_svg]:size-[18px]",
-  md: "size-11 rounded-[14px] [&_svg]:size-[22px]",
-  lg: "size-14 rounded-2xl [&_svg]:size-7",
+  sm: "size-9 rounded-thumb [&_svg]:size-[18px]",
+  md: "size-11 rounded-inner [&_svg]:size-[22px]",
+  lg: "size-14 rounded-inner [&_svg]:size-7",
 } as const;
 
 export function IconTile({

@@ -19,9 +19,9 @@ export function formatUSDCompact(cents: number): string {
   return `$${compactNumber.format(dollars)}`;
 }
 
-/** `≈ ₦1,850,000` — an estimate in naira from USD cents at a naira-per-dollar rate. */
-export function formatNGNEstimate(cents: number, ngnPerUsd: number): string {
-  return `≈ ${ngn.format(Math.round((cents / 100) * ngnPerUsd))}`;
+/** `₦158,250` — whole naira. */
+export function formatNGN(naira: number): string {
+  return ngn.format(naira);
 }
 
 /** `$1.50 / 1K views` (long) or `$1.50/1K` (short, for cards). `rateCents` is per 1,000 views. */

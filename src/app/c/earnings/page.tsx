@@ -1,18 +1,42 @@
 import type { Metadata } from "next";
-import { EmptyState } from "@/components/app/empty-state";
+import { EarningsView } from "@/components/app/earnings-view";
 import { PageHeader } from "@/components/app/page-header";
-import { Wallet } from "@/components/icons";
+import { SampleNotice } from "@/components/app/sample-notice";
+import {
+  SAMPLE_NGN_PER_USD,
+  SAMPLE_NOW,
+  SAMPLE_TRANSFER_FEE_NGN,
+  SAMPLE_WITHDRAWN_TODAY_CENTS,
+  sampleClips,
+  sampleCreatorSummary,
+  samplePayoutAccount,
+  sampleRounds,
+  sampleWithdrawals,
+} from "@/lib/sample-data";
 
 export const metadata: Metadata = { title: "Earnings — Clippifi" };
 
-// Placeholder until this screen is designed in D3.
-export default function Page() {
+export default async function EarningsPage({ searchParams }: PageProps<"/c/earnings">) {
+  // ?tab=withdrawals opens straight onto withdrawals (for links from emails and notifications).
+  const { tab } = await searchParams;
   return (
     <>
-      <PageHeader title="Earnings" description="What you've earned, when it unlocks, and withdrawals to your bank." />
-      <div className="rounded-3xl bg-card">
-        <EmptyState icon={<Wallet />} title="Being designed" description="This screen arrives in the next design batch (D3)." />
+      <div className="flex flex-col gap-2">
+        <PageHeader title="Earnings" description="What you've earned, when it unlocks, and withdrawals to your bank." />
+        <SampleNotice />
       </div>
+      <EarningsView
+        summary={sampleCreatorSummary}
+        clips={sampleClips}
+        rounds={sampleRounds}
+        withdrawals={sampleWithdrawals}
+        account={samplePayoutAccount}
+        withdrawnTodayCents={SAMPLE_WITHDRAWN_TODAY_CENTS}
+        ngnPerUsd={SAMPLE_NGN_PER_USD}
+        feeNaira={SAMPLE_TRANSFER_FEE_NGN}
+        now={SAMPLE_NOW}
+        initialTab={tab === "withdrawals" ? "withdrawals" : "unlocking"}
+      />
     </>
   );
 }

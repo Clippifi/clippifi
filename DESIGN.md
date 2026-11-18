@@ -123,8 +123,19 @@ Hierarchy comes from weight and colour: titles in `foreground`, everything suppo
 
 ## 5. Shape, spacing and motion
 
-- Radius: cards and sections `rounded-3xl`; inner blocks `rounded-2xl`; icon tiles
-  `rounded-[14px]`; **buttons, tabs, chips, filters and avatars are pills** (`rounded-full`).
+- **Shape rule: boxes are calm, only controls are pills.** Pick the radius by what the element is:
+
+  | Element | Shape | Token |
+  |---|---|---|
+  | Holds content: cards, sections, dialogs, drawers, banners, heroes | 16px | `rounded-card` |
+  | Sits inside a box: tables, stat strips, inputs for long text, thumbnails | 12px | `rounded-inner` |
+  | Small, 44px or less: small thumbnails, icon tiles | 10px | `rounded-thumb` |
+  | One line you tap or read as a label: buttons, tabs, chips, filters, search, floating bars | Pill | `rounded-full` |
+  | People: avatars | Circle | `rounded-full` |
+
+  1. Anything holding more than one line of content is never a pill.
+  2. Nesting always steps down: card, then inner, then thumb. A child is never rounder than its parent.
+  3. Use the tokens only. `rounded-2xl`, `rounded-3xl` and custom values like `rounded-[20px]` fail lint in our screens.
 - Spacing on a 4px grid. Cards pad 20px. Sibling cards sit 16px apart. **Interactive
   rows (sidebar items, list rows, menu items) always keep a gap of at least 4px** so
   hover and selected fills never touch.
@@ -171,7 +182,7 @@ come from `platform-icons.tsx` and sit on their brand-coloured tiles.
 - `UserAvatar`: the photo, or a soft gradient generated from the person (no initials).
 - `Confirm`: asks before consequential actions; drawer on phones, dialog elsewhere.
 - `MobileTabBar`: floating detached pill, blurred, active icon in a grey circle.
-- Cards and sections: `rounded-3xl bg-card p-5`, image-first cards for media with a
+- Cards and sections: `rounded-card bg-card p-5`, image-first cards for media with a
   dark gradient over the image so text stays readable.
 
 ## 8. Money, numbers and time

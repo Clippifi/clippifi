@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   formatAge,
   formatCompact,
-  formatNGNEstimate,
+  formatNGN,
   formatRate,
   formatRelative,
   formatUSD,
@@ -25,8 +25,8 @@ describe("money", () => {
     expect(formatUSDCompact(12345)).toBe("$123.45");
   });
 
-  it("estimates naira with the ≈ sign and no decimals", () => {
-    expect(formatNGNEstimate(124000, 1500)).toBe("≈ ₦1,860,000");
+  it("formats whole naira for withdrawal estimates", () => {
+    expect(formatNGN(155087)).toBe("₦155,087");
   });
 
   it("formats rates per 1,000 views", () => {

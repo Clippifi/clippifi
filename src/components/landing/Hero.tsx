@@ -110,19 +110,19 @@ export default function Hero() {
           />
 
           <span
-            className="animate-float absolute left-[6%] top-[46%] flex h-10 w-10 items-center justify-center rounded-xl bg-black shadow-lg"
+            className="animate-float absolute left-[6%] top-[46%] flex h-10 w-10 items-center justify-center rounded-inner bg-black shadow-lg"
             style={{ animationDelay: "-2s" }}
           >
             <TikTokGlyph />
           </span>
           <span
-            className="animate-float absolute -right-2 top-[38%] flex h-10 w-10 items-center justify-center rounded-xl bg-red-600 shadow-lg"
+            className="animate-float absolute -right-2 top-[38%] flex h-10 w-10 items-center justify-center rounded-inner bg-red-600 shadow-lg"
             style={{ animationDelay: "-0.5s" }}
           >
             <YoutubeGlyph />
           </span>
           <span
-            className="animate-float absolute left-[10%] bottom-[6%] flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-fuchsia-500 via-pink-500 to-orange-400 shadow-lg"
+            className="animate-float absolute left-[10%] bottom-[6%] flex h-10 w-10 items-center justify-center rounded-inner bg-gradient-to-br from-fuchsia-500 via-pink-500 to-orange-400 shadow-lg"
             style={{ animationDelay: "-3.5s" }}
           >
             <InstagramGlyph />
@@ -154,7 +154,7 @@ function ClipCard({
 }) {
   return (
     <div
-      className={`animate-float absolute overflow-hidden rounded-2xl border border-slate-200 shadow-2xl shadow-slate-300/50 dark:border-white/10 dark:shadow-black/50 ${className}`}
+      className={`animate-float absolute overflow-hidden rounded-card border border-slate-200 shadow-2xl shadow-slate-300/50 dark:border-white/10 dark:shadow-black/50 ${className}`}
       style={{ aspectRatio: "9 / 16", animationDelay: floatDelay }}
     >
       {/* Drawn with CSS so the hero never waits on a photo download. */}
@@ -198,7 +198,7 @@ function ClipCard({
 
 function Highlight({ children }: { children: React.ReactNode }) {
   return (
-    <span className="relative inline-block rounded-xl bg-brand-400 px-2.5 pb-1 text-[#252525]">
+    <span className="relative inline-block rounded-inner bg-brand-400 px-2.5 pb-1 text-[#252525]">
       {children}
     </span>
   );

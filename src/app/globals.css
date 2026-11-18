@@ -204,10 +204,15 @@
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  /* The shape rule lives here (DESIGN.md → Shape). No box is ever rounder than a card:
+     the larger steps are capped, so components added later can't bring in bubbles. */
+  --radius-card: 16px;
+  --radius-inner: 12px;
+  --radius-thumb: 10px;
+  --radius-xl: var(--radius-card);
+  --radius-2xl: var(--radius-card);
+  --radius-3xl: var(--radius-card);
+  --radius-4xl: var(--radius-card);
 }
 
 html {
@@ -441,4 +446,10 @@ body {
   html {
     @apply font-sans;
   }
+}
+
+/* Fills the active dot of the featured carousel while it waits to move on. */
+@keyframes featured-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }

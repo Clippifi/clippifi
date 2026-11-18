@@ -14,10 +14,10 @@ export default function StatsBar() {
   return (
     <section>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-6 rounded-2xl bg-white px-6 py-8 shadow-xl min-[480px]:grid-cols-2 sm:gap-4 sm:px-10 lg:grid-cols-5 dark:bg-[#111] dark:shadow-none">
+        <div className="grid grid-cols-1 gap-6 rounded-card bg-white px-6 py-8 shadow-xl min-[480px]:grid-cols-2 sm:gap-4 sm:px-10 lg:grid-cols-5 dark:bg-[#111] dark:shadow-none">
           {facts.map(({ icon: Icon, value, label }) => (
             <div key={label} className="flex items-center gap-3">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-400 text-slate-900">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-inner bg-brand-400 text-slate-900">
                 <Icon className="h-5 w-5" />
               </span>
               <div className="min-w-0">

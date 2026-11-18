@@ -5,9 +5,9 @@ import { btnPrimary, btnSecondary } from "@/lib/button-styles";
 export default function CtaBanner() {
   return (
     <section className="bg-white px-4 pb-20 sm:px-6 lg:px-8 dark:bg-[#0a0a0a]">
-      <div className="group mx-auto flex max-w-7xl flex-col items-center gap-6 rounded-2xl bg-slate-50 p-8 text-center transition-shadow duration-300 hover:shadow-lg sm:p-10 lg:flex-row lg:justify-between lg:text-left dark:bg-[#111]">
+      <div className="group mx-auto flex max-w-7xl flex-col items-center gap-6 rounded-card bg-slate-50 p-8 text-center transition-shadow duration-300 hover:shadow-lg sm:p-10 lg:flex-row lg:justify-between lg:text-left dark:bg-[#111]">
         <div className="flex flex-col items-center gap-4 lg:flex-row lg:items-center">
-          <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-400 text-slate-900 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+          <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-inner bg-brand-400 text-slate-900 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
             <Eye className="h-6 w-6" />
           </span>
           <div>

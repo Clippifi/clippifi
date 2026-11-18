@@ -74,7 +74,7 @@ export function CampaignCard({ campaign, now, className }: { campaign: Campaign;
     <Link
       href={`/c/campaigns/${campaign.id}`}
       className={cn(
-        "group @container relative flex flex-col overflow-hidden rounded-3xl bg-card outline-none transition-transform duration-200 ease-out hover:-translate-y-0.5 focus-visible:ring-3 focus-visible:ring-ring/50",
+        "group @container relative flex flex-col overflow-hidden rounded-card bg-card outline-none transition-transform duration-200 ease-out hover:-translate-y-0.5 focus-visible:ring-3 focus-visible:ring-ring/50",
         className,
       )}
     >
@@ -128,13 +128,13 @@ export function CampaignRow({ campaign, now, className }: { campaign: Campaign; 
     <Link
       href={`/c/campaigns/${campaign.id}`}
       className={cn(
-        "flex flex-col gap-3 rounded-3xl bg-card p-4 outline-none transition-transform duration-150 ease-out focus-visible:ring-3 focus-visible:ring-ring/50 active:scale-[0.99]",
+        "flex flex-col gap-3 rounded-card bg-card p-4 outline-none transition-transform duration-150 ease-out focus-visible:ring-3 focus-visible:ring-ring/50 active:scale-[0.99]",
         className,
       )}
     >
       <div className="flex items-start gap-3">
         <span
-          className="relative flex size-24 shrink-0 items-end justify-center overflow-hidden rounded-2xl"
+          className="relative flex size-24 shrink-0 items-end justify-center overflow-hidden rounded-inner"
           style={{ backgroundImage: `linear-gradient(135deg, ${campaign.banner.from}, ${campaign.banner.to})` }}
         >
           <span className="w-full bg-linear-to-t from-black/70 to-transparent pt-4 pb-1.5 text-center text-[12px] font-semibold text-white">
@@ -173,7 +173,7 @@ export function CampaignRow({ campaign, now, className }: { campaign: Campaign; 
 
 export function CampaignCardSkeleton() {
   return (
-    <div className="flex flex-col overflow-hidden rounded-3xl bg-card">
+    <div className="flex flex-col overflow-hidden rounded-card bg-card">
       <Skeleton className="aspect-video rounded-none" />
       <div className="flex flex-col gap-2.5 p-4">
         <Skeleton className="h-6 w-3/5" />

@@ -69,7 +69,7 @@ export function CampaignDetail({
     toast.success(`You joined ${campaign.brand.name}'s campaign`, { description: "Post a clip, then submit it within 30 minutes." });
   };
   const action = (className?: string) => (
-    <PrimaryAction joined={joined} accepting={accepting} onJoin={() => setJoinOpen(true)} className={className} />
+    <PrimaryAction campaignId={campaign.id} joined={joined} accepting={accepting} onJoin={() => setJoinOpen(true)} className={className} />
   );
 
   return (
@@ -146,7 +146,7 @@ function CampaignHero({
   return (
     <section
       ref={ref}
-      className="relative min-w-0 overflow-hidden text-white sm:rounded-3xl"
+      className="relative min-w-0 overflow-hidden text-white sm:rounded-card"
       style={{ backgroundColor: campaign.banner.from }}
     >
       <CampaignBanner banner={campaign.banner} className="aspect-[16/10] sm:aspect-[21/9]">
@@ -232,7 +232,7 @@ function RatesTable({ campaign }: { campaign: Campaign }) {
   return (
     <CampaignSection title="What each platform pays">
       <div className="@container">
-        <div className="overflow-hidden rounded-2xl border border-hairline">
+        <div className="overflow-hidden rounded-inner border border-hairline">
           <div className="grid grid-cols-3 border-b border-hairline text-[12px] text-muted-foreground @md:grid-cols-[1.25fr_1fr_1fr_1fr]">
             <span className="hidden px-3 py-2 @md:block">Platform</span>
             <span className="px-3 py-2">Per 1K views</span>
@@ -313,7 +313,7 @@ function RulesAndFiles({ campaign, joined, action }: { campaign: Campaign; joine
   const rules = campaign.rules.length;
   if (!joined) {
     return (
-      <section className="flex flex-col gap-3 rounded-3xl border border-dashed border-hairline p-4 sm:flex-row sm:items-center sm:justify-between">
+      <section className="flex flex-col gap-3 rounded-card border border-dashed border-hairline p-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="flex items-center gap-2.5 text-[15px] font-semibold">
           <Lock className="size-[18px] shrink-0 text-muted-foreground" />
           Join to unlock {rules} rule{rules === 1 ? "" : "s"} and {files} file{files === 1 ? "" : "s"}
@@ -324,7 +324,7 @@ function RulesAndFiles({ campaign, joined, action }: { campaign: Campaign; joine
   }
   return (
     <CampaignSection title="Rules and files">
-      <ul className="divide-y divide-hairline rounded-2xl border border-hairline">
+      <ul className="divide-y divide-hairline rounded-inner border border-hairline">
         {campaign.rules.map((rule) => (
           <li key={rule} className="flex items-start gap-2.5 px-3 py-2.5 text-[15px]">
             <CheckCircle className="mt-0.5 size-[18px] shrink-0 text-success" />
@@ -345,11 +345,13 @@ function RulesAndFiles({ campaign, joined, action }: { campaign: Campaign; joine
 
 // The core action: Join (yellow, a brand action) or, once joined, Submit a clip.
 function PrimaryAction({
+  campaignId,
   joined,
   accepting,
   onJoin,
   className,
 }: {
+  campaignId: string;
   joined: boolean;
   accepting: boolean;
   onJoin: () => void;
@@ -365,7 +367,7 @@ function PrimaryAction({
   if (joined) {
     return (
       <Button variant="brand" asChild className={className}>
-        <Link href="/c/submit">
+        <Link href={`/c/submit?campaign=${campaignId}`}>
           <Upload />
           Submit a clip
         </Link>
@@ -432,7 +434,7 @@ function JoinSheet({
           </li>
         ))}
       </ul>
-      <div className="flex items-center gap-3 rounded-2xl bg-muted p-3">
+      <div className="flex items-center gap-3 rounded-inner bg-muted p-3">
         <IconTile size="sm" className="bg-[#161616] text-white">
           <TikTokIcon />
         </IconTile>

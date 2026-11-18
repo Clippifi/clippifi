@@ -40,6 +40,7 @@ export type Campaign = {
 export type Clip = {
   id: string;
   campaignId: string;
+  platform: Platform;
   title: string;
   coverHue: number;
   postedAt: Date;
@@ -267,6 +268,7 @@ export const sampleClips: Clip[] = [
   {
     id: "clip-1",
     campaignId: "studio-nine-s4",
+    platform: "tiktok",
     title: "\"Nobody tells you the first hire is the hardest\" #founders",
     coverHue: 262,
     postedAt: ago(6, 2),
@@ -279,6 +281,7 @@ export const sampleClips: Clip[] = [
   {
     id: "clip-2",
     campaignId: "studio-nine-s4",
+    platform: "instagram",
     title: "The pricing mistake that almost killed us",
     coverHue: 280,
     postedAt: ago(2, 5),
@@ -291,6 +294,7 @@ export const sampleClips: Clip[] = [
   {
     id: "clip-3",
     campaignId: "pagewell-logo",
+    platform: "tiktok",
     title: "5-hour study with me (finals week)",
     coverHue: 210,
     postedAt: ago(12),
@@ -303,6 +307,7 @@ export const sampleClips: Clip[] = [
   {
     id: "clip-4",
     campaignId: "pagewell-logo",
+    platform: "tiktok",
     title: "How I plan my week in 10 minutes",
     coverHue: 200,
     postedAt: ago(15),
@@ -312,18 +317,93 @@ export const sampleClips: Clip[] = [
     earnedCents: 0,
     keepLiveUntil: ahead(18),
   },
+  {
+    id: "clip-5",
+    campaignId: "studio-nine-s4",
+    platform: "tiktok",
+    title: "Why we fired our biggest customer",
+    coverHue: 300,
+    postedAt: ago(8),
+    submittedAt: ago(8),
+    status: "under_review",
+    views: 31200,
+    earnedCents: 4680,
+    keepLiveUntil: ahead(25),
+  },
+  {
+    id: "clip-6",
+    campaignId: "pagewell-logo",
+    platform: "tiktok",
+    title: "The note-taking habit that saved my grades",
+    coverHue: 180,
+    postedAt: ago(10),
+    submittedAt: ago(10),
+    status: "reconnect_tiktok",
+    views: 26875,
+    earnedCents: 2150,
+    keepLiveUntil: ahead(23),
+  },
+  {
+    id: "clip-7",
+    campaignId: "studio-nine-s4",
+    platform: "tiktok",
+    title: "\"Raise less than you think you need\"",
+    coverHue: 240,
+    postedAt: ago(34),
+    submittedAt: ago(34),
+    status: "finished",
+    views: 62670,
+    earnedCents: 9400,
+    keepLiveUntil: ago(1),
+  },
+];
+
+/** Videos from the creator's connected account, newest first, for the submit picker. */
+export type RecentVideo = { id: string; title: string; coverHue: number; postedAt: Date; alreadySubmitted?: boolean };
+
+const minutesAgo = (minutes: number) => new Date(now.getTime() - minutes * 60 * 1000);
+
+export const sampleRecentVideos: RecentVideo[] = [
+  { id: "v1", title: "The one question every founder dodges", coverHue: 262, postedAt: minutesAgo(6) },
+  { id: "v2", title: "He almost sold the company for $10K", coverHue: 320, postedAt: minutesAgo(19) },
+  { id: "v3", title: "Stop hiring your friends", coverHue: 28, postedAt: minutesAgo(12), alreadySubmitted: true },
+  { id: "v4", title: "How to pitch in 30 seconds", coverHue: 200, postedAt: minutesAgo(47) },
+  { id: "v5", title: "My morning routine, honestly", coverHue: 150, postedAt: minutesAgo(190) },
 ];
 
 export const sampleRounds: EarningRound[] = [
   { id: "r1", clipId: "clip-1", index: 1, startsAt: ago(5), endsAt: ahead(2), availableOn: ahead(5), amountCents: 7231, state: "accruing" },
   { id: "r2", clipId: "clip-3", index: 1, startsAt: ago(11), endsAt: ago(4), availableOn: ago(1), amountCents: 1100, state: "settled" },
   { id: "r3", clipId: "clip-3", index: 2, startsAt: ago(4), endsAt: ahead(3), availableOn: ahead(6), amountCents: 132, state: "waiting", blockedReason: "Waiting for clip check" },
+  { id: "r4", clipId: "clip-5", index: 1, startsAt: ago(7), endsAt: ago(0), availableOn: ahead(3), amountCents: 4680, state: "waiting", blockedReason: "Under review" },
+  { id: "r5", clipId: "clip-6", index: 1, startsAt: ago(9), endsAt: ago(2), availableOn: ahead(1), amountCents: 2150, state: "waiting", blockedReason: "Reconnect TikTok" },
+  { id: "r6", clipId: "clip-7", index: 1, startsAt: ago(33), endsAt: ago(26), availableOn: ago(23), amountCents: 9400, state: "settled" },
+];
+
+export type WithdrawalStatus = "requested" | "sent" | "paid" | "failed";
+
+export type Withdrawal = {
+  id: string;
+  amountCents: number;
+  naira: number; // what reached (or will reach) the bank
+  requestedAt: Date;
+  status: WithdrawalStatus;
+  failureReason?: string;
+};
+
+export const sampleWithdrawals: Withdrawal[] = [
+  { id: "w3", amountCents: 2500, naira: 36885, requestedAt: ago(2, 3), status: "failed", failureReason: "The bank didn't accept the transfer. Your money is back in your balance." },
+  { id: "w2", amountCents: 5000, naira: 73820, requestedAt: ago(9), status: "paid" },
+  { id: "w1", amountCents: 4000, naira: 59050, requestedAt: ago(20), status: "paid" },
 ];
 
 export const sampleCreatorSummary = {
-  lifetimeCents: sampleRounds.reduce((s, r) => s + r.amountCents, 0),
-  availableCents: 1100,
-  pendingCents: 7363,
+  // Everything earned: still in rounds, plus what was already withdrawn.
+  lifetimeCents:
+    sampleRounds.reduce((s, r) => s + r.amountCents, 0) +
+    sampleWithdrawals.filter((w) => w.status === "paid").reduce((s, w) => s + w.amountCents, 0),
+  availableCents: sampleRounds.filter((r) => r.state === "settled").reduce((s, r) => s + r.amountCents, 0),
+  pendingCents: sampleRounds.filter((r) => r.state !== "settled").reduce((s, r) => s + r.amountCents, 0),
   inTransitCents: 0,
   nextUnlock: { amountCents: 7231, on: ahead(5) },
   views: sampleClips.reduce((s, c) => s + c.views, 0),
@@ -338,11 +418,12 @@ export type CampaignProof = {
   totalViews: number;
   viewsByDay: { day: string; views: number }[]; // running total
   topClips: { id: string; platform: Platform; views: number; earnedCents: number; hue: number }[];
-  topClippers: { handle: string; earnedCents: number }[];
+  topClippers: { id: string; name: string | null; earnedCents: number }[]; // name: their account name, if set
   brand: { approvalPercent: number; reviewHours: number; paidCents: number };
 };
 
-const CLIPPER_HANDLES = ["clipsbytobi", "ada.edits", "kingsley.cuts", "viralvee", "mideclips", "zaracuts"];
+// Made-up people. One has no name set, to show the fallback.
+const CLIPPER_NAMES = ["Tobi Adeyemi", "Ada Okafor", null, "Kingsley Eze", "Vee Mensah", "Zara Bello"];
 
 // Made-up but stable numbers derived from the campaign, so a page looks the same on every visit.
 export function getSampleProof(c: Campaign): CampaignProof {
@@ -372,7 +453,8 @@ export function getSampleProof(c: Campaign): CampaignProof {
   });
 
   const topClippers = [0.16, 0.11, 0.07].map((share, i) => ({
-    handle: CLIPPER_HANDLES[(seed + i) % CLIPPER_HANDLES.length],
+    id: `${c.id}-clipper-${i}`,
+    name: CLIPPER_NAMES[(seed + i) % CLIPPER_NAMES.length],
     earnedCents: Math.min(Math.round(c.spentCents * share), c.maxPerCreatorCents),
   }));
 
@@ -384,3 +466,30 @@ export function getSampleProof(c: Campaign): CampaignProof {
     brand: { approvalPercent: 82 + (seed % 15), reviewHours: 6 + (seed % 30), paidCents: c.spentCents * (2 + (seed % 5)) },
   };
 }
+
+/** Where withdrawals go. v1: Nigerian bank accounts. */
+export type PayoutAccount = {
+  bank: string;
+  last4: string;
+  accountName: string; // from the bank's name lookup; also the private payout name
+  addedAt: Date;
+  withdrawalsFrom: Date; // 48 hours after it was added
+};
+
+export const samplePayoutAccount: PayoutAccount = {
+  bank: "GTBank",
+  last4: "4821",
+  accountName: "ADA OKAFOR",
+  addedAt: ago(12),
+  withdrawalsFrom: ago(10),
+};
+
+/** Already sent today, counted against the $1,000 daily limit. */
+export const SAMPLE_WITHDRAWN_TODAY_CENTS = 0;
+export const SAMPLE_TRANSFER_FEE_NGN = 50;
+
+// Until the engine reads Flutterwave's bank list, the form uses these Nigerian banks.
+export const NIGERIAN_BANKS = [
+  "Access Bank", "Ecobank", "Fidelity Bank", "First Bank", "FCMB", "GTBank", "Kuda", "Moniepoint",
+  "Opay", "PalmPay", "Polaris Bank", "Stanbic IBTC", "Sterling Bank", "UBA", "Union Bank", "Wema Bank", "Zenith Bank",
+];

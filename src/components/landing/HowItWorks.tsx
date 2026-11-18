@@ -70,14 +70,14 @@ export default function HowItWorks() {
 
 function Track({ id, label, steps }: { id: string; label: string; steps: Step[] }) {
   return (
-    <div id={id} className="scroll-mt-24 rounded-2xl border border-slate-100 bg-slate-50 p-6 sm:p-8 dark:border-white/10 dark:bg-[#111]">
+    <div id={id} className="scroll-mt-24 rounded-card border border-slate-100 bg-slate-50 p-6 sm:p-8 dark:border-white/10 dark:bg-[#111]">
       <h3 className="inline-flex rounded-full bg-brand-400 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-slate-900">
         {label}
       </h3>
       <ol className="mt-6 flex flex-col gap-6">
         {steps.map(({ icon: Icon, title, text }, i) => (
           <li key={title} className="flex gap-4">
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-slate-900 shadow-sm dark:bg-white/10 dark:text-white">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-inner bg-white text-slate-900 shadow-sm dark:bg-white/10 dark:text-white">
               <Icon className="h-5 w-5" />
             </span>
             <div className="min-w-0">

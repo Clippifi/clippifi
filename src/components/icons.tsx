@@ -17,6 +17,7 @@ import {
   Desktop,
   Eye as EyeIcon,
   FileText,
+  FunnelSimple,
   FilmSlate,
   Gear,
   Heart as HeartIcon,
@@ -86,6 +87,7 @@ export const DollarCircle = make(CurrencyCircleDollar, "DollarCircle");
 export const ErrorCircle = make(XCircle, "ErrorCircle");
 export const Eye = make(EyeIcon, "Eye");
 export const File = make(FileText, "File");
+export const Filter = make(FunnelSimple, "Filter");
 export const Grid = make(SquaresFour, "Grid");
 export const Heart = make(HeartIcon, "Heart");
 export const Home = make(House, "Home");

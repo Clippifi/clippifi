@@ -3,92 +3,130 @@
 import { useMemo, useState } from "react";
 import { CampaignCard, CampaignRow } from "@/components/app/campaign-card";
 import { EmptyState } from "@/components/app/empty-state";
-import { FeaturedCampaign } from "@/components/app/featured-campaign";
+import {
+  ActiveFilterChips,
+  activeFilterChips,
+  DEFAULT_FILTERS,
+  FiltersSheet,
+  TYPE_OPTIONS,
+  type DiscoverFilters,
+  type TypeFilter,
+} from "@/components/app/discover-filters";
+import { FeaturedCarousel } from "@/components/app/featured-carousel";
 import { ScrollRail } from "@/components/app/scroll-rail";
 import { Tabs, TabsList, TabsTrigger } from "@/components/animate-ui/components/radix/tabs";
-import { Close, Compass, Search } from "@/components/icons";
+import { Close, Compass, Filter, Search } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { budgetLeftCents, isAlmostFull, isCampaignBeginnerFriendly } from "@/lib/campaign-math";
-import type { Campaign, CampaignType } from "@/lib/sample-data";
-
-const FILTERS: { value: "all" | CampaignType; label: string }[] = [
-  { value: "all", label: "All" },
-  { value: "clipping", label: "Clipping" },
-  { value: "ugc", label: "UGC" },
-  { value: "sound", label: "Sound" },
-  { value: "logo", label: "Logo" },
-];
+import { bestRateCents, budgetLeftCents, isAlmostFull, isCampaignBeginnerFriendly } from "@/lib/campaign-math";
+import type { Campaign } from "@/lib/sample-data";
 
 const WEEK = 7 * 24 * 60 * 60 * 1000;
+const FEATURED_COUNT = 5;
 
 export function DiscoverView({ campaigns, now }: { campaigns: Campaign[]; now: Date }) {
-  const [filter, setFilter] = useState<"all" | CampaignType>("all");
+  const [filters, setFilters] = useState<DiscoverFilters>(DEFAULT_FILTERS);
+  const [sheetOpen, setSheetOpen] = useState(false);
   const [query, setQuery] = useState("");
 
   const open = useMemo(() => campaigns.filter((c) => c.state === "active"), [campaigns]);
   const q = query.trim().toLowerCase();
-  const browsing = filter === "all" && !q;
-  const results = useMemo(
-    () =>
-      open.filter(
-        (c) =>
-          (filter === "all" || c.type === filter) &&
-          (!q || `${c.title} ${c.brand.name} ${c.brief}`.toLowerCase().includes(q)),
-      ),
-    [open, filter, q],
-  );
+  const browsing = activeFilterChips(filters).length === 0 && !q;
+  const results = useMemo(() => {
+    const { type, platform, sort } = filters;
+    const rateOf = (c: Campaign) => (platform === "any" ? bestRateCents(c) : (c.rates[platform]?.rateCents ?? 0));
+    const matching = open.filter(
+      (c) =>
+        (type === "all" || c.type === type) &&
+        (platform === "any" || c.platforms.includes(platform)) &&
+        (!q || `${c.title} ${c.brand.name} ${c.brief}`.toLowerCase().includes(q)),
+    );
+    if (sort === "rate") return [...matching].sort((a, b) => rateOf(b) - rateOf(a));
+    if (sort === "money") return [...matching].sort((a, b) => budgetLeftCents(b) - budgetLeftCents(a));
+    if (sort === "newest") return [...matching].sort((a, b) => b.launchedAt.getTime() - a.launchedAt.getTime());
+    return matching;
+  }, [open, filters, q]);
+  const typeCounts = Object.fromEntries(
+    TYPE_OPTIONS.map((o) => [o.value, o.value === "all" ? open.length : open.filter((c) => c.type === o.value).length]),
+  ) as Record<TypeFilter, number>;
+  const activeCount = activeFilterChips(filters).length;
 
   // Curated shelves: one sideways-scrolling row each, so Discover stays short at any size.
-  // A campaign can sit on more than one shelf (it fits both); the featured one isn't repeated.
-  const featured = [...open].filter((c) => !c.joined).sort((a, b) => budgetLeftCents(b) - budgetLeftCents(a))[0];
-  const shelf = (pick: (c: Campaign) => boolean) => open.filter((c) => c.id !== featured?.id && pick(c));
+  // A campaign can sit on more than one shelf (it fits both). Featured: the campaigns you
+  // haven't joined with the most money left, up to five.
+  const featured = open
+    .filter((c) => !c.joined)
+    .sort((a, b) => budgetLeftCents(b) - budgetLeftCents(a))
+    .slice(0, FEATURED_COUNT);
+  const shelf = (pick: (c: Campaign) => boolean) => open.filter(pick);
   const beginner = shelf((c) => isCampaignBeginnerFriendly(c) && c.fastReview);
   const almostFull = shelf((c) => isAlmostFull(c));
   const fresh = shelf((c) => now.getTime() - c.launchedAt.getTime() < WEEK);
 
   return (
     <div data-page-width="full" className="flex flex-col gap-8">
-      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-        <div className="relative md:w-80">
-          <Search className="pointer-events-none absolute left-3.5 top-1/2 size-[18px] -translate-y-1/2 text-muted-foreground" />
-          <Input
-            type="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search campaigns or brands"
-            aria-label="Search campaigns"
-            className="h-11 rounded-full bg-card pr-10 pl-10 text-[15px] shadow-[0_1px_2px_rgb(0_0_0/0.04)] md:text-[15px] [&::-webkit-search-cancel-button]:hidden"
-          />
-          {query && (
-            <Button
-              variant="ghost"
-              size="icon-xs"
-              onClick={() => setQuery("")}
-              aria-label="Clear search"
-              className="absolute top-1/2 right-2 -translate-y-1/2"
-            >
-              <Close className="size-4" />
-            </Button>
-          )}
+      <div className="flex flex-col gap-3">
+        {/* Phones: search and one Filters button. Wider screens: the type tabs fit too. */}
+        <div className="flex items-center gap-2 md:gap-3">
+          <div className="relative min-w-0 flex-1 md:max-w-80">
+            <Search className="pointer-events-none absolute left-3.5 top-1/2 size-[18px] -translate-y-1/2 text-muted-foreground" />
+            <Input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search campaigns"
+              aria-label="Search campaigns"
+              className="h-11 rounded-full bg-card pr-10 pl-10 text-[15px] shadow-[0_1px_2px_rgb(0_0_0/0.04)] md:text-[15px] [&::-webkit-search-cancel-button]:hidden"
+            />
+            {query && (
+              <Button
+                variant="ghost"
+                size="icon-xs"
+                onClick={() => setQuery("")}
+                aria-label="Clear search"
+                className="absolute top-1/2 right-2 -translate-y-1/2"
+              >
+                <Close className="size-4" />
+              </Button>
+            )}
+          </div>
+          <div className="ml-auto hidden xl:block">
+            <Tabs value={filters.type} onValueChange={(v) => setFilters({ ...filters, type: v as TypeFilter })}>
+              <TabsList aria-label="Campaign type">
+                {TYPE_OPTIONS.map((o) => (
+                  <TabsTrigger key={o.value} value={o.value}>
+                    {o.label}
+                    <span data-count>{typeCounts[o.value]}</span>
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
+          </div>
+          <Button variant="outline" onClick={() => setSheetOpen(true)} className="h-11 shrink-0 px-4" aria-label={`Filters${activeCount ? `, ${activeCount} on` : ""}`}>
+            <Filter />
+            Filters
+            {activeCount > 0 && (
+              <span className="flex size-5 items-center justify-center rounded-full bg-foreground text-[11px] font-semibold text-background tabular-nums">
+                {activeCount}
+              </span>
+            )}
+          </Button>
         </div>
-        <div className="no-scrollbar -mx-4 overflow-x-auto px-4 md:mx-0 md:px-0">
-          <Tabs value={filter} onValueChange={(v) => setFilter(v as typeof filter)}>
-            <TabsList aria-label="Campaign type">
-              {FILTERS.map((f) => (
-                <TabsTrigger key={f.value} value={f.value}>
-                  {f.label}
-                  <span data-count>{f.value === "all" ? open.length : open.filter((c) => c.type === f.value).length}</span>
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </Tabs>
-        </div>
+        <ActiveFilterChips filters={filters} onChange={setFilters} />
       </div>
+
+      <FiltersSheet
+        open={sheetOpen}
+        onOpenChange={setSheetOpen}
+        filters={filters}
+        onChange={setFilters}
+        typeCounts={typeCounts}
+        resultCount={browsing ? open.length : results.length}
+      />
 
       {browsing ? (
         <>
-          {featured && <FeaturedCampaign campaign={featured} />}
+          {featured.length > 0 && <FeaturedCarousel campaigns={featured} />}
           <Rail title="Beginner friendly" subtitle="Paid before 2,000 views, reviewed fast" campaigns={beginner} now={now} />
           <Rail title="Almost full" subtitle="Less than a quarter of the budget left. Post soon." campaigns={almostFull} now={now} />
           <Rail title="New this week" subtitle="Launched in the last 7 days" campaigns={fresh} now={now} />
@@ -98,17 +136,17 @@ export function DiscoverView({ campaigns, now }: { campaigns: Campaign[]; now: D
           </section>
         </>
       ) : results.length === 0 ? (
-        <div className="rounded-3xl bg-card">
+        <div className="rounded-card bg-card">
           <EmptyState
             icon={<Compass />}
-            title={q ? "No campaigns match your search" : "No campaigns of this type right now"}
-            description={q ? "Try a brand name or a different word." : "New campaigns open every week. Check all campaigns for now."}
+            title={q ? "No campaigns match your search" : "No campaigns match these filters"}
+            description={q ? "Try a brand name or a different word." : "New campaigns open every week. Try fewer filters for now."}
             action={
               <Button
                 variant="secondary"
                 onClick={() => {
                   setQuery("");
-                  setFilter("all");
+                  setFilters(DEFAULT_FILTERS);
                 }}
               >
                 Show all campaigns
