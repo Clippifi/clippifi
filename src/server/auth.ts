@@ -8,6 +8,9 @@ import type { TiktokProfile } from "better-auth/social-providers";
 import { db } from "@/server/db";
 import * as schema from "@/server/db/schema";
 import { sendEmail } from "@/server/email";
+import { eq } from "drizzle-orm";
+import { BETA_MESSAGE, normalizeEmail } from "@/lib/access-rules";
+import { isApprovedEmail, REVIEWER_CODE, REVIEWER_EMAIL } from "@/server/access";
 import { hit } from "@/server/rate-limit";
 
 // Read a setting with stray spaces from copy-pasting removed.
@@ -99,6 +102,10 @@ export const auth = betterAuth({
       // At most 5 sign-in codes per email address per hour, whoever asks for them.
       if (ctx.path === "/email-otp/send-verification-otp" && typeof ctx.body?.email === "string") {
         const email = ctx.body.email.trim().toLowerCase();
+        // Private beta: codes go only to approved emails, so nobody else can start an account.
+        if (!(await isApprovedEmail(email))) {
+          throw new APIError("FORBIDDEN", { message: BETA_MESSAGE, code: "PRIVATE_BETA" });
+        }
         const { allowed, retryAfterSeconds } = await hit(`otp-email:${email}`, 5, 60 * 60);
         if (!allowed) {
           const minutes = Math.max(1, Math.ceil(retryAfterSeconds / 60));
@@ -109,12 +116,45 @@ export const auth = betterAuth({
       }
     }),
   },
+  // Private beta, enforced where accounts and sessions are created, whatever the route
+  // (email code, Google, or anything added later). Existing sessions are re-checked on
+  // every request in requireSession().
+  databaseHooks: {
+    user: {
+      create: {
+        before: async (newUser) => {
+          if (!(await isApprovedEmail(newUser.email))) {
+            throw new APIError("FORBIDDEN", { message: BETA_MESSAGE, code: "PRIVATE_BETA" });
+          }
+        },
+      },
+    },
+    session: {
+      create: {
+        before: async (newSession) => {
+          const [owner] = await db
+            .select({ email: schema.user.email })
+            .from(schema.user)
+            .where(eq(schema.user.id, newSession.userId))
+            .limit(1);
+          if (!owner || !(await isApprovedEmail(owner.email))) {
+            throw new APIError("FORBIDDEN", { message: BETA_MESSAGE, code: "PRIVATE_BETA" });
+          }
+        },
+      },
+    },
+  },
   plugins: [
     emailOTP({
       otpLength: 6,
       expiresIn: 600,
       allowedAttempts: 5,
+      // The TikTok review team can't read our emails, so their one account uses a fixed
+      // code kept in REVIEWER_CODE. Everyone else gets a fresh random code (undefined → default).
+      generateOTP: ({ email }) =>
+        REVIEWER_EMAIL && REVIEWER_CODE && normalizeEmail(email) === REVIEWER_EMAIL ? REVIEWER_CODE : undefined,
       async sendVerificationOTP({ email, otp }) {
+        if (REVIEWER_EMAIL && normalizeEmail(email) === REVIEWER_EMAIL) return; // nobody to email
         await sendEmail({
           to: email,
           subject: `${otp} is your Clippifi code`,

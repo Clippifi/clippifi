@@ -15,7 +15,9 @@ const platforms = [
   { name: "YouTube", status: "Soon" },
 ];
 
-export default function Hero() {
+// privateBeta: sign-up buttons lead to the waitlist instead of /login.
+export default function Hero({ privateBeta = false }: { privateBeta?: boolean }) {
+  const signUpHref = privateBeta ? "/#waitlist" : "/login";
   return (
     <section className="relative overflow-hidden bg-white dark:bg-[#0a0a0a]">
       <div
@@ -42,13 +44,13 @@ export default function Hero() {
             className="animate-fade-in-up mt-8 flex flex-col gap-3 sm:flex-row"
             style={{ animationDelay: "240ms" }}
           >
-            <Link href="/login" className={`group rounded-full px-6 py-3 text-center text-sm ${btnPrimary}`}>
-              Start earning{" "}
+            <Link href={signUpHref} className={`group rounded-full px-6 py-3 text-center text-sm ${btnPrimary}`}>
+              {privateBeta ? "Join the waitlist" : "Start earning"}{" "}
               <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">
                 →
               </span>
             </Link>
-            <Link href="/login" className={`rounded-full px-6 py-3 text-center text-sm ${btnSecondary}`}>
+            <Link href={signUpHref} className={`rounded-full px-6 py-3 text-center text-sm ${btnSecondary}`}>
               Launch a campaign
             </Link>
           </div>
