@@ -1,0 +1,2 @@
+-- Waitlist: creator or brand. IF NOT EXISTS so it is safe to run by hand in the Neon console and again by db:migrate.
+ALTER TABLE "waitlist" ADD COLUMN IF NOT EXISTS "role" text DEFAULT 'creator' NOT NULL;

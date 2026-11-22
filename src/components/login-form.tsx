@@ -16,7 +16,7 @@ const AFTER_SIGN_IN = "/c";
 
 // One form for sign-in and sign-up: Google, or a 6-digit code sent to the email.
 // A new email address gets an account automatically.
-export function LoginForm({ googleEnabled }: { googleEnabled: boolean }) {
+export function LoginForm({ googleEnabled, privateBeta = false }: { googleEnabled: boolean; privateBeta?: boolean }) {
   const router = useRouter();
   const [step, setStep] = useState<"email" | "code">("email");
   const [email, setEmail] = useState("");
@@ -31,7 +31,8 @@ export function LoginForm({ googleEnabled }: { googleEnabled: boolean }) {
 
   async function continueWithGoogle() {
     setBusy("google");
-    const { error } = await authClient.signIn.social({ provider: "google", callbackURL: AFTER_SIGN_IN });
+    // A blocked Google sign-in (private beta) comes back to the private beta page.
+    const { error } = await authClient.signIn.social({ provider: "google", callbackURL: AFTER_SIGN_IN, errorCallbackURL: "/private-beta" });
     if (error) {
       toast.error(error.message ?? "Google sign-in isn't available right now.");
       setBusy(null);
@@ -45,6 +46,11 @@ export function LoginForm({ googleEnabled }: { googleEnabled: boolean }) {
     const { error } = await authClient.emailOtp.sendVerificationOtp({ email: email.trim(), type: "sign-in" });
     setBusy(null);
     if (error) {
+      // Not invited yet (private beta): show the waitlist, with their email filled in.
+      if (error.status === 403) {
+        router.push(`/private-beta?email=${encodeURIComponent(email.trim())}`);
+        return;
+      }
       toast.error(error.message ?? "We couldn't send a code. Try again.");
       return;
     }
@@ -124,7 +130,7 @@ export function LoginForm({ googleEnabled }: { googleEnabled: boolean }) {
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Welcome to Clippifi</CardTitle>
-          <CardDescription>Sign in or create an account</CardDescription>
+          <CardDescription>{privateBeta ? "Sign in with your invite" : "Sign in or create an account"}</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={sendCode}>

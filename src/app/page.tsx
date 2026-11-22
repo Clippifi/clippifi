@@ -7,13 +7,14 @@ import Faq from "@/components/landing/Faq";
 import CtaBanner from "@/components/landing/CtaBanner";
 import Footer from "@/components/landing/Footer";
 import Reveal from "@/components/landing/Reveal";
+import { PRIVATE_BETA } from "@/server/access";
 
 export default function Home() {
   return (
     <div className="flex flex-1 flex-col">
-      <Navbar />
+      <Navbar privateBeta={PRIVATE_BETA} />
       <main className="flex-1">
-        <Hero />
+        <Hero privateBeta={PRIVATE_BETA} />
         <div className="relative z-10 -mt-10 sm:-mt-12">
           <StatsBar />
         </div>
@@ -27,7 +28,7 @@ export default function Home() {
           <Faq />
         </Reveal>
         <Reveal>
-          <CtaBanner />
+          <CtaBanner privateBeta={PRIVATE_BETA} />
         </Reveal>
       </main>
       <Footer />
