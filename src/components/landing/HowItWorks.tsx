@@ -21,7 +21,7 @@ const creatorSteps: Step[] = [
   {
     icon: Wallet,
     title: "Withdraw to your bank",
-    text: "Cash out from $10, straight to your bank.",
+    text: "Cash out from $5, straight to your bank.",
   },
 ];
 
