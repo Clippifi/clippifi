@@ -6,18 +6,18 @@ const facts = [
   { icon: DollarCircle, value: "Real views", label: "Only verified views are paid" },
   { icon: Timer, value: "30 minutes", label: "To submit after you post" },
   { icon: Calendar, value: "7 + 3 days", label: "Earning round, then a short hold" },
-  { icon: Bank, value: "$10", label: "Minimum withdrawal to your bank" },
-  { icon: Percent, value: "10%", label: "Brand fee, only on delivered views" },
+  { icon: Bank, value: "$5", label: "Minimum withdrawal to your bank" },
+  { icon: Percent, value: "10%", label: "Our fee on each side, only on delivered views" },
 ];
 
 export default function StatsBar() {
   return (
     <section>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-6 rounded-2xl bg-white px-6 py-8 shadow-xl min-[480px]:grid-cols-2 sm:gap-4 sm:px-10 lg:grid-cols-5 dark:bg-[#111] dark:shadow-none">
+        <div className="grid grid-cols-1 gap-6 rounded-card bg-white px-6 py-8 shadow-xl min-[480px]:grid-cols-2 sm:gap-4 sm:px-10 lg:grid-cols-5 dark:bg-[#111] dark:shadow-none">
           {facts.map(({ icon: Icon, value, label }) => (
             <div key={label} className="flex items-center gap-3">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-400 text-slate-900">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-inner bg-brand-400 text-slate-900">
                 <Icon className="h-5 w-5" />
               </span>
               <div className="min-w-0">

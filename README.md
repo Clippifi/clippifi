@@ -10,10 +10,25 @@ npm install
 npm run dev        # http://localhost:3000
 ```
 
-Other scripts: `npm run build`, `npm run lint`, `npm run typecheck`, `npm test`,
-`npm run make-admin -- someone@example.com`.
+Other scripts: `npm run build`, `npm run lint`, `npm run typecheck`, `npm test`.
 
-Environment variables go in `.env.local` (never committed).
+Environment variables go in `.env.local` (never committed). Local runs use their own
+database in `.data/` (PGlite), never production.
+
+### Signing in locally
+
+- Your own email: the code arrives by email as usual. Google sign-in works too.
+- **Test accounts:** any address ending in `@clippifi.test` (for example
+  `creator@clippifi.test`, `brand@clippifi.test`) gets its code printed in the terminal
+  running `npm run dev`, not emailed. Use them to try both sides of the marketplace.
+  This only works in development; the live site ignores it.
+
+## How we ship
+
+- `main` is what's live on clippifi.com. Work happens on feature branches.
+- A feature deploys only when it's finished and has been tried locally: then it's merged
+  to `main` and deployed once (`vercel deploy --prod`). Urgent fixes to live features are
+  the only exception.
 
 ## Stack
 

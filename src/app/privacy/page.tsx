@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <LegalLayout title="Privacy Policy" updated={LEGAL_UPDATED}>
+    <LegalLayout title="Privacy Policy" updated={LEGAL_UPDATED} current="privacy">
       <p>
         This Privacy Policy explains what personal information Clippifi collects, why we collect
         it, who we share it with and the choices you have. Clippifi is run by its founders from
@@ -22,6 +22,8 @@ export default function PrivacyPage() {
       <h3>Account information</h3>
       <ul>
         <li>Your name and email address. You sign in with Google or a one-time code sent to your email, so we store no password.</li>
+        <li>Your phone number, which we verify to confirm you’re a real person, stop spam and reach you for support.</li>
+        <li>Your country.</li>
         <li>
           If you sign in with Google, the account identifier, name, email and profile picture Google
           shares with us. We never see your Google password.
@@ -49,6 +51,17 @@ export default function PrivacyPage() {
           encrypted.
         </li>
       </ul>
+      <p>
+        From the videos above we only keep and use the ones you submit to a campaign: their status (public, private,
+        deleted or edited), view snapshots over time, and the fraud signals we work out from them. We never collect your
+        TikTok password, private messages, follower lists, audience demographics, or videos you didn’t submit, and we
+        stop reading data when you unlink.
+      </p>
+      <p>
+        We plan to ask TikTok for further read-only permissions (such as your username, bio, profile link and account
+        verification status) to confirm account ownership and catch fraud. We will update this section, listing each
+        one, before we ask you to grant them.
+      </p>
 
       <h3>Information from other platforms</h3>
       <ul>
@@ -76,21 +89,27 @@ export default function PrivacyPage() {
         </li>
         <li>
           For creators: your bank name, account number, country, and the account holder name your
-          bank returns when we check the account (your “legal payout name”). Bank account numbers
-          are shown masked to the last 4 digits.
+          bank returns when we check the account. Bank account numbers are shown masked to the last
+          4 digits.
         </li>
         <li>
-          If a bank account name does not match your payout name, the ID document or bank statement
-          you upload so we can confirm it.
+          Identity and business checks: our payment partner runs them before a creator’s first payout
+          and before a brand’s first campaign. We receive the result and the verified name, so we can
+          check it matches the bank account. We don’t collect or store identity documents, selfies,
+          BVN, proof of address or bank statements, unless our payment partner requires us to pass
+          them on.
         </li>
+        <li>Tax information, only where the law requires us to collect it.</li>
         <li>Your balance, earnings history and withdrawals.</li>
       </ul>
 
       <h3>Technical and security information</h3>
       <ul>
         <li>
-          IP address, device and browser type, and logs of sign-ins and actions. We use these to
-          keep accounts secure and to detect fraud such as multiple accounts or fake views.
+          IP address, device and browser type, and logs of sign-ins and actions. We use these, with
+          signals from submitted clips (bot-likelihood, duplicate content, account and submission
+          patterns), to keep accounts secure and to detect fraud such as multiple accounts or fake
+          views. A person reviews every decision to reverse earnings.
         </li>
       </ul>
 
@@ -101,7 +120,7 @@ export default function PrivacyPage() {
         <li>To check submissions, count views, calculate earnings and check that clips stay live for the required period.</li>
         <li>To process brand payments, creator withdrawals and refunds, including checking bank account names.</li>
         <li>To show brands the results of their campaigns.</li>
-        <li>To detect and prevent fraud and abuse, and to enforce our <Link href="/terms">Terms of Service</Link>.</li>
+        <li>To detect and prevent fraud and abuse, and to enforce our <Link href="/terms">Creator Terms</Link> and <Link href="/terms/brands">Brand Terms</Link>.</li>
         <li>To send you service messages (for example, a clip needs attention or a withdrawal was paid) and to answer support requests.</li>
         <li>To meet legal, accounting and tax obligations.</li>
       </ul>
@@ -143,12 +162,17 @@ export default function PrivacyPage() {
       <ul>
         <li>
           <strong>Brands</strong>: the display name, social account name, clip details and
-          statistics of clips submitted to their campaigns. Never your email, legal payout name,
-          bank details or ID documents.
+          statistics of clips submitted to their campaigns. Never your email, phone number, verified
+          name, bank details or identity information.
         </li>
         <li>
-          <strong>Payment partners</strong> (Flutterwave, and Paystack where enabled): what they
-          need to take payments, check bank account names and send payouts.
+          <strong>Everyone, on campaign pages</strong>: top creators and top clips show a display
+          name, views and an earnings band (for example “$100+”), never the exact amount.
+        </li>
+        <li>
+          <strong>Our payment partner</strong>: what it needs to take payments, run identity and
+          business checks, check bank account names and send payouts. We will name it here before
+          real payments start.
         </li>
         <li>
           <strong>Service providers</strong> who run parts of the Platform for us: hosting
@@ -178,7 +202,6 @@ export default function PrivacyPage() {
           fraud prevention and dispute resolution, and as the law requires, even after your account
           is closed.
         </li>
-        <li>ID documents and bank statements: only until the review is decided and any dispute about it is resolved, then deleted.</li>
         <li>Security logs: for a limited period, then deleted.</li>
       </ul>
 

@@ -72,7 +72,37 @@ off-white text, never pure white. Easier on the eyes and more professional.
 - **Floating things** (mobile tab bar, active tab pill, menus, dialogs, drawers, toasts)
   get a soft, low-opacity shadow instead of a border.
 - **State banners** use tinted fills (`Notice`), never outlined boxes.
-- The sidebar sits on the page colour with no dividing line.
+- The one structural line: a **faint vertical divider** between the desktop sidebar and
+  the content (`--sidebar-border`, ~6% opacity). Nothing else gets an edge line.
+- **Fill holds, lines organise:** white cards and fills group content; inside a card, data
+  and structure use hairlines (`border-hairline`, `divide-hairline`): tables, stat strips,
+  timelines, lists. Dashed outline = locked. An element never combines fill, border and shadow.
+- **Campaign page:** the hero's art melts into its own colour and carries brand, title, brief
+  and the main action, edge to edge on phones. Rates are one table with a row per platform.
+  Layout follows the space available (container queries), not the screen width.
+- **Campaign card:** brand row, a one-line title, then paid / pool ("$1.5K / $4K") with the
+  creators and rate chips on the same line, and the budget bar. The rate is a highlighted
+  chip ("up to" when platforms pay differently), not a headline. Every card in a row is the same height.
+- **Verified brands** always use `VerifiedBadge` from the icons module: Phosphor's `SealCheck`
+  with a top-lit gradient from the info colour, a white check and a soft shadow. Never a plain
+  check, never a flat seal.
+- **Bottom haze (Discover):** a very light fade of the page colour (70% at the edge) pinned to
+  the bottom of the screen, so cards rise out of it while scrolling. No blur; clicks pass through.
+- **Progress bars** use Animate UI `Progress` (recessed track, lit brand fill).
+- **Page width:** every app page uses the same full width, edge to edge inside the page
+  padding, so moving between Home, Discover, a campaign and My clips never changes the
+  frame. Forms (payout account, settings) cap their own column inside it for readability.
+- **Scrolling rails** (`ScrollRail`): on full-width pages each section is one sideways row
+  at every size: swipe on phones, ← → buttons on larger screens, cards running off the
+  edge to show there's more. Positioned children need a `relative` parent inside the
+  rail, or they widen the page. `CardRail` (grid on desktop) stays for short lists.
+- **Lists on phones:** long campaign lists use `CampaignRow`, which shows everything the
+  campaign card does: square artwork with the type; brand, title, platforms and status beside it; then the same paid / pool amounts ("$1.5K / $4K"),
+  creators, rate chip and budget bar as the campaign card.
+- **Sidebar:** 288px open, 72px collapsed. The collapse toggle lives inside the sidebar
+  (never in the page, where it would scroll away): beside the logo when open, under the
+  symbol in the icon column when collapsed. Collapsed shows only the symbol logo,
+  centred icons with room for their fills, labels as tooltips; no text is ever cut off.
 
 **Before finishing any UI work, check:** is there a visible border around a card or
 container? If yes, replace it with a shade difference.
@@ -97,8 +127,19 @@ Hierarchy comes from weight and colour: titles in `foreground`, everything suppo
 
 ## 5. Shape, spacing and motion
 
-- Radius: cards and sections `rounded-3xl`; inner blocks `rounded-2xl`; icon tiles
-  `rounded-[14px]`; **buttons, tabs, chips, filters and avatars are pills** (`rounded-full`).
+- **Shape rule: boxes are calm, only controls are pills.** Pick the radius by what the element is:
+
+  | Element | Shape | Token |
+  |---|---|---|
+  | Holds content: cards, sections, dialogs, drawers, banners, heroes | 12px | `rounded-card` |
+  | Sits inside a box: tables, stat strips, inputs for long text, thumbnails | 10px | `rounded-inner` |
+  | Small, 44px or less: small thumbnails, icon tiles | 8px | `rounded-thumb` |
+  | One line you tap or read as a label: buttons, tabs, chips, filters, search, floating bars | Pill | `rounded-full` |
+  | People: avatars | Circle | `rounded-full` |
+
+  1. Anything holding more than one line of content is never a pill.
+  2. Nesting always steps down: card, then inner, then thumb. A child is never rounder than its parent.
+  3. Use the tokens only. `rounded-2xl`, `rounded-3xl` and custom values like `rounded-[20px]` fail lint in our screens.
 - Spacing on a 4px grid. Cards pad 20px. Sibling cards sit 16px apart. **Interactive
   rows (sidebar items, list rows, menu items) always keep a gap of at least 4px** so
   hover and selected fills never touch.
@@ -145,7 +186,7 @@ come from `platform-icons.tsx` and sit on their brand-coloured tiles.
 - `UserAvatar`: the photo, or a soft gradient generated from the person (no initials).
 - `Confirm`: asks before consequential actions; drawer on phones, dialog elsewhere.
 - `MobileTabBar`: floating detached pill, blurred, active icon in a grey circle.
-- Cards and sections: `rounded-3xl bg-card p-5`, image-first cards for media with a
+- Cards and sections: `rounded-card bg-card p-5`, image-first cards for media with a
   dark gradient over the image so text stays readable.
 
 ## 8. Money, numbers and time

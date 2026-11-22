@@ -15,7 +15,7 @@ export default async function PrivateBetaPage({ searchParams }: PageProps<"/priv
         <Logo className="h-7 w-7" />
         Clippifi
       </Link>
-      <section className="flex w-full max-w-lg flex-col items-center gap-5 rounded-3xl bg-card p-6 text-center sm:p-8">
+      <section className="flex w-full max-w-lg flex-col items-center gap-5 rounded-card bg-card p-6 text-center sm:p-8">
         <div className="flex flex-col gap-2">
           <h1 className="text-2xl font-bold tracking-tight">We&apos;re in private beta</h1>
           <p className="text-[15px] text-muted-foreground">

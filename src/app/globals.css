@@ -30,7 +30,7 @@
  * actions and text, brand yellow only for core brand actions, green only for money.
  */
 :root {
-  --radius: 0.75rem;
+  --radius: 0.625rem;
   /* Surfaces */
   --background: #f6f5f1;
   --foreground: #252525;
@@ -60,6 +60,7 @@
   --info-muted: #e5efff;
   /* Lines and focus */
   --border: rgb(37 37 37 / 7%);
+  --hairline: rgb(37 37 37 / 12%);
   --input: #efede7;
   --ring: var(--color-brand-500);
   /* Charts */
@@ -75,7 +76,8 @@
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #ebe9e2;
   --sidebar-accent-foreground: #252525;
-  --sidebar-border: transparent;
+  /* The one structural line: a faint divider between the sidebar and the content. */
+  --sidebar-border: rgb(37 37 37 / 6%);
   --sidebar-ring: var(--color-brand-500);
 }
 
@@ -106,6 +108,7 @@
   --info: #5aa2f0;
   --info-muted: rgb(90 162 240 / 15%);
   --border: rgb(255 255 255 / 7%);
+  --hairline: rgb(255 255 255 / 13%);
   --input: #33332f;
   --ring: var(--color-brand-400);
   --chart-1: #ecebe7;
@@ -119,7 +122,7 @@
   --sidebar-primary-foreground: #1e1e1d;
   --sidebar-accent: #2f2f2d;
   --sidebar-accent-foreground: #ecebe7;
-  --sidebar-border: transparent;
+  --sidebar-border: rgb(255 255 255 / 6%);
   --sidebar-ring: var(--color-brand-400);
 }
 
@@ -182,6 +185,7 @@
   --color-info: var(--info);
   --color-info-muted: var(--info-muted);
   --color-border: var(--border);
+  --color-hairline: var(--hairline);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-chart-1: var(--chart-1);
@@ -200,10 +204,15 @@
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  /* The shape rule lives here (DESIGN.md → Shape). No box is ever rounder than a card:
+     the larger steps are capped, so components added later can't bring in bubbles. */
+  --radius-card: 12px;
+  --radius-inner: 10px;
+  --radius-thumb: 8px;
+  --radius-xl: var(--radius-card);
+  --radius-2xl: var(--radius-card);
+  --radius-3xl: var(--radius-card);
+  --radius-4xl: var(--radius-card);
 }
 
 html {
@@ -437,4 +446,10 @@ body {
   html {
     @apply font-sans;
   }
+}
+
+/* Fills the active dot of the featured carousel while it waits to move on. */
+@keyframes featured-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }

@@ -23,7 +23,7 @@ export function Notice({
 }) {
   const { box, icon: Icon } = tones[tone];
   return (
-    <div role={tone === "danger" ? "alert" : "status"} className={cn("flex items-start gap-3 rounded-2xl px-4 py-3", box, className)}>
+    <div role={tone === "danger" ? "alert" : "status"} className={cn("flex items-start gap-3 rounded-card px-4 py-3", box, className)}>
       <Icon className="mt-px size-5 shrink-0" />
       <div className="min-w-0 text-[14px] leading-5">
         {title && <p className="font-semibold">{title}</p>}

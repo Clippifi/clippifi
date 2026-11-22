@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { creatorNav, isActive } from "@/components/app/nav";
 import { usePathname, useRouter } from "next/navigation";
-import { ChevronsUpDown, Home, Plug, LogOut, Settings } from "@/components/icons";
+import { ChevronsUpDown, LogOut, Settings } from "@/components/icons";
 import Logo from "@/components/Logo";
 import { UserAvatar } from "@/components/app/user-avatar";
 import {
@@ -24,19 +25,17 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  SidebarTrigger,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { authClient } from "@/lib/auth-client";
 
-const nav = [
-  { title: "Home", href: "/c", icon: Home },
-  { title: "Connections", href: "/c/connections", icon: Plug },
-  { title: "Settings", href: "/c/settings", icon: Settings },
-];
 
 type SidebarUser = { name: string; email: string; image?: string | null };
 
 export function AppSidebar({ user }: { user: SidebarUser }) {
   const pathname = usePathname();
+  const { state: sidebarState } = useSidebar();
   const router = useRouter();
 
   async function signOut() {
@@ -47,28 +46,42 @@ export function AppSidebar({ user }: { user: SidebarUser }) {
 
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
-              <Link href="/c">
-                <Logo className="size-6" />
-                <span className="text-[17px] font-bold tracking-[-0.02em] text-foreground">Clippifi</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+      {/* Logo and the collapse toggle live together, so the toggle never scrolls away.
+          Expanded: one row, toggle beside the divider. Collapsed: a column, toggle under the symbol. */}
+      {/* Logo and the collapse toggle live together, so the toggle never scrolls away.
+          Expanded: one row, toggle beside the divider. Collapsed: a column, toggle under the symbol. */}
+      <SidebarHeader className="group-data-[collapsible=icon]:px-4">
+        <div className="flex items-center gap-1 group-data-[collapsible=icon]:flex-col">
+          <SidebarMenu className="min-w-0 flex-1">
+            <SidebarMenuItem>
+              <SidebarMenuButton size="lg" asChild className="group-data-[collapsible=icon]:justify-center">
+                <Link href="/c">
+                  <Logo className="size-6" />
+                  <span className="text-[17px] font-bold tracking-[-0.02em] text-foreground group-data-[collapsible=icon]:hidden">
+                    Clippifi
+                  </span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+          {/* Fades in at its new spot instead of sliding across while the sidebar resizes. */}
+          <SidebarTrigger
+            key={sidebarState}
+            title="Collapse or expand the sidebar (Ctrl+B)"
+            className="size-9 shrink-0 rounded-xl text-muted-foreground hover:bg-sidebar-accent/55 hover:text-foreground group-data-[collapsible=icon]:size-10 [&_svg]:size-5 animate-in fade-in-0 duration-200 [animation-delay:180ms] [animation-fill-mode:backwards]"
+          />
+        </div>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup className="px-3">
+        <SidebarGroup className="px-3 group-data-[collapsible=icon]:px-4">
           <SidebarGroupContent>
             <SidebarMenu>
-              {nav.map((item) => (
+              {creatorNav.map((item) => (
                 <SidebarMenuItem key={item.href}>
                   <SidebarMenuButton
                     asChild
                     tooltip={item.title}
-                    isActive={item.href === "/c" ? pathname === "/c" : pathname.startsWith(item.href)}
+                    isActive={isActive(item.href, pathname)}
                   >
                     <Link href={item.href}>
                       <item.icon />
@@ -81,18 +94,18 @@ export function AppSidebar({ user }: { user: SidebarUser }) {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
+      <SidebarFooter className="group-data-[collapsible=icon]:px-4">
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <SidebarMenuButton size="lg" className="data-[state=open]:bg-sidebar-accent">
+                <SidebarMenuButton size="lg" className="data-[state=open]:bg-sidebar-accent group-data-[collapsible=icon]:justify-center">
                   <UserAvatar user={user} className="size-8" />
-                  <div className="grid flex-1 text-left text-sm leading-tight">
+                  <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
                     <span className="truncate font-medium text-foreground">{user.name || "Your account"}</span>
                     <span className="truncate text-xs text-muted-foreground">{user.email}</span>
                   </div>
-                  <ChevronsUpDown className="ml-auto size-4" />
+                  <ChevronsUpDown className="ml-auto size-4 group-data-[collapsible=icon]:hidden" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent side="top" align="start" className="w-(--radix-dropdown-menu-trigger-width) min-w-56">

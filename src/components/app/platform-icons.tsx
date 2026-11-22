@@ -25,3 +25,29 @@ export function YouTubeIcon(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+const PLATFORM_ICON = { tiktok: TikTokIcon, instagram: InstagramIcon, youtube: YouTubeIcon } as const;
+const PLATFORM_NAME = { tiktok: "TikTok", instagram: "Instagram", youtube: "YouTube" } as const;
+
+// The platforms a campaign accepts, as small soft circles.
+export function PlatformIcons({
+  platforms,
+  className,
+}: {
+  platforms: (keyof typeof PLATFORM_ICON)[];
+  className?: string;
+}) {
+  return (
+    <span className={["flex items-center gap-1", className].filter(Boolean).join(" ")}>
+      {platforms.map((p) => {
+        const Icon = PLATFORM_ICON[p];
+        return (
+          <span key={p} title={PLATFORM_NAME[p]} className="inline-flex size-6 items-center justify-center rounded-full bg-muted text-foreground">
+            <Icon className="size-3.5" />
+            <span className="sr-only">{PLATFORM_NAME[p]}</span>
+          </span>
+        );
+      })}
+    </span>
+  );
+}

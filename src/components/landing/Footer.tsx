@@ -29,9 +29,10 @@ const columns = [
   {
     title: "Legal",
     links: [
-      { label: "Terms of Service", href: "/terms" },
+      { label: "Creator Terms", href: "/terms" },
+      { label: "Brand Terms", href: "/terms/brands" },
       { label: "Privacy Policy", href: "/privacy" },
-      { label: "Refund & Payout Policy", href: "/refund-policy" },
+      { label: "Refunds & Payouts", href: "/refund-policy" },
     ],
   },
 ] as const;
