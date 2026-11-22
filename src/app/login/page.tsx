@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Logo from "@/components/Logo";
 import { LoginForm } from "@/components/login-form";
+import { PRIVATE_BETA } from "@/server/access";
 
 export const metadata: Metadata = {
   title: "Sign in — Clippifi",
@@ -17,7 +18,7 @@ export default function LoginPage() {
           Clippifi
         </Link>
         {/* Google shows only once its keys are configured. */}
-        <LoginForm googleEnabled={Boolean(process.env.GOOGLE_CLIENT_ID?.trim())} />
+        <LoginForm googleEnabled={Boolean(process.env.GOOGLE_CLIENT_ID?.trim())} privateBeta={PRIVATE_BETA} />
       </div>
     </main>
   );

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Eye, Play } from "@/components/icons";
+import { WaitlistForm } from "@/components/waitlist-form";
 import { btnPrimary, btnSecondary } from "@/lib/button-styles";
 
 const HERO_TONES: Record<string, string> = {
@@ -15,7 +16,8 @@ const platforms = [
   { name: "YouTube", status: "Soon" },
 ];
 
-export default function Hero() {
+// privateBeta: the waitlist form replaces the sign-up buttons.
+export default function Hero({ privateBeta = false }: { privateBeta?: boolean }) {
   return (
     <section className="relative overflow-hidden bg-white dark:bg-[#0a0a0a]">
       <div
@@ -38,20 +40,33 @@ export default function Hero() {
             the link, and get paid for every view we verify. No pitching, no follower minimum.
           </p>
 
-          <div
-            className="animate-fade-in-up mt-8 flex flex-col gap-3 sm:flex-row"
-            style={{ animationDelay: "240ms" }}
-          >
-            <Link href="/login" className={`group rounded-full px-6 py-3 text-center text-sm ${btnPrimary}`}>
-              Start earning{" "}
-              <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">
-                →
-              </span>
-            </Link>
-            <Link href="/login" className={`rounded-full px-6 py-3 text-center text-sm ${btnSecondary}`}>
-              Launch a campaign
-            </Link>
-          </div>
+          {privateBeta ? (
+            <div
+              id="waitlist"
+              className="animate-fade-in-up mt-8 max-w-lg scroll-mt-24"
+              style={{ animationDelay: "240ms" }}
+            >
+              <WaitlistForm compact />
+              <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
+                We&apos;re in private beta, inviting creators and brands in small groups.
+              </p>
+            </div>
+          ) : (
+            <div
+              className="animate-fade-in-up mt-8 flex flex-col gap-3 sm:flex-row"
+              style={{ animationDelay: "240ms" }}
+            >
+              <Link href="/login" className={`group rounded-full px-6 py-3 text-center text-sm ${btnPrimary}`}>
+                Start earning{" "}
+                <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">
+                  →
+                </span>
+              </Link>
+              <Link href="/login" className={`rounded-full px-6 py-3 text-center text-sm ${btnSecondary}`}>
+                Launch a campaign
+              </Link>
+            </div>
+          )}
 
           <div
             className="animate-fade-in-up mt-12"

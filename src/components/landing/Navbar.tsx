@@ -19,7 +19,8 @@ const sectionLinks: NavLink[] = [
 const navLink =
   "relative text-sm text-slate-600 hover:text-brand-600 transition-colors after:absolute after:inset-x-0 after:-bottom-1 after:h-0.5 after:origin-left after:scale-x-0 after:bg-brand-500 after:transition-transform after:duration-200 hover:after:scale-x-100 dark:text-slate-300 dark:hover:text-brand-400 dark:after:bg-brand-400";
 
-export default function Navbar() {
+// privateBeta: "Sign up" becomes "Join the waitlist"; "Log in" stays for invited people.
+export default function Navbar({ privateBeta = false }: { privateBeta?: boolean }) {
   const [open, setOpen] = useState(false);
   const { data: session } = authClient.useSession();
   const user = session?.user;
@@ -59,10 +60,10 @@ export default function Navbar() {
                 Log in
               </Link>
               <Link
-                href="/login"
+                href={privateBeta ? "/#waitlist" : "/login"}
                 className={`rounded-full px-4 py-2 text-sm ${btnPrimary}`}
               >
-                Sign up
+                {privateBeta ? "Join the waitlist" : "Sign up"}
               </Link>
             </>
           )}
@@ -121,10 +122,11 @@ export default function Navbar() {
                     Log in
                   </Link>
                   <Link
-                    href="/login"
+                    href={privateBeta ? "/#waitlist" : "/login"}
+                    onClick={() => setOpen(false)}
                     className={`flex-1 rounded-full px-4 py-2 text-center text-sm ${btnPrimary}`}
                   >
-                    Sign up
+                    {privateBeta ? "Join the waitlist" : "Sign up"}
                   </Link>
                 </>
               )}

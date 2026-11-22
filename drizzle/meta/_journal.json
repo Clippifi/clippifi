@@ -15,6 +15,20 @@
       "when": 1794916585071,
       "tag": "0001_rate_limit",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1795025944535,
+      "tag": "0002_private_beta",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1795363377795,
+      "tag": "0003_waitlist_role",
+      "breakpoints": true
     }
   ]
 }
