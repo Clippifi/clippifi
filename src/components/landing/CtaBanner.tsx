@@ -37,7 +37,7 @@ export default function CtaBanner({ privateBeta = false }: { privateBeta?: boole
 
 function WaitlistBanner() {
   return (
-    <section id="waitlist" className="scroll-mt-24 bg-white px-4 pb-20 sm:px-6 lg:px-8 dark:bg-[#0a0a0a]">
+    <section className="bg-white px-4 pb-20 sm:px-6 lg:px-8 dark:bg-[#0a0a0a]">
       <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 rounded-2xl bg-slate-50 p-8 text-center sm:p-10 dark:bg-[#111]">
         <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-400 text-slate-900">
           <Eye className="h-6 w-6" />

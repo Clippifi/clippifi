@@ -7,6 +7,8 @@ export const waitlist = pgTable("waitlist", {
   id: text("id").primaryKey(),
   email: text("email").notNull().unique(),
   name: text("name"),
+  // "creator" or "brand": who to invite first.
+  role: text("role").notNull().default("creator"),
   status: text("status").notNull().default("waiting"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
