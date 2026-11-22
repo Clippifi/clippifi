@@ -88,3 +88,16 @@ export function viewsToMinimum(minPayoutCents: number, rateCents: number): numbe
   if (rateCents <= 0) return 0;
   return Math.ceil((minPayoutCents * 1000) / rateCents);
 }
+
+/**
+ * A band for what someone earned, for anything other people can see (leaderboards, top
+ * clips): never the exact amount (FOUNDATION.md §11, D6). Bands: under $10, $10+, $100+,
+ * $1K+, $10K+.
+ */
+export function earningsTier(cents: number): string {
+  if (cents >= 1_000_000) return "$10K+";
+  if (cents >= 100_000) return "$1K+";
+  if (cents >= 10_000) return "$100+";
+  if (cents >= 1_000) return "$10+";
+  return "Under $10";
+}

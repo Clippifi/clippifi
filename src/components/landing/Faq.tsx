@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ChevronDown } from "@/components/icons";
 import { SUPPORT_EMAIL } from "@/lib/site";
 
-// Answers must match the Terms of Service and the Refund & Payout Policy.
+// Answers must match the Creator Terms, Brand Terms and Refunds & Payouts pages.
 const faqs: { q: string; a: React.ReactNode }[] = [
   {
     q: "Do I need a lot of followers?",
@@ -14,7 +14,7 @@ const faqs: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: "When do I get paid?",
-    a: "A clip earns in 7-day rounds from when it's approved. Each round is held for 3 days, then the money is available to withdraw. Views count for 30 days from submission.",
+    a: "A clip starts earning once it passes the campaign's minimum views. Brands approve within 48 hours, or the clip is approved automatically. It's then paid in 7-day rounds, each held for 3 days before the money is yours to withdraw. Views count for 30 days from submission.",
   },
   {
     q: "Can I delete the clip after I'm paid?",
@@ -22,11 +22,11 @@ const faqs: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: "How do I withdraw, and where?",
-    a: "From $10, up to $1,000 a day, to a bank account in your local currency. Nigeria is supported first and more countries are coming. You see the exchange rate and transfer fee before you confirm.",
+    a: "From $5, up to $350 a day, one payout a day, to a bank account in your name. Nigeria is supported first and more countries are coming. Before your first payout our payment partner checks your identity once. You see the exchange rate and transfer fee before you confirm.",
   },
   {
     q: "What does a campaign cost a brand?",
-    a: "You set the budget (from $100) and the rate you pay for views. Our fee is 10%, charged only on the views you receive. When the campaign ends, unspent budget and its fee come back to you.",
+    a: "You set the budget (from $200) and the rate you pay for views. Our fee is 10% on top, charged only on the views you receive; creators also pay 10% of what they earn. When the campaign ends, unspent budget and its fee come back to you as credit for your next campaign, or as a refund.",
   },
   {
     q: "Which platforms are supported?",

@@ -5,7 +5,7 @@ import { InstagramIcon, TikTokIcon, YouTubeIcon } from "@/components/app/platfor
 import { UserAvatar } from "@/components/app/user-avatar";
 import { Eye, Lock, Medal } from "@/components/icons";
 import { Skeleton } from "@/components/ui/skeleton";
-import { formatCompact, formatUSD, formatUSDCompact } from "@/lib/format";
+import { earningsTier, formatCompact, formatUSD, formatUSDCompact } from "@/lib/format";
 import type { Campaign, CampaignProof as Proof } from "@/lib/sample-data";
 import { cn } from "@/lib/utils";
 
@@ -60,7 +60,9 @@ export function TopClips({ clips }: { clips: Proof["topClips"] }) {
                   <Eye className="size-3.5" />
                   {formatCompact(clip.views)}
                 </span>
-                <span className="text-[17px] leading-5 font-bold">{formatUSD(clip.earnedCents)}</span>
+                <span className="text-[17px] leading-5 font-bold" title="Earnings shown as a band, never the exact amount">
+                  {earningsTier(clip.earnedCents)}
+                </span>
               </span>
             </li>
           );
@@ -92,7 +94,7 @@ export function TopClippers({ campaign, clippers, joined }: { campaign: Campaign
                 Join to see
               </span>
             )}
-            <span className="text-[16px] leading-5 font-bold text-success tabular-nums">{formatUSDCompact(clipper.earnedCents)}</span>
+            <span className="text-[16px] leading-5 font-bold text-success tabular-nums">{earningsTier(clipper.earnedCents)}</span>
           </li>
         ))}
       </ol>

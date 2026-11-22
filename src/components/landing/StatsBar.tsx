@@ -6,8 +6,8 @@ const facts = [
   { icon: DollarCircle, value: "Real views", label: "Only verified views are paid" },
   { icon: Timer, value: "30 minutes", label: "To submit after you post" },
   { icon: Calendar, value: "7 + 3 days", label: "Earning round, then a short hold" },
-  { icon: Bank, value: "$10", label: "Minimum withdrawal to your bank" },
-  { icon: Percent, value: "10%", label: "Brand fee, only on delivered views" },
+  { icon: Bank, value: "$5", label: "Minimum withdrawal to your bank" },
+  { icon: Percent, value: "10%", label: "Our fee on each side, only on delivered views" },
 ];
 
 export default function StatsBar() {

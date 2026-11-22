@@ -61,8 +61,8 @@ export function ScrollRail({
         onScroll={update}
         className={cn(
           // Bleed to the screen edges so cards slide under them, not under the page padding.
-          "no-scrollbar relative -mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-px-4 px-4 pb-1 md:-mx-8 md:scroll-px-8 md:gap-4 md:px-8",
-          "[&>*]:w-[80%] [&>*]:shrink-0 [&>*]:snap-start sm:[&>*]:w-[300px] 2xl:[&>*]:w-[320px]",
+          "no-scrollbar relative -mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-px-4 px-4 pb-1 md:-mx-8 md:scroll-px-8 md:px-8",
+          "[&>*]:w-[80%] [&>*]:shrink-0 [&>*]:snap-start sm:[&>*]:w-[360px]",
         )}
       >
         {children}

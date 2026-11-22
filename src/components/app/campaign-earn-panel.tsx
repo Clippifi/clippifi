@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/animate-ui/components/radix/tabs";
 import { BudgetMeter } from "@/components/app/budget-meter";
 import { Slider } from "@/components/ui/slider";
-import { budgetLeftCents, budgetMessage, campaignRates, estimateClipEarnings, viewsToCap } from "@/lib/campaign-math";
+import { budgetLeftCents, budgetMessage, campaignRates, creatorRateFor, estimateClipEarnings, viewsToCap } from "@/lib/campaign-math";
 import { formatCompact, formatCount, formatUSD, formatUSDCompact, viewsToMinimum } from "@/lib/format";
 import type { Campaign, Platform } from "@/lib/sample-data";
 
@@ -14,7 +14,7 @@ const PLATFORM_NAME = { tiktok: "TikTok", instagram: "Instagram", youtube: "YouT
 export function CampaignEarnPanel({ campaign, action }: { campaign: Campaign; action: React.ReactNode }) {
   const rates = campaignRates(campaign);
   const [platform, setPlatform] = useState<Platform>(rates[0].platform);
-  const rate = campaign.rates[platform] ?? rates[0].rate;
+  const rate = creatorRateFor(campaign, platform) ?? rates[0].rate;
 
   const cap = viewsToCap(rate);
   const maxViews = Math.max(10_000, Math.ceil((cap * 1.2) / 1000) * 1000);

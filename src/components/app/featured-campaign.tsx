@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { BrandMark } from "@/components/app/campaign-card";
-import { SealCheck } from "@/components/icons";
+import { VerifiedBadge } from "@/components/icons";
 import { formatRate, formatUSDCompact } from "@/lib/format";
 import { bestRateCents, ratesDiffer } from "@/lib/campaign-math";
 import type { Campaign } from "@/lib/sample-data";
@@ -21,7 +21,7 @@ export function FeaturedCampaign({ campaign }: { campaign: Campaign }) {
         <span className="flex items-center gap-2 text-[12px] font-medium text-white/85 sm:text-[13px]">
           <BrandMark hue={campaign.brand.hue} className="ring-2 ring-white/30" />
           {campaign.brand.name}
-          {campaign.brand.verified && <SealCheck className="size-4" aria-label="Verified brand" />}
+          {campaign.brand.verified && <VerifiedBadge />}
           <span className="rounded-full bg-white/15 px-2 py-0.5 text-[11px] font-semibold tracking-wide uppercase">Featured</span>
         </span>
         <h2 className="text-[20px] leading-[26px] font-bold tracking-[-0.02em] text-balance sm:text-[30px] sm:leading-9 md:text-[34px] md:leading-10 lg:text-[36px] lg:leading-[42px]">

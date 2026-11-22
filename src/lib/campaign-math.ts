@@ -49,12 +49,40 @@ export function isBeginnerFriendly(terms: Terms): boolean {
 
 type Rated = { platforms: Platform[]; rates: Partial<Record<Platform, PlatformRate>> };
 
-/** The platforms a campaign pays on, each with its own terms, in the campaign's order. */
+/**
+ * Clippifi's fee on the creator side: 10% of what the brand pays per view (FOUNDATION.md §4;
+ * the brand pays its own 10% on top). In basis points.
+ */
+export const CREATOR_FEE_BPS = 1000;
+
+/** What a creator keeps of an amount the brand pays, rounded down to whole cents. */
+export function takeHomeCents(cents: number): number {
+  return Math.floor((cents * (10_000 - CREATOR_FEE_BPS)) / 10_000);
+}
+
+/** A platform's terms as the creator sees them: every amount is take-home. */
+export function creatorTerms(rate: PlatformRate): PlatformRate {
+  return {
+    rateCents: takeHomeCents(rate.rateCents),
+    minPayoutCents: takeHomeCents(rate.minPayoutCents),
+    maxPerClipCents: takeHomeCents(rate.maxPerClipCents),
+  };
+}
+
+/**
+ * The platforms a campaign pays on, in the campaign's order, with the creator's take-home
+ * terms. Every creator screen reads rates through here, never `campaign.rates` directly.
+ */
 export function campaignRates(c: Rated): { platform: Platform; rate: PlatformRate }[] {
   return c.platforms.flatMap((platform) => {
     const rate = c.rates[platform];
-    return rate ? [{ platform, rate }] : [];
+    return rate ? [{ platform, rate: creatorTerms(rate) }] : [];
   });
+}
+
+/** One platform's take-home terms, or undefined when the campaign doesn't pay there. */
+export function creatorRateFor(c: Rated, platform: Platform): PlatformRate | undefined {
+  return campaignRates(c).find((r) => r.platform === platform)?.rate;
 }
 
 /** The highest rate on any platform. */

@@ -10,20 +10,27 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { formatDay, formatNGN, formatUSD } from "@/lib/format";
 import type { PayoutAccount } from "@/lib/sample-data";
-import { MIN_WITHDRAWAL_CENTS, nairaEstimate, parseAmountCents, withdrawBlock, type WithdrawBlock } from "@/lib/withdraw";
+import { DAILY_LIMIT_CENTS, MIN_WITHDRAWAL_CENTS, nairaEstimate, parseAmountCents, withdrawBlock, type WithdrawBlock } from "@/lib/withdraw";
 
 function blockMessage(block: WithdrawBlock): { title: string; body?: string } {
   switch (block.reason) {
     case "no_account":
       return { title: "Add a payout account first", body: "Tell us where to send your money." };
+    case "needs_verification":
+      return {
+        title: "Verify your identity first",
+        body: "A one-time check by our payment partner before your first payout. Your bank account must be in the same name.",
+      };
     case "account_waiting":
       return { title: `Withdrawals to this account start ${formatDay(block.until, "UTC")}`, body: "New accounts wait 48 hours, to keep your money safe." };
     case "below_minimum":
       return { title: `The minimum is ${formatUSD(MIN_WITHDRAWAL_CENTS)}` };
     case "over_balance":
       return { title: "That's more than you have available" };
+    case "already_today":
+      return { title: "You've already withdrawn today", body: "One payout a day. You can withdraw again tomorrow." };
     case "over_daily_limit":
-      return { title: `You can withdraw ${formatUSD(block.leftTodayCents)} more today`, body: "The limit is $1,000 a day." };
+      return { title: `The most you can withdraw in a day is ${formatUSD(DAILY_LIMIT_CENTS)}` };
   }
 }
 
@@ -32,7 +39,8 @@ export function WithdrawSheet({
   open,
   onOpenChange,
   availableCents,
-  withdrawnTodayCents,
+  withdrawalsToday,
+  identityVerified,
   account,
   ngnPerUsd,
   feeNaira,
@@ -41,7 +49,8 @@ export function WithdrawSheet({
   open: boolean;
   onOpenChange: (open: boolean) => void;
   availableCents: number;
-  withdrawnTodayCents: number;
+  withdrawalsToday: number;
+  identityVerified: boolean;
   account: PayoutAccount | null;
   ngnPerUsd: number;
   feeNaira: number;
@@ -50,7 +59,7 @@ export function WithdrawSheet({
   const [text, setText] = useState(() => (availableCents / 100).toFixed(2));
   const [sent, setSent] = useState<number | null>(null);
   const amountCents = parseAmountCents(text);
-  const block = amountCents === null ? null : withdrawBlock({ amountCents, availableCents, withdrawnTodayCents, account, now });
+  const block = amountCents === null ? null : withdrawBlock({ amountCents, availableCents, withdrawalsToday, identityVerified, account, now });
   const naira = amountCents === null ? 0 : nairaEstimate(amountCents, ngnPerUsd, feeNaira);
   const canSend = amountCents !== null && amountCents > 0 && block === null;
 
@@ -126,7 +135,7 @@ export function WithdrawSheet({
       </div>
 
       {message && block?.reason !== "no_account" && (
-        <Notice tone={block?.reason === "account_waiting" ? "info" : "warning"} title={message.title}>
+        <Notice tone={block?.reason === "account_waiting" || block?.reason === "already_today" ? "info" : "warning"} title={message.title}>
           {message.body}
         </Notice>
       )}

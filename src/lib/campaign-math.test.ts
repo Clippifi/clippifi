@@ -6,12 +6,14 @@ import {
   budgetMessage,
   budgetUsedPercent,
   campaignRates,
+  creatorRateFor,
   easiestFirstPayoutViews,
   estimateClipEarnings,
   isAlmostFull,
   isBeginnerFriendly,
   isCampaignBeginnerFriendly,
   ratesDiffer,
+  takeHomeCents,
   viewsToCap,
 } from "./campaign-math";
 
@@ -72,8 +74,16 @@ describe("per-platform rates", () => {
     expect(campaignRates({ ...c, rates: { tiktok: c.rates.tiktok } })).toHaveLength(1);
   });
 
+  it("shows creators what they take home: the brand's terms minus the 10% creator fee", () => {
+    expect(takeHomeCents(150)).toBe(135);
+    expect(takeHomeCents(155)).toBe(139); // 139.5 rounds down
+    expect(creatorRateFor(c, "instagram")).toEqual({ rateCents: 135, minPayoutCents: 270, maxPerClipCents: 9000 });
+    expect(creatorRateFor(c, "youtube")).toEqual({ rateCents: 45, minPayoutCents: 450, maxPerClipCents: 9000 });
+    expect(creatorRateFor({ ...c, platforms: ["tiktok"] }, "youtube")).toBeUndefined();
+  });
+
   it("finds the best rate and whether platforms differ", () => {
-    expect(bestRateCents(c)).toBe(150);
+    expect(bestRateCents(c)).toBe(135); // Instagram's $1.50, take-home
     expect(ratesDiffer(c)).toBe(true);
     expect(ratesDiffer({ platforms: ["tiktok"], rates: { tiktok: c.rates.tiktok } })).toBe(false);
   });

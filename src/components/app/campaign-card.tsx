@@ -2,7 +2,7 @@ import Link from "next/link";
 import { BudgetMeter } from "@/components/app/budget-meter";
 import { CampaignBanner } from "@/components/app/campaign-banner";
 import { PlatformIcons } from "@/components/app/platform-icons";
-import { CheckCircle, Lightning, SealCheck, Timer, User } from "@/components/icons";
+import { CheckCircle, Lightning, VerifiedBadge, Timer, User } from "@/components/icons";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { bestRateCents, easiestFirstPayoutViews, isAlmostFull, ratesDiffer } from "@/lib/campaign-math";
@@ -40,7 +40,7 @@ function BrandLine({ campaign, now }: { campaign: Campaign; now?: Date }) {
     <>
       <BrandMark hue={campaign.brand.hue} className="size-[18px]" />
       <span className="truncate font-medium text-foreground">{campaign.brand.name}</span>
-      {campaign.brand.verified && <SealCheck className="size-4 shrink-0 text-info" aria-label="Verified brand" />}
+      {campaign.brand.verified && <VerifiedBadge />}
       <span className="shrink-0 whitespace-nowrap">· {formatAge(campaign.launchedAt, now)}</span>
     </>
   );
@@ -74,7 +74,7 @@ export function CampaignCard({ campaign, now, className }: { campaign: Campaign;
     <Link
       href={`/c/campaigns/${campaign.id}`}
       className={cn(
-        "group @container relative flex flex-col overflow-hidden rounded-card bg-card outline-none transition-transform duration-200 ease-out hover:-translate-y-0.5 focus-visible:ring-3 focus-visible:ring-ring/50",
+        "group @container relative flex min-h-[330px] flex-col overflow-hidden rounded-card bg-card outline-none transition-transform duration-200 ease-out hover:-translate-y-0.5 focus-visible:ring-3 focus-visible:ring-ring/50",
         className,
       )}
     >

@@ -9,6 +9,7 @@ import {
   formatUSDCompact,
   minutesLeftToSubmit,
   viewsToMinimum,
+  earningsTier,
 } from "./format";
 
 describe("money", () => {
@@ -65,5 +66,16 @@ describe("counts and time", () => {
   it("works out views to the first payout", () => {
     expect(viewsToMinimum(200, 100)).toBe(2000); // $2 minimum at $1/1K
     expect(viewsToMinimum(200, 70)).toBe(2858); // rounds up
+  });
+});
+
+describe("earningsTier", () => {
+  it("shows a band, never the exact amount", () => {
+    expect(earningsTier(0)).toBe("Under $10");
+    expect(earningsTier(999)).toBe("Under $10");
+    expect(earningsTier(1000)).toBe("$10+");
+    expect(earningsTier(41250)).toBe("$100+");
+    expect(earningsTier(100000)).toBe("$1K+");
+    expect(earningsTier(1_000_000)).toBe("$10K+");
   });
 });

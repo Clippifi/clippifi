@@ -6,7 +6,8 @@ import {
   SAMPLE_NGN_PER_USD,
   SAMPLE_NOW,
   SAMPLE_TRANSFER_FEE_NGN,
-  SAMPLE_WITHDRAWN_TODAY_CENTS,
+  SAMPLE_IDENTITY_VERIFIED,
+  SAMPLE_WITHDRAWALS_TODAY,
   sampleClips,
   sampleCreatorSummary,
   samplePayoutAccount,
@@ -31,7 +32,8 @@ export default async function EarningsPage({ searchParams }: PageProps<"/c/earni
         rounds={sampleRounds}
         withdrawals={sampleWithdrawals}
         account={samplePayoutAccount}
-        withdrawnTodayCents={SAMPLE_WITHDRAWN_TODAY_CENTS}
+        withdrawalsToday={SAMPLE_WITHDRAWALS_TODAY}
+        identityVerified={SAMPLE_IDENTITY_VERIFIED}
         ngnPerUsd={SAMPLE_NGN_PER_USD}
         feeNaira={SAMPLE_TRANSFER_FEE_NGN}
         now={SAMPLE_NOW}

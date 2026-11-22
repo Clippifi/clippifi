@@ -12,10 +12,10 @@ import { Notice } from "@/components/app/notice";
 import { InstagramIcon, PlatformIcons, TikTokIcon, YouTubeIcon } from "@/components/app/platform-icons";
 import { ResponsiveDialog } from "@/components/app/responsive-dialog";
 import { SampleNotice } from "@/components/app/sample-notice";
-import { ArrowLeft, ArrowRight, Calendar, CheckCircle, File, Link as LinkIcon, Lock, SealCheck, Timer, Upload, User } from "@/components/icons";
+import { ArrowLeft, ArrowRight, Calendar, CheckCircle, File, Link as LinkIcon, Lock, VerifiedBadge, Timer, Upload, User } from "@/components/icons";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { bestRateCents, budgetLeftCents, campaignRates, ratesDiffer } from "@/lib/campaign-math";
+import { bestRateCents, budgetLeftCents, campaignRates, ratesDiffer, takeHomeCents } from "@/lib/campaign-math";
 import { formatAge, formatCount, formatDay, formatRate, formatUSD, formatUSDCompact, viewsToMinimum } from "@/lib/format";
 import type { Campaign, CampaignProof } from "@/lib/sample-data";
 import { cn } from "@/lib/utils";
@@ -75,7 +75,7 @@ export function CampaignDetail({
   return (
     <>
       {/* Two columns only when the content area really has room, whatever the screen size. */}
-      <div data-page-width="wide" className="@container -mx-4 -mt-4 sm:mx-0 sm:mt-0">
+      <div className="@container -mx-4 -mt-4 sm:mx-0 sm:mt-0">
         <div className="grid gap-5 @[56rem]:grid-cols-[minmax(0,1fr)_340px] @[56rem]:items-start">
           <CampaignHero ref={heroRef} campaign={campaign} action={action("h-11 w-full px-6 sm:w-auto")} />
 
@@ -172,7 +172,7 @@ function CampaignHero({
         <p className="flex w-fit max-w-full items-center gap-1.5 rounded-full bg-black/35 py-1 pr-2.5 pl-1.5 text-[13px] font-medium backdrop-blur-md">
           <BrandMark hue={campaign.brand.hue} className="rounded-full" />
           <span className="truncate">{campaign.brand.name}</span>
-          {campaign.brand.verified && <SealCheck className="size-4 shrink-0" aria-label="Verified brand" />}
+          {campaign.brand.verified && <VerifiedBadge />}
         </p>
         <h1 className="text-[26px] leading-8 font-bold tracking-[-0.025em] text-balance sm:text-[30px] sm:leading-9">{campaign.title}</h1>
         <div>
@@ -262,8 +262,9 @@ function RatesTable({ campaign }: { campaign: Campaign }) {
         </div>
       </div>
       <p className="text-[13px] leading-[18px] text-muted-foreground">
-        Views come from each platform&apos;s own count. You can earn up to{" "}
-        <span className="font-semibold text-foreground tabular-nums">{formatUSD(campaign.maxPerCreatorCents)}</span> in this campaign.
+        Rates are what you take home, after Clippifi&apos;s 10% fee. Views come from each platform&apos;s own count. You can
+        earn up to <span className="font-semibold text-foreground tabular-nums">{formatUSD(takeHomeCents(campaign.maxPerCreatorCents))}</span> in
+        this campaign.
       </p>
     </CampaignSection>
   );
@@ -274,6 +275,11 @@ function HowYouEarn({ now }: { now: Date }) {
   const date = (days: number) => formatDay(new Date(now.getTime() + days * DAY), "UTC");
   const steps = [
     { when: "Today", title: "Post, then submit", text: "Submit within 30 minutes of posting." },
+    {
+      when: `By ${date(2)}`,
+      title: "Brand approves",
+      text: "Earning starts at the minimum views. No answer in 48 hours means approved.",
+    },
     { when: `Until ${date(30)}`, title: "Views are counted", text: "Verified views count for 30 days." },
     { when: `From ${date(10)}`, title: "Get paid weekly", text: "Each 7-day round unlocks 3 days later." },
   ];

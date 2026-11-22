@@ -284,11 +284,11 @@ export const sampleClips: Clip[] = [
     platform: "instagram",
     title: "The pricing mistake that almost killed us",
     coverHue: 280,
-    postedAt: ago(2, 5),
-    submittedAt: ago(2, 5),
+    postedAt: ago(0, 19),
+    submittedAt: ago(0, 19), // inside the brand's 48-hour review
     status: "in_review",
     views: 9120,
-    earnedCents: 0,
+    earnedCents: 984, // earned so far, waiting for approval
     keepLiveUntil: ahead(31),
   },
   {
@@ -485,7 +485,8 @@ export const samplePayoutAccount: PayoutAccount = {
 };
 
 /** Already sent today, counted against the $1,000 daily limit. */
-export const SAMPLE_WITHDRAWN_TODAY_CENTS = 0;
+export const SAMPLE_WITHDRAWALS_TODAY = 0; // one payout a day (FOUNDATION.md §9)
+export const SAMPLE_IDENTITY_VERIFIED = true; // KYC by the payment provider, before the first payout
 export const SAMPLE_TRANSFER_FEE_NGN = 50;
 
 // Until the engine reads Flutterwave's bank list, the form uses these Nigerian banks.

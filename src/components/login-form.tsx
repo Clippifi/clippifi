@@ -170,7 +170,8 @@ export function LoginForm({ googleEnabled, privateBeta = false }: { googleEnable
         </CardContent>
       </Card>
       <FieldDescription className="px-6 text-center">
-        By continuing, you agree to our <Link href="/terms">Terms of Service</Link> and{" "}
+        By continuing, you agree to our <Link href="/terms">Creator Terms</Link> or{" "}
+        <Link href="/terms/brands">Brand Terms</Link> (whichever applies to you) and our{" "}
         <Link href="/privacy">Privacy Policy</Link>.
       </FieldDescription>
     </div>

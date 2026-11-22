@@ -12,7 +12,7 @@ import { InstagramIcon, TikTokIcon, YouTubeIcon } from "@/components/app/platfor
 import { ResponsiveDialog } from "@/components/app/responsive-dialog";
 import { Clapperboard, Eye, Play } from "@/components/icons";
 import { Button } from "@/components/ui/button";
-import { CLIP_STATUS, type ClipStatus } from "@/lib/clip-status";
+import { CLIP_STATUS, reviewHoursLeft, type ClipStatus } from "@/lib/clip-status";
 import { formatAge, formatCompact, formatDay, formatUSD } from "@/lib/format";
 import { getSampleCampaign, type Clip } from "@/lib/sample-data";
 import { cn } from "@/lib/utils";
@@ -79,7 +79,7 @@ export function ClipsView({ clips, now }: { clips: Clip[]; now: Date }) {
         </ul>
       )}
 
-      {open && <ClipSheet clip={open} onClose={() => setOpenId(null)} />}
+      {open && <ClipSheet clip={open} now={now} onClose={() => setOpenId(null)} />}
     </div>
   );
 }
@@ -115,6 +115,13 @@ function ClipCard({ clip, now, onOpen }: { clip: Clip; now: Date; onOpen: () => 
           <span className="shrink-0 whitespace-nowrap">· {formatAge(clip.postedAt, now)}</span>
         </span>
         <span className="line-clamp-2 text-[15px] leading-[21px] font-semibold tracking-[-0.01em]">{clip.title}</span>
+        {clip.status === "in_review" && (
+          <span className="text-[13px] text-muted-foreground">
+            {reviewHoursLeft(clip.submittedAt, now) > 0
+              ? `Brand decides within ${reviewHoursLeft(clip.submittedAt, now)}h`
+              : "Being approved automatically"}
+          </span>
+        )}
         <span className="mt-auto flex flex-wrap items-center justify-between gap-x-2 gap-y-1 pt-1">
           <ClipStatusChip status={clip.status} />
           <span className="ml-auto flex shrink-0 items-center gap-2 tabular-nums">
@@ -122,7 +129,13 @@ function ClipCard({ clip, now, onOpen }: { clip: Clip; now: Date; onOpen: () => 
               <Eye className="size-3.5" />
               {formatCompact(clip.views)}
             </span>
-            <span className={cn("text-[15px] font-bold", clip.earnedCents > 0 ? "text-success" : "text-muted-foreground")}>
+            <span
+              title={clip.status === "in_review" ? "Earned so far, waiting for the brand's approval" : undefined}
+              className={cn(
+                "text-[15px] font-bold",
+                clip.status === "in_review" ? "text-info" : clip.earnedCents > 0 ? "text-success" : "text-muted-foreground",
+              )}
+            >
               {formatUSD(clip.earnedCents)}
             </span>
           </span>
@@ -132,12 +145,15 @@ function ClipCard({ clip, now, onOpen }: { clip: Clip; now: Date; onOpen: () => 
   );
 }
 
-function ClipSheet({ clip, onClose }: { clip: Clip; onClose: () => void }) {
+function ClipSheet({ clip, now, onClose }: { clip: Clip; now: Date; onClose: () => void }) {
   const { explanation, action } = CLIP_STATUS[clip.status];
   const campaign = getSampleCampaign(clip.campaignId);
+  const waiting = clip.status === "in_review";
+  const hoursLeft = reviewHoursLeft(clip.submittedAt, now);
   const stats = [
     { label: "Views", value: formatCompact(clip.views) },
-    { label: "Earned", value: formatUSD(clip.earnedCents) },
+    { label: waiting ? "Waiting for approval" : "Earned", value: formatUSD(clip.earnedCents) },
+    ...(waiting ? [{ label: "Brand decides within", value: hoursLeft > 0 ? `${hoursLeft} hours` : "Now (automatic)" }] : []),
     { label: "Keep public until", value: formatDay(clip.keepLiveUntil, "UTC") },
   ];
   return (

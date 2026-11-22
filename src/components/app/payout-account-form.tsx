@@ -14,9 +14,9 @@ import { formatDay } from "@/lib/format";
 const fieldClass = "h-11 w-full rounded-inner border-hairline bg-transparent px-3.5 text-[15px] md:text-[15px] dark:bg-transparent";
 const selectClass = `${fieldClass} data-[size=default]:h-11`;
 
-// Add or change the bank account withdrawals go to (plan → Payout account). The bank's own
-// name for the account is looked up, a fresh email code confirms the change, and the new
-// account starts receiving withdrawals 48 hours later.
+// Add or change the bank account withdrawals go to (FOUNDATION.md §9). The bank's own name
+// for the account is looked up and must match the creator's verified identity (KYC), a fresh
+// email code confirms the change, and the new account starts receiving withdrawals 48 hours later.
 export function PayoutAccountForm({
   banks,
   email,
@@ -154,9 +154,10 @@ export function PayoutAccountForm({
         )}
       </section>
 
-      {resolved && !currentPayoutName && (
-        <Notice tone="info" title="This becomes your payout name">
-          It&apos;s private. We check every account you add later against it, so your money can only go to you.
+      {resolved && (
+        <Notice tone="info" title="Must match your verified identity">
+          The name on this account has to match the identity you verify with our payment partner, so your money can only go
+          to you. It stays private.
         </Notice>
       )}
       <Notice tone="info" title="New accounts wait 48 hours">

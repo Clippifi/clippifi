@@ -15,7 +15,7 @@ function Progress({ className, ...props }: ProgressProps) {
   return (
     <ProgressPrimitive
       className={cn(
-        'relative h-2.5 w-full overflow-hidden rounded-full bg-muted shadow-[inset_0_1px_2px_rgb(0_0_0/0.16)]',
+        'relative h-2 w-full overflow-hidden rounded-full bg-muted shadow-[inset_0_1px_2px_rgb(0_0_0/0.16)]',
         className,
       )}
       {...props}

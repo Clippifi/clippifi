@@ -55,3 +55,29 @@
 **Depends on:** v1 money loop shipped.
 
 ## Completed
+
+## Docs
+
+### Archive the money-loop plan's review history
+
+**What:** Move the review notes (about 1,300 lines, estimated) out of the money-loop plan in the private repo into an archive file next to it, leaving the plan as the clean rules.
+
+**Why:** PRODUCT.md links to the plan for the full money rules; readers following those links should land on the rules, not on planning-session review notes.
+
+**Context:** Raised by /office-hours (2026-11-19) as an open question and accepted by /plan-ceo-review the same day (D12). The rules are the first ~430 lines; everything after is review history. Keep the plan's headings stable so links from PRODUCT.md still work.
+
+**Effort:** S (human) / S (CC)
+**Priority:** P3
+**Depends on:** PRODUCT.md written.
+
+### Design catch-up: D1 to D3 screens to the 2026-11-22 policy
+
+**What:** Update the creator screens already designed (Discover cards, campaign page, Submit, My clips, Earnings, Withdraw) to the money policy agreed on 2026-11-22: take-home rates, new payout limits and frequency, earnings tiers instead of exact amounts on leaderboards, "waiting for approval" earnings with a 48-hour review timer, and KYC before the first payout.
+
+**Why:** The screens show the 2026-11-11 rules; the private PRODUCT.md and FOUNDATION.md hold the current ones.
+
+**Context:** Decided in /office-hours 2026-11-22 (D1 to D7). Today's docs-only session left the screens unchanged on purpose. Numbers live in the private repo only.
+
+**Effort:** M (human) / S (CC)
+**Priority:** P1 (before E1)
+**Depends on:** nothing; can run alongside D4.

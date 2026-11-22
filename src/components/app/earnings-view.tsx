@@ -9,7 +9,7 @@ import { MoneyHero } from "@/components/app/money-hero";
 import { Notice } from "@/components/app/notice";
 import { StatTile, StatTiles } from "@/components/app/stat-tile";
 import { WithdrawSheet } from "@/components/app/withdraw-sheet";
-import { Bank, CheckCircle, ChevronRight, ErrorCircle, Play, Timer, Wallet } from "@/components/icons";
+import { Bank, CheckCircle, ChevronRight, ErrorCircle, Play, Timer, User, Wallet } from "@/components/icons";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { formatDate, formatDay, formatNGN, formatUSD } from "@/lib/format";
@@ -29,7 +29,8 @@ export function EarningsView({
   rounds,
   withdrawals,
   account,
-  withdrawnTodayCents,
+  withdrawalsToday,
+  identityVerified,
   ngnPerUsd,
   feeNaira,
   now,
@@ -40,7 +41,8 @@ export function EarningsView({
   rounds: EarningRound[];
   withdrawals: Withdrawal[];
   account: PayoutAccount | null;
-  withdrawnTodayCents: number;
+  withdrawalsToday: number;
+  identityVerified: boolean;
   ngnPerUsd: number;
   feeNaira: number;
   now: Date;
@@ -124,7 +126,7 @@ export function EarningsView({
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,380px)] lg:items-start">
             {/* Phones: the account comes first, so where the money goes is never buried. */}
             <div className="lg:order-2">
-              <PayoutAccountCard account={account} now={now} />
+              <PayoutAccountCard account={account} identityVerified={identityVerified} now={now} />
             </div>
             <div className="lg:order-1">
               <Withdrawals withdrawals={withdrawals} />
@@ -137,7 +139,8 @@ export function EarningsView({
         open={withdrawOpen}
         onOpenChange={setWithdrawOpen}
         availableCents={summary.availableCents}
-        withdrawnTodayCents={withdrawnTodayCents}
+        withdrawalsToday={withdrawalsToday}
+        identityVerified={identityVerified}
         account={account}
         ngnPerUsd={ngnPerUsd}
         feeNaira={feeNaira}
@@ -272,7 +275,7 @@ function Withdrawals({ withdrawals }: { withdrawals: Withdrawal[] }) {
   );
 }
 
-function PayoutAccountCard({ account, now }: { account: PayoutAccount | null; now: Date }) {
+function PayoutAccountCard({ account, identityVerified, now }: { account: PayoutAccount | null; identityVerified: boolean; now: Date }) {
   const waiting = account && account.withdrawalsFrom.getTime() > now.getTime();
   return (
     <section className="flex min-w-0 flex-col gap-4 rounded-card bg-card p-5">
@@ -302,7 +305,22 @@ function PayoutAccountCard({ account, now }: { account: PayoutAccount | null; no
           </Button>
         </div>
       )}
-      <p className="text-[13px] leading-[18px] text-muted-foreground">Nigerian bank accounts for now. More countries are coming.</p>
+      <div className="flex items-center gap-3 rounded-inner border border-hairline p-3">
+        <IconTile tone="muted" size="sm">
+          <User />
+        </IconTile>
+        <span className="min-w-0 flex-1">
+          <span className="block text-[15px] font-semibold">Identity</span>
+          <span className="block text-[13px] text-muted-foreground">
+            {identityVerified ? "Checked by our payment partner" : "Needed once, before your first payout"}
+          </span>
+        </span>
+        {/* SAMPLE: the identity check opens with real payouts (E5); the payment partner runs it. */}
+        {identityVerified ? <Badge variant="success">Verified</Badge> : <Badge variant="warning">To do</Badge>}
+      </div>
+      <p className="text-[13px] leading-[18px] text-muted-foreground">
+        Nigerian bank accounts for now, in the same name as your verified identity. More countries are coming.
+      </p>
     </section>
   );
 }

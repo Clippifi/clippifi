@@ -79,7 +79,7 @@ export function SubmitClip({
         <EmptyState
           icon={<CheckCircle />}
           title={submitted === 1 ? "Clip submitted" : `${submitted} clips submitted`}
-          description="Views start counting now. You're paid for them once the brand approves."
+          description="Views start counting now. The brand approves within 48 hours, and if it doesn't answer, your clip is approved automatically."
           action={
             <div className="flex flex-col gap-2 sm:flex-row">
               <Button asChild>

@@ -83,11 +83,15 @@ off-white text, never pure white. Easier on the eyes and more professional.
 - **Campaign card:** brand row, a one-line title, then paid / pool ("$1.5K / $4K") with the
   creators and rate chips on the same line, and the budget bar. The rate is a highlighted
   chip ("up to" when platforms pay differently), not a headline. Every card in a row is the same height.
-- **Verified brands** always use Phosphor's `SealCheck`, never a plain check.
+- **Verified brands** always use `VerifiedBadge` from the icons module: Phosphor's `SealCheck`
+  with a top-lit gradient from the info colour, a white check and a soft shadow. Never a plain
+  check, never a flat seal.
+- **Bottom haze (Discover):** a very light fade of the page colour (70% at the edge) pinned to
+  the bottom of the screen, so cards rise out of it while scrolling. No blur; clicks pass through.
 - **Progress bars** use Animate UI `Progress` (recessed track, lit brand fill).
-- **Page width:** pages are centred (max 1024px) for comfortable reading. Pages with a side
-  panel (the campaign page) use `data-page-width="wide"` (max 1152px); browse pages
-  (Discover) go edge to edge with `data-page-width="full"`.
+- **Page width:** every app page uses the same full width, edge to edge inside the page
+  padding, so moving between Home, Discover, a campaign and My clips never changes the
+  frame. Forms (payout account, settings) cap their own column inside it for readability.
 - **Scrolling rails** (`ScrollRail`): on full-width pages each section is one sideways row
   at every size: swipe on phones, ← → buttons on larger screens, cards running off the
   edge to show there's more. Positioned children need a `relative` parent inside the
@@ -127,9 +131,9 @@ Hierarchy comes from weight and colour: titles in `foreground`, everything suppo
 
   | Element | Shape | Token |
   |---|---|---|
-  | Holds content: cards, sections, dialogs, drawers, banners, heroes | 16px | `rounded-card` |
-  | Sits inside a box: tables, stat strips, inputs for long text, thumbnails | 12px | `rounded-inner` |
-  | Small, 44px or less: small thumbnails, icon tiles | 10px | `rounded-thumb` |
+  | Holds content: cards, sections, dialogs, drawers, banners, heroes | 12px | `rounded-card` |
+  | Sits inside a box: tables, stat strips, inputs for long text, thumbnails | 10px | `rounded-inner` |
+  | Small, 44px or less: small thumbnails, icon tiles | 8px | `rounded-thumb` |
   | One line you tap or read as a label: buttons, tabs, chips, filters, search, floating bars | Pill | `rounded-full` |
   | People: avatars | Circle | `rounded-full` |
 

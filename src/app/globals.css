@@ -30,7 +30,7 @@
  * actions and text, brand yellow only for core brand actions, green only for money.
  */
 :root {
-  --radius: 0.75rem;
+  --radius: 0.625rem;
   /* Surfaces */
   --background: #f6f5f1;
   --foreground: #252525;
@@ -206,9 +206,9 @@
   --radius-lg: var(--radius);
   /* The shape rule lives here (DESIGN.md → Shape). No box is ever rounder than a card:
      the larger steps are capped, so components added later can't bring in bubbles. */
-  --radius-card: 16px;
-  --radius-inner: 12px;
-  --radius-thumb: 10px;
+  --radius-card: 12px;
+  --radius-inner: 10px;
+  --radius-thumb: 8px;
   --radius-xl: var(--radius-card);
   --radius-2xl: var(--radius-card);
   --radius-3xl: var(--radius-card);

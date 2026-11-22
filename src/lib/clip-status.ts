@@ -22,7 +22,8 @@ export const CLIP_STATUS: Record<
 > = {
   in_review: {
     label: "In review",
-    explanation: "Views are counting. You're paid for them once the brand approves.",
+    explanation:
+      "Earning has started. It's paid once the brand approves: brands have 48 hours, then the clip is approved automatically if it passes our checks.",
     tone: "info",
   },
   earning: {
@@ -81,3 +82,12 @@ export const REJECTION_MESSAGE = {
 } as const;
 
 export type RejectionCode = keyof typeof REJECTION_MESSAGE;
+
+/** Brands approve or reject within 48 hours of submission, or the clip is approved automatically (FOUNDATION.md §5). */
+export const BRAND_REVIEW_HOURS = 48;
+
+/** Whole hours left in the brand's review, rounded up; 0 once the window has passed. */
+export function reviewHoursLeft(submittedAt: Date, now: Date): number {
+  const left = submittedAt.getTime() + BRAND_REVIEW_HOURS * 3_600_000 - now.getTime();
+  return Math.max(0, Math.ceil(left / 3_600_000));
+}

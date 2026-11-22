@@ -18,7 +18,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/animate-ui/components/
 import { Close, Compass, Filter, Search } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { bestRateCents, budgetLeftCents, isAlmostFull, isCampaignBeginnerFriendly } from "@/lib/campaign-math";
+import { bestRateCents, budgetLeftCents, creatorRateFor, isAlmostFull, isCampaignBeginnerFriendly } from "@/lib/campaign-math";
 import type { Campaign } from "@/lib/sample-data";
 
 const WEEK = 7 * 24 * 60 * 60 * 1000;
@@ -34,7 +34,7 @@ export function DiscoverView({ campaigns, now }: { campaigns: Campaign[]; now: D
   const browsing = activeFilterChips(filters).length === 0 && !q;
   const results = useMemo(() => {
     const { type, platform, sort } = filters;
-    const rateOf = (c: Campaign) => (platform === "any" ? bestRateCents(c) : (c.rates[platform]?.rateCents ?? 0));
+    const rateOf = (c: Campaign) => (platform === "any" ? bestRateCents(c) : (creatorRateFor(c, platform)?.rateCents ?? 0));
     const matching = open.filter(
       (c) =>
         (type === "all" || c.type === type) &&
@@ -64,7 +64,7 @@ export function DiscoverView({ campaigns, now }: { campaigns: Campaign[]; now: D
   const fresh = shelf((c) => now.getTime() - c.launchedAt.getTime() < WEEK);
 
   return (
-    <div data-page-width="full" className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-3">
         {/* Phones: search and one Filters button. Wider screens: the type tabs fit too. */}
         <div className="flex items-center gap-2 md:gap-3">
@@ -162,6 +162,13 @@ export function DiscoverView({ campaigns, now }: { campaigns: Campaign[]; now: D
           <CampaignList campaigns={results} now={now} />
         </section>
       )}
+      {/* A very light haze pinned to the bottom of the screen: cards rise out of it as
+          you scroll, so the list never ends in a hard cut. Stays inside the content column
+          (never over the sidebar) and lets every click through. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none sticky bottom-0 z-10 -mt-8 h-16 bg-gradient-to-t from-background/70 to-transparent md:h-24"
+      />
     </div>
   );
 }
@@ -175,10 +182,15 @@ function CampaignList({ campaigns, now }: { campaigns: Campaign[]; now: Date }) 
           <CampaignRow key={c.id} campaign={c} now={now} />
         ))}
       </div>
-      <div className="hidden gap-4 sm:grid sm:grid-cols-[repeat(auto-fill,minmax(280px,1fr))]">
-        {campaigns.map((c) => (
-          <CampaignCard key={c.id} campaign={c} now={now} />
-        ))}
+      {/* Cards are 360px wide. When one more column would fit at 340px, they shrink to make
+          room (never below 340px), so a laptop gets three even columns instead of a gap.
+          Breakpoints = n × 340px + (n − 1) × 12px gaps. */}
+      <div className="@container hidden sm:block">
+        <div className="grid grid-cols-[repeat(1,minmax(0,360px))] gap-3 @[692px]:grid-cols-[repeat(2,minmax(0,360px))] @[1044px]:grid-cols-[repeat(3,minmax(0,360px))] @[1396px]:grid-cols-[repeat(4,minmax(0,360px))] @[1748px]:grid-cols-[repeat(5,minmax(0,360px))]">
+          {campaigns.map((c) => (
+            <CampaignCard key={c.id} campaign={c} now={now} />
+          ))}
+        </div>
       </div>
     </>
   );
