@@ -12,12 +12,16 @@ import { cn } from "@/lib/utils";
 
 const DELAY = 6000;
 
-// Featured campaigns at the top of Discover. It moves on by itself every 6 seconds, but
-// stops as soon as you touch it, pauses while you hover or focus it, never moves for people
-// who turn motion off, and the next campaign always peeks in so nothing feels hidden.
+// Featured campaigns at the top of Discover. It moves on by itself every 6 seconds and pauses
+// while you hover, swipe or focus it; when you let go it starts the current slide's 6 seconds
+// (and its progress fill) again from the beginning. It never moves for people who turn motion
+// off, and the next campaign always peeks in so nothing feels hidden.
+//
+// stopOnInteraction must stay false: with it on, the autoplay plugin never listens for the
+// mouse leaving, so one hover stopped the carousel for good.
 export function FeaturedCarousel({ campaigns }: { campaigns: Campaign[] }) {
   const reduceMotion = useReducedMotion();
-  const [autoplay] = useState(() => Autoplay({ delay: DELAY, stopOnInteraction: true, stopOnMouseEnter: true, stopOnFocusIn: true }));
+  const [autoplay] = useState(() => Autoplay({ delay: DELAY, stopOnInteraction: false, stopOnMouseEnter: true, stopOnFocusIn: true }));
   const [api, setApi] = useState<CarouselApi>();
   const [selected, setSelected] = useState(0);
   const [playing, setPlaying] = useState(false);
@@ -50,6 +54,14 @@ export function FeaturedCarousel({ campaigns }: { campaigns: Campaign[] }) {
     };
   }, [api]);
 
+  // Dots and arrows sit outside the slides, so moving with them doesn't pause autoplay. Restart its
+  // timer so the next slide waits a full 6 seconds, in step with the fill that restarts on select.
+  const go = (move: (api: NonNullable<CarouselApi>) => void) => {
+    if (!api) return;
+    move(api);
+    api.plugins().autoplay?.reset();
+  };
+
   if (campaigns.length === 1) return <FeaturedCampaign campaign={campaigns[0]} />;
 
   return (
@@ -81,7 +93,7 @@ export function FeaturedCarousel({ campaigns }: { campaigns: Campaign[] }) {
             <button
               key={campaign.id}
               type="button"
-              onClick={() => api?.scrollTo(i)}
+              onClick={() => go((a) => a.scrollTo(i))}
               aria-label={`Show featured campaign ${i + 1}: ${campaign.title}`}
               aria-current={i === selected}
               className={cn(
@@ -94,17 +106,23 @@ export function FeaturedCarousel({ campaigns }: { campaigns: Campaign[] }) {
                   key={`${i}-${round}`}
                   aria-hidden
                   className="absolute inset-0 origin-left rounded-full bg-foreground"
-                  style={playing ? { animation: `featured-progress ${DELAY}ms linear forwards` } : undefined}
+                  // Freezes where it is while paused (hover, swipe, focus); a new play starts a
+                  // new round, so the fill restarts from empty when you let go.
+                  style={
+                    reduceMotion
+                      ? undefined
+                      : { animation: `featured-progress ${DELAY}ms linear forwards`, animationPlayState: playing ? "running" : "paused" }
+                  }
                 />
               )}
             </button>
           ))}
         </div>
         <div className="hidden gap-1 sm:flex">
-          <Button variant="outline" size="icon-sm" aria-label="Previous featured campaign" onClick={() => api?.scrollPrev()}>
+          <Button variant="outline" size="icon-sm" aria-label="Previous featured campaign" onClick={() => go((a) => a.scrollPrev())}>
             <ArrowLeft />
           </Button>
-          <Button variant="outline" size="icon-sm" aria-label="Next featured campaign" onClick={() => api?.scrollNext()}>
+          <Button variant="outline" size="icon-sm" aria-label="Next featured campaign" onClick={() => go((a) => a.scrollNext())}>
             <ArrowRight />
           </Button>
         </div>
