@@ -52,7 +52,8 @@ export function ClipsView({ clips, now }: { clips: Clip[]; now: Date }) {
         </Notice>
       )}
 
-      <div className="no-scrollbar relative -mx-4 overflow-x-auto px-4 md:mx-0 md:px-0">
+      {/* Phones: the filters scroll sideways and fade at the right edge, so it is clear there are more. */}
+      <div className="no-scrollbar relative -mx-4 overflow-x-auto px-4 max-md:[mask-image:linear-gradient(to_right,black_calc(100%-48px),transparent)] md:mx-0 md:px-0">
         <Tabs value={filter} onValueChange={(v) => setFilter(v as Filter)}>
           <TabsList aria-label="Filter clips">
             {FILTERS.map((f) => (

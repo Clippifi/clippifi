@@ -196,7 +196,7 @@ function StatusRow({ campaign, accepting, joined, now }: { campaign: Campaign; a
   const chip = "h-7 border border-hairline bg-transparent px-2.5 text-caption text-foreground";
   return (
     <div className="flex flex-col gap-2.5">
-      <div className="no-scrollbar relative -mx-4 flex items-center gap-1.5 overflow-x-auto px-4 sm:mx-0 sm:flex-wrap sm:px-0">
+      <div className="flex flex-wrap items-center gap-1.5">
         {accepting ? (
           <Badge className={cn(chip, "text-success")}>
             <CheckCircle /> Accepting clips
