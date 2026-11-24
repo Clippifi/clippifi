@@ -17,8 +17,6 @@ export function FeaturedCampaign({ campaign }: { campaign: Campaign }) {
       className="group relative flex aspect-[5/4] h-full flex-col justify-end overflow-hidden rounded-card p-5 text-white outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:aspect-video sm:p-8 md:aspect-auto md:min-h-[460px] md:p-10 lg:min-h-[500px] lg:p-12"
       style={{ backgroundImage: `linear-gradient(135deg, ${campaign.banner.from} 0%, ${campaign.banner.to} 100%)` }}
     >
-      <span className="absolute -right-16 -top-20 size-72 rounded-full bg-white/10 transition-transform duration-500 ease-out group-hover:scale-105" />
-      <span className="absolute -bottom-24 right-24 size-56 rounded-full bg-black/10" />
       <div className="relative flex max-w-xl flex-col gap-2.5 sm:gap-3">
         <span className="flex items-center gap-2 text-fine font-medium text-white/85 sm:text-caption">
           <BrandMark hue={campaign.brand.hue} className="ring-2 ring-white/30" />
