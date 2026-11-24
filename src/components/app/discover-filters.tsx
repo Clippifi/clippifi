@@ -57,7 +57,7 @@ export function ActiveFilterChips({ filters, onChange }: { filters: DiscoverFilt
           type="button"
           onClick={() => onChange({ ...filters, [chip.key]: DEFAULT_FILTERS[chip.key] })}
           aria-label={`Remove filter: ${chip.label}`}
-          className="inline-flex h-8 items-center gap-1.5 rounded-full bg-foreground pr-2.5 pl-3.5 text-[13px] font-medium text-background outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+          className="inline-flex h-8 items-center gap-1.5 rounded-full bg-foreground pr-2.5 pl-3.5 text-caption font-medium text-background outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
         >
           {chip.label}
           <Close className="size-3.5" />
@@ -135,8 +135,8 @@ export function FiltersSheet({
             >
               <RadioGroupItem value={o.value} />
               <span className="min-w-0">
-                <span className="block text-[15px] font-medium">{o.label}</span>
-                <span className="block text-[13px] text-muted-foreground">{o.hint}</span>
+                <span className="block text-body font-medium">{o.label}</span>
+                <span className="block text-caption text-muted-foreground">{o.hint}</span>
               </span>
             </label>
           ))}
@@ -149,7 +149,7 @@ export function FiltersSheet({
 function FilterSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="flex flex-col gap-2.5">
-      <h3 className="text-[14px] font-semibold">{title}</h3>
+      <h3 className="text-small font-semibold">{title}</h3>
       {children}
     </section>
   );

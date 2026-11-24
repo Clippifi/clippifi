@@ -22,9 +22,9 @@ export function MoneyHero({
     <section className={cn("flex flex-col gap-5 rounded-card bg-card p-5 sm:p-6", className)}>
       <div className="flex flex-wrap items-end justify-between gap-x-3 gap-y-4 [&>*:last-child:not(:first-child)]:shrink-0">
         <div className="min-w-0">
-          <p className="text-[14px] font-medium text-muted-foreground">{label}</p>
-          <p className="mt-1 text-[34px] leading-[40px] font-semibold tracking-[-0.03em] tabular-nums sm:text-[40px] sm:leading-[44px]">{amount}</p>
-          {estimate && <p className="mt-1 text-[13px] text-muted-foreground tabular-nums">{estimate}</p>}
+          <p className="text-small font-medium text-muted-foreground">{label}</p>
+          <p className="mt-1 text-[30px] leading-[40px] font-semibold tracking-[-0.03em] tabular-nums sm:text-[40px] sm:leading-[44px]">{amount}</p>
+          {estimate && <p className="mt-1 text-caption text-muted-foreground tabular-nums">{estimate}</p>}
         </div>
         {action}
       </div>

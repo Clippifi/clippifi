@@ -76,7 +76,7 @@ export function DiscoverView({ campaigns, now }: { campaigns: Campaign[]; now: D
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search campaigns"
               aria-label="Search campaigns"
-              className="h-11 rounded-full bg-card pr-10 pl-10 text-[15px] shadow-[0_1px_2px_rgb(0_0_0/0.04)] md:text-[15px] [&::-webkit-search-cancel-button]:hidden"
+              className="h-11 rounded-full bg-card pr-10 pl-10 text-body shadow-[0_1px_2px_rgb(0_0_0/0.04)] md:text-body [&::-webkit-search-cancel-button]:hidden"
             />
             {query && (
               <Button
@@ -106,7 +106,7 @@ export function DiscoverView({ campaigns, now }: { campaigns: Campaign[]; now: D
             <Filter />
             Filters
             {activeCount > 0 && (
-              <span className="flex size-5 items-center justify-center rounded-full bg-foreground text-[11px] font-semibold text-background tabular-nums">
+              <span className="flex size-5 items-center justify-center rounded-full bg-foreground text-fine font-semibold text-background tabular-nums">
                 {activeCount}
               </span>
             )}
@@ -131,7 +131,7 @@ export function DiscoverView({ campaigns, now }: { campaigns: Campaign[]; now: D
           <Rail title="Almost full" subtitle="Less than a quarter of the budget left. Post soon." campaigns={almostFull} now={now} />
           <Rail title="New this week" subtitle="Launched in the last 7 days" campaigns={fresh} now={now} />
           <section className="flex flex-col gap-3">
-            <h2 className="text-[20px] leading-7 font-bold tracking-[-0.02em]">All campaigns</h2>
+            <h2 className="text-[18px] sm:text-[20px] leading-7 font-bold tracking-[-0.02em]">All campaigns</h2>
             <CampaignList campaigns={open} now={now} />
           </section>
         </>
@@ -156,7 +156,7 @@ export function DiscoverView({ campaigns, now }: { campaigns: Campaign[]; now: D
         </div>
       ) : (
         <section className="flex flex-col gap-3">
-          <p className="text-[14px] text-muted-foreground">
+          <p className="text-small text-muted-foreground">
             {results.length} campaign{results.length === 1 ? "" : "s"}
           </p>
           <CampaignList campaigns={results} now={now} />

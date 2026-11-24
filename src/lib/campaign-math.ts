@@ -60,6 +60,15 @@ export function takeHomeCents(cents: number): number {
   return Math.floor((cents * (10_000 - CREATOR_FEE_BPS)) / 10_000);
 }
 
+/**
+ * What a creator takes home from one clip with `views` verified views: the clip's earnings at the
+ * brand's terms, then 10% off that total. Never multiply a rounded take-home rate instead; that
+ * shorts creators (a $1.55 rate rounds to $1.39 per 1,000). The engine must use this rule too.
+ */
+export function takeHomeEarnings(views: number, grossTerms: Terms): number {
+  return takeHomeCents(estimateClipEarnings(views, grossTerms));
+}
+
 /** A platform's terms as the creator sees them: every amount is take-home. */
 export function creatorTerms(rate: PlatformRate): PlatformRate {
   return {

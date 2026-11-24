@@ -10,6 +10,19 @@
  * (700+ for small text). Nothing else in the app hard-codes the brand color.
  */
 @theme {
+  /* Type scale (DESIGN.md → Type). Phone sizes here; one step up from 768px below. Use these,
+     not raw pixel sizes, so small text stays small and the hierarchy reads at a glance. */
+  --text-fine: 11px;
+  --text-fine--line-height: 15px;
+  --text-caption: 12px;
+  --text-caption--line-height: 16px;
+  --text-small: 13px;
+  --text-small--line-height: 18px;
+  --text-body: 14px;
+  --text-body--line-height: 20px;
+  --text-subhead: 16px;
+  --text-subhead--line-height: 22px;
+
   --color-brand-50: #fffdf0;
   --color-brand-100: #fffadb;
   --color-brand-200: #fff5b8;
@@ -452,4 +465,20 @@ body {
 @keyframes featured-progress {
   from { transform: scaleX(0); }
   to { transform: scaleX(1); }
+}
+
+/* Type scale, from tablet up: each step one size larger than on phones. */
+@media (width >= 48rem) {
+  :root {
+    --text-fine: 12px;
+    --text-fine--line-height: 16px;
+    --text-caption: 13px;
+    --text-caption--line-height: 18px;
+    --text-small: 14px;
+    --text-small--line-height: 20px;
+    --text-body: 15px;
+    --text-body--line-height: 22px;
+    --text-subhead: 17px;
+    --text-subhead--line-height: 24px;
+  }
 }

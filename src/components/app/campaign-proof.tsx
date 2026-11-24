@@ -31,8 +31,8 @@ export function CampaignSection({
   return (
     <section className="flex min-w-0 flex-col gap-4 rounded-card bg-card p-5">
       <div className="flex items-baseline justify-between gap-3">
-        <h2 className="text-[17px] leading-6 font-semibold tracking-[-0.01em]">{title}</h2>
-        {aside && <p className="shrink-0 text-[13px] text-muted-foreground tabular-nums">{aside}</p>}
+        <h2 className="text-subhead leading-6 font-semibold tracking-[-0.01em]">{title}</h2>
+        {aside && <p className="shrink-0 text-caption text-muted-foreground tabular-nums">{aside}</p>}
       </div>
       {children}
     </section>
@@ -56,11 +56,11 @@ export function TopClips({ clips }: { clips: Proof["topClips"] }) {
                 <Icon className="size-3.5" />
               </span>
               <span className="flex flex-col gap-0.5 tabular-nums">
-                <span className="flex items-center gap-1 text-[12px] font-medium text-white/85">
+                <span className="flex items-center gap-1 text-fine font-medium text-white/85">
                   <Eye className="size-3.5" />
                   {formatCompact(clip.views)}
                 </span>
-                <span className="text-[17px] leading-5 font-bold" title="Earnings shown as a band, never the exact amount">
+                <span className="text-subhead leading-5 font-bold" title="Earnings shown as a band, never the exact amount">
                   {earningsTier(clip.earnedCents)}
                 </span>
               </span>
@@ -87,9 +87,9 @@ export function TopClippers({ campaign, clippers, joined }: { campaign: Campaign
               </span>
             </span>
             {joined ? (
-              <span className="mt-1 w-full truncate text-[13px] font-medium">{clipper.name ?? DEFAULT_CREATOR_NAME}</span>
+              <span className="mt-1 w-full truncate text-caption font-medium">{clipper.name ?? DEFAULT_CREATOR_NAME}</span>
             ) : (
-              <span className="mt-1 flex items-center gap-1 text-[12px] text-muted-foreground">
+              <span className="mt-1 flex items-center gap-1 text-fine text-muted-foreground">
                 <Lock className="size-3" />
                 Join to see
               </span>
@@ -130,8 +130,8 @@ export function BrandTrust({ campaign, brand }: { campaign: Campaign; brand: Pro
       <dl className="grid grid-cols-3 divide-x divide-hairline rounded-inner border border-hairline">
         {stats.map((stat) => (
           <div key={stat.label} className="flex min-w-0 flex-col gap-0.5 px-3 py-3.5">
-            <dd className="text-[20px] leading-6 font-bold tracking-[-0.02em] tabular-nums">{stat.value}</dd>
-            <dt className="text-[12px] leading-4 text-muted-foreground">{stat.label}</dt>
+            <dd className="text-[18px] sm:text-[20px] leading-6 font-bold tracking-[-0.02em] tabular-nums">{stat.value}</dd>
+            <dt className="text-fine leading-4 text-muted-foreground">{stat.label}</dt>
           </div>
         ))}
       </dl>

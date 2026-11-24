@@ -101,14 +101,14 @@ export function LoginForm({ googleEnabled, privateBeta = false }: { googleEnable
                   ))}
                 </InputOTPGroup>
               </InputOTP>
-              <FieldDescription className="text-center">The code expires in 10 minutes.</FieldDescription>
+              <FieldDescription className="text-center text-caption">The code expires in 10 minutes.</FieldDescription>
             </Field>
             <Field>
               <Button onClick={() => verifyCode(code)} disabled={code.length !== 6 || busy === "verify"}>
                 {busy === "verify" && <Spinner className="animate-spin" />}
                 Continue
               </Button>
-              <FieldDescription className="text-center">
+              <FieldDescription className="text-center text-caption">
                 Didn&apos;t get it?{" "}
                 <button type="button" className="underline underline-offset-4" onClick={() => sendCode()} disabled={busy !== null}>
                   Send a new code
@@ -163,13 +163,13 @@ export function LoginForm({ googleEnabled, privateBeta = false }: { googleEnable
                   {busy === "send" && <Spinner className="animate-spin" />}
                   Continue with email
                 </Button>
-                <FieldDescription className="text-center">We&apos;ll email you a code. No password needed.</FieldDescription>
+                <FieldDescription className="text-center text-caption">We&apos;ll email you a code. No password needed.</FieldDescription>
               </Field>
             </FieldGroup>
           </form>
         </CardContent>
       </Card>
-      <FieldDescription className="px-6 text-center">
+      <FieldDescription className="px-6 text-center text-fine text-muted-foreground/80">
         By continuing, you agree to our <Link href="/terms">Creator Terms</Link> or{" "}
         <Link href="/terms/brands">Brand Terms</Link> (whichever applies to you) and our{" "}
         <Link href="/privacy">Privacy Policy</Link>.

@@ -42,8 +42,8 @@ export function ScrollRail({
     <section className="flex flex-col gap-3">
       <div className="flex items-end justify-between gap-4">
         <div className="min-w-0">
-          <h2 className="text-[20px] leading-7 font-bold tracking-[-0.02em]">{title}</h2>
-          {subtitle && <p className="text-[14px] text-muted-foreground">{subtitle}</p>}
+          <h2 className="text-[18px] sm:text-[20px] leading-7 font-bold tracking-[-0.02em]">{title}</h2>
+          {subtitle && <p className="text-small text-muted-foreground">{subtitle}</p>}
         </div>
         {scrollable && (
           <div className="hidden shrink-0 gap-1 sm:flex">

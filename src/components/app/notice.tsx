@@ -25,7 +25,7 @@ export function Notice({
   return (
     <div role={tone === "danger" ? "alert" : "status"} className={cn("flex items-start gap-3 rounded-card px-4 py-3", box, className)}>
       <Icon className="mt-px size-5 shrink-0" />
-      <div className="min-w-0 text-[14px] leading-5">
+      <div className="min-w-0 text-small leading-5">
         {title && <p className="font-semibold">{title}</p>}
         {children && <div className={cn(title && "mt-0.5", "text-foreground/80")}>{children}</div>}
       </div>

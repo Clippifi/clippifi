@@ -101,3 +101,8 @@ export function earningsTier(cents: number): string {
   if (cents >= 1_000) return "$10+";
   return "Under $10";
 }
+
+/** The hour (0–23) in a time zone. The server runs on UTC, so local greetings need this. */
+export function hourIn(timeZone: string, date: Date = new Date()): number {
+  return Number(new Intl.DateTimeFormat("en-GB", { hour: "numeric", hourCycle: "h23", timeZone }).format(date));
+}

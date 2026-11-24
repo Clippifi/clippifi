@@ -74,8 +74,9 @@ export function CampaignDetail({
 
   return (
     <>
-      {/* Two columns only when the content area really has room, whatever the screen size. */}
-      <div className="@container -mx-4 -mt-4 sm:mx-0 sm:mt-0">
+      {/* Two columns only when the content area really has room, whatever the screen size.
+          Capped at 1280px and centred: past that the hero and side panel stretch (DESIGN.md → Page width). */}
+      <div className="@container -mx-4 -mt-4 max-w-[1280px] sm:mx-auto sm:mt-0 sm:w-full">
         <div className="grid gap-5 @[56rem]:grid-cols-[minmax(0,1fr)_340px] @[56rem]:items-start">
           <CampaignHero ref={heroRef} campaign={campaign} action={action("h-11 w-full px-6 sm:w-auto")} />
 
@@ -106,11 +107,11 @@ export function CampaignDetail({
       >
         <div className="flex items-center gap-3 rounded-full bg-card/90 py-1.5 pr-1.5 pl-5 shadow-[0_8px_30px_rgb(0_0_0/0.12),0_1px_3px_rgb(0_0_0/0.08)] backdrop-blur-xl">
           <div className="min-w-0 flex-1">
-            <p className="truncate text-[15px] font-semibold text-success tabular-nums">
+            <p className="truncate text-body font-semibold text-success tabular-nums">
               {ratesDiffer(campaign) ? "Up to " : ""}
               {formatRate(bestRateCents(campaign), "short")}
             </p>
-            <p className="truncate text-[12px] text-muted-foreground tabular-nums">{formatUSDCompact(budgetLeftCents(campaign))} left</p>
+            <p className="truncate text-fine text-muted-foreground tabular-nums">{formatUSDCompact(budgetLeftCents(campaign))} left</p>
           </div>
           {action("h-11")}
         </div>
@@ -169,18 +170,18 @@ function CampaignHero({
       </CampaignBanner>
 
       <div className="relative -mt-14 flex flex-col gap-3 px-5 pb-5">
-        <p className="flex w-fit max-w-full items-center gap-1.5 rounded-full bg-black/35 py-1 pr-2.5 pl-1.5 text-[13px] font-medium backdrop-blur-md">
+        <p className="flex w-fit max-w-full items-center gap-1.5 rounded-full bg-black/35 py-1 pr-2.5 pl-1.5 text-caption font-medium backdrop-blur-md">
           <BrandMark hue={campaign.brand.hue} className="rounded-full" />
           <span className="truncate">{campaign.brand.name}</span>
           {campaign.brand.verified && <VerifiedBadge />}
         </p>
         <h1 className="text-[26px] leading-8 font-bold tracking-[-0.025em] text-balance sm:text-[30px] sm:leading-9">{campaign.title}</h1>
         <div>
-          <p className={cn("text-[15px] leading-[22px] text-white/80", !expanded && "line-clamp-2")}>{campaign.brief}</p>
+          <p className={cn("text-body leading-[22px] text-white/80", !expanded && "line-clamp-2")}>{campaign.brief}</p>
           <button
             type="button"
             onClick={() => setExpanded((v) => !v)}
-            className="mt-0.5 rounded text-[14px] font-medium text-white underline-offset-4 outline-none hover:underline focus-visible:ring-3 focus-visible:ring-white/50"
+            className="mt-0.5 rounded text-small font-medium text-white underline-offset-4 outline-none hover:underline focus-visible:ring-3 focus-visible:ring-white/50"
           >
             {expanded ? "Show less" : "Show more"}
           </button>
@@ -192,7 +193,7 @@ function CampaignHero({
 }
 
 function StatusRow({ campaign, accepting, joined, now }: { campaign: Campaign; accepting: boolean; joined: boolean; now: Date }) {
-  const chip = "h-7 border border-hairline bg-transparent px-2.5 text-[13px] text-foreground";
+  const chip = "h-7 border border-hairline bg-transparent px-2.5 text-caption text-foreground";
   return (
     <div className="flex flex-col gap-2.5">
       <div className="no-scrollbar relative -mx-4 flex items-center gap-1.5 overflow-x-auto px-4 sm:mx-0 sm:flex-wrap sm:px-0">
@@ -206,7 +207,7 @@ function StatusRow({ campaign, accepting, joined, now }: { campaign: Campaign; a
           </Badge>
         )}
         {joined && (
-          <Badge variant="brand" className="h-7 px-2.5 text-[13px]">
+          <Badge variant="brand" className="h-7 px-2.5 text-caption">
             <CheckCircle /> Joined
           </Badge>
         )}
@@ -233,7 +234,7 @@ function RatesTable({ campaign }: { campaign: Campaign }) {
     <CampaignSection title="What each platform pays">
       <div className="@container">
         <div className="overflow-hidden rounded-inner border border-hairline">
-          <div className="grid grid-cols-3 border-b border-hairline text-[12px] text-muted-foreground @md:grid-cols-[1.25fr_1fr_1fr_1fr]">
+          <div className="grid grid-cols-3 border-b border-hairline text-fine text-muted-foreground @md:grid-cols-[1.25fr_1fr_1fr_1fr]">
             <span className="hidden px-3 py-2 @md:block">Platform</span>
             <span className="px-3 py-2">Per 1K views</span>
             <span className="px-3 py-2">First payout</span>
@@ -244,24 +245,24 @@ function RatesTable({ campaign }: { campaign: Campaign }) {
               const { name, Icon } = PLATFORM[platform];
               return (
                 <li key={platform} className="grid grid-cols-3 items-center @md:grid-cols-[1.25fr_1fr_1fr_1fr]">
-                  <span className="col-span-3 flex items-center gap-2 px-3 pt-3 text-[14px] font-semibold @md:col-span-1 @md:py-3">
+                  <span className="col-span-3 flex items-center gap-2 px-3 pt-3 text-small font-semibold @md:col-span-1 @md:py-3">
                     <Icon className="size-4 shrink-0" />
                     {name}
                   </span>
                   <span className={cn(cell, "pt-1.5 text-[16px] font-bold @md:pt-3", rate.rateCents === best ? "text-success" : "text-foreground")}>
                     {formatUSD(rate.rateCents)}
                   </span>
-                  <span className={cn(cell, "pt-1.5 text-[13px] font-medium whitespace-nowrap @md:pt-3 @md:text-[14px]")}>
+                  <span className={cn(cell, "pt-1.5 text-caption font-medium whitespace-nowrap @md:pt-3 @md:text-small")}>
                     {formatCount(viewsToMinimum(rate.minPayoutCents, rate.rateCents))} views
                   </span>
-                  <span className={cn(cell, "pt-1.5 text-[13px] font-medium @md:pt-3 @md:text-[14px]")}>{formatUSD(rate.maxPerClipCents)}</span>
+                  <span className={cn(cell, "pt-1.5 text-caption font-medium @md:pt-3 @md:text-small")}>{formatUSD(rate.maxPerClipCents)}</span>
                 </li>
               );
             })}
           </ul>
         </div>
       </div>
-      <p className="text-[13px] leading-[18px] text-muted-foreground">
+      <p className="text-caption leading-[18px] text-muted-foreground">
         Rates are what you take home, after Clippifi&apos;s 10% fee. Views come from each platform&apos;s own count. You can
         earn up to <span className="font-semibold text-foreground tabular-nums">{formatUSD(takeHomeCents(campaign.maxPerCreatorCents))}</span> in
         this campaign.
@@ -295,19 +296,19 @@ function HowYouEarn({ now }: { now: Date }) {
                   className="absolute top-8 bottom-0 left-[15px] w-px bg-hairline @lg:top-[15px] @lg:right-0 @lg:bottom-auto @lg:left-8 @lg:h-px @lg:w-auto"
                 />
               )}
-              <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-hairline text-[14px] font-semibold tabular-nums">
+              <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-hairline text-small font-semibold tabular-nums">
                 {i + 1}
               </span>
               <div className="min-w-0">
-                <p className="text-[12px] font-medium text-muted-foreground tabular-nums">{step.when}</p>
-                <p className="text-[15px] leading-[22px] font-semibold">{step.title}</p>
-                <p className="text-[13px] leading-[18px] text-muted-foreground">{step.text}</p>
+                <p className="text-fine font-medium text-muted-foreground tabular-nums">{step.when}</p>
+                <p className="text-body leading-[22px] font-semibold">{step.title}</p>
+                <p className="text-caption leading-[18px] text-muted-foreground">{step.text}</p>
               </div>
             </li>
           ))}
         </ol>
       </div>
-      <p className="border-t border-hairline pt-3 text-[13px] leading-[18px] text-muted-foreground">
+      <p className="border-t border-hairline pt-3 text-caption leading-[18px] text-muted-foreground">
         <span className="font-semibold text-foreground">Keep your clip public until {date(33)}.</span> Deleting or hiding it earlier cancels its unpaid earnings.
       </p>
     </CampaignSection>
@@ -320,7 +321,7 @@ function RulesAndFiles({ campaign, joined, action }: { campaign: Campaign; joine
   if (!joined) {
     return (
       <section className="flex flex-col gap-3 rounded-card border border-dashed border-hairline p-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="flex items-center gap-2.5 text-[15px] font-semibold">
+        <p className="flex items-center gap-2.5 text-body font-semibold">
           <Lock className="size-[18px] shrink-0 text-muted-foreground" />
           Join to unlock {rules} rule{rules === 1 ? "" : "s"} and {files} file{files === 1 ? "" : "s"}
         </p>
@@ -332,16 +333,16 @@ function RulesAndFiles({ campaign, joined, action }: { campaign: Campaign; joine
     <CampaignSection title="Rules and files">
       <ul className="divide-y divide-hairline rounded-inner border border-hairline">
         {campaign.rules.map((rule) => (
-          <li key={rule} className="flex items-start gap-2.5 px-3 py-2.5 text-[15px]">
+          <li key={rule} className="flex items-start gap-2.5 px-3 py-2.5 text-body">
             <CheckCircle className="mt-0.5 size-[18px] shrink-0 text-success" />
             {rule}
           </li>
         ))}
         {Array.from({ length: files }, (_, i) => (
-          <li key={i} className="flex items-center gap-2.5 px-3 py-2.5 text-[15px]">
+          <li key={i} className="flex items-center gap-2.5 px-3 py-2.5 text-body">
             <File className="size-[18px] shrink-0 text-muted-foreground" />
             Reference file {i + 1}
-            <span className="ml-auto text-[13px] text-muted-foreground">Sample</span>
+            <span className="ml-auto text-caption text-muted-foreground">Sample</span>
           </li>
         ))}
       </ul>
@@ -434,7 +435,7 @@ function JoinSheet({
           "Follow the brand's rules (you'll see all of them after joining).",
           "Keep each clip public for about 33 days.",
         ].map((t) => (
-          <li key={t} className="flex items-start gap-2.5 text-[15px] leading-[22px]">
+          <li key={t} className="flex items-start gap-2.5 text-body leading-[22px]">
             <CheckCircle className="mt-0.5 size-[18px] shrink-0 text-success" />
             {t}
           </li>
@@ -445,8 +446,8 @@ function JoinSheet({
           <TikTokIcon />
         </IconTile>
         <div className="min-w-0 flex-1">
-          <p className="text-[15px] font-semibold">TikTok</p>
-          <p className="text-[13px] text-muted-foreground">
+          <p className="text-body font-semibold">TikTok</p>
+          <p className="text-caption text-muted-foreground">
             {tiktokConnected ? "Connected. Your clips will be checked against this account." : "Connect the account you'll post from to join."}
           </p>
         </div>

@@ -14,6 +14,7 @@ import {
   isCampaignBeginnerFriendly,
   ratesDiffer,
   takeHomeCents,
+  takeHomeEarnings,
   viewsToCap,
 } from "./campaign-math";
 
@@ -113,5 +114,20 @@ describe("budgetMessage", () => {
     expect(left(0.2)).toBe("Filling up fast, post soon.");
     expect(left(0.05)).toBe("Almost gone, post today.");
     expect(left(0)).toBe("The budget is used up.");
+  });
+});
+
+describe("takeHomeEarnings", () => {
+  // The creator fee comes off what the clip earned in total, never off a rounded per-1,000 rate:
+  // rounding the rate first would short creators (a $1.55 rate rounds to $1.39 per 1,000).
+  const gross = { rateCents: 155, minPayoutCents: 200, maxPerClipCents: 100_000 };
+
+  it("takes 10% off the total the clip earned", () => {
+    expect(takeHomeEarnings(100_000, gross)).toBe(13_950); // $155.00 gross -> $139.50, not $139.00
+    expect(takeHomeEarnings(1_000, gross)).toBe(0); // under the minimum: nothing
+  });
+
+  it("caps at the brand's max per clip before the fee", () => {
+    expect(takeHomeEarnings(10_000_000, { ...gross, maxPerClipCents: 10_000 })).toBe(9_000); // $100 cap -> $90
   });
 });

@@ -21,8 +21,8 @@ export function StatTile({
         {icon}
       </IconTile>
       <div className="min-w-0">
-        <p className="truncate text-[17px] leading-6 font-semibold tracking-[-0.01em] tabular-nums">{value}</p>
-        <p className="line-clamp-2 text-[13px] leading-[18px] text-muted-foreground">{label}</p>
+        <p className="truncate text-subhead leading-6 font-semibold tracking-[-0.01em] tabular-nums">{value}</p>
+        <p className="line-clamp-2 text-caption leading-[18px] text-muted-foreground">{label}</p>
       </div>
     </div>
   );

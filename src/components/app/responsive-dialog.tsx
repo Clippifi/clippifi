@@ -28,8 +28,8 @@ export function ResponsiveDialog({
       <Drawer open={open} onOpenChange={onOpenChange}>
         <DrawerContent>
           <DrawerHeader className="text-left">
-            <DrawerTitle className="text-[20px] font-bold tracking-[-0.02em]">{title}</DrawerTitle>
-            {description && <DrawerDescription className="text-[15px] leading-[22px]">{description}</DrawerDescription>}
+            <DrawerTitle className="text-[18px] sm:text-[20px] font-bold tracking-[-0.02em]">{title}</DrawerTitle>
+            {description && <DrawerDescription className="text-body leading-[22px]">{description}</DrawerDescription>}
           </DrawerHeader>
           <div className="flex flex-col gap-4 px-4">{children}</div>
           {footer && <div className="flex flex-col gap-2 p-4">{footer}</div>}
@@ -42,8 +42,8 @@ export function ResponsiveDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent showCloseButton={false} className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-[20px] font-bold tracking-[-0.02em]">{title}</DialogTitle>
-          {description && <DialogDescription className="text-[15px] leading-[22px]">{description}</DialogDescription>}
+          <DialogTitle className="text-[18px] sm:text-[20px] font-bold tracking-[-0.02em]">{title}</DialogTitle>
+          {description && <DialogDescription className="text-body leading-[22px]">{description}</DialogDescription>}
         </DialogHeader>
         {children && <div className="flex flex-col gap-4">{children}</div>}
         {footer && <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">{footer}</div>}

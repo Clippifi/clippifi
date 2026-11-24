@@ -78,7 +78,7 @@ export function FeaturedCarousel({ campaigns }: { campaigns: Campaign[] }) {
             key={campaign.id}
             aria-label={`${i + 1} of ${campaigns.length}`}
             className={cn(
-              "basis-[94%] pl-3 transition-opacity duration-300 sm:basis-[88%] sm:pl-4",
+              "basis-[96%] pl-3 transition-opacity duration-300 sm:basis-[88%] sm:pl-4",
               i === selected ? "opacity-100" : "opacity-55",
             )}
           >

@@ -46,7 +46,7 @@ export default async function ConnectionsPage({ searchParams }: PageProps<"/c/co
         >
           {!tiktok && (
             <>
-              <p className="text-[14px] leading-5 text-muted-foreground">
+              <p className="text-small leading-5 text-muted-foreground">
                 Connect the account you post from so we can confirm your clips and count their views. We only ask for
                 your basic profile and video list.
               </p>
@@ -55,7 +55,7 @@ export default async function ConnectionsPage({ searchParams }: PageProps<"/c/co
           )}
           {tiktok && overview?.needsReconnect && (
             <>
-              <p className="text-[14px] leading-5 text-muted-foreground">
+              <p className="text-small leading-5 text-muted-foreground">
                 Your TikTok connection expired. Reconnect so we can keep counting your views.
               </p>
               <div className="flex gap-2">
@@ -72,8 +72,8 @@ export default async function ConnectionsPage({ searchParams }: PageProps<"/c/co
                   className="size-10"
                 />
                 <div className="min-w-0">
-                  <p className="truncate text-[15px] font-semibold">{overview.profile.displayName}</p>
-                  <p className="text-[13px] text-muted-foreground">
+                  <p className="truncate text-body font-semibold">{overview.profile.displayName}</p>
+                  <p className="text-caption text-muted-foreground">
                     Connected {tiktok.linkedAt.toLocaleDateString("en", { day: "numeric", month: "short", year: "numeric" })}
                   </p>
                 </div>
@@ -88,7 +88,7 @@ export default async function ConnectionsPage({ searchParams }: PageProps<"/c/co
           tile={<IconTile className="bg-gradient-to-br from-[#f58529] via-[#dd2a7b] to-[#8134af] text-white"><InstagramIcon /></IconTile>}
           status={<Badge>Coming soon</Badge>}
         >
-          <p className="text-[14px] leading-5 text-muted-foreground">Instagram Reels campaigns are next on our list.</p>
+          <p className="text-small leading-5 text-muted-foreground">Instagram Reels campaigns are next on our list.</p>
           <Button variant="secondary" disabled className="w-full">
             Connect Instagram
           </Button>
@@ -99,7 +99,7 @@ export default async function ConnectionsPage({ searchParams }: PageProps<"/c/co
           tile={<IconTile className="bg-[#ff0033] text-white"><YouTubeIcon /></IconTile>}
           status={<Badge>Coming soon</Badge>}
         >
-          <p className="text-[14px] leading-5 text-muted-foreground">YouTube Shorts campaigns will follow Instagram.</p>
+          <p className="text-small leading-5 text-muted-foreground">YouTube Shorts campaigns will follow Instagram.</p>
           <Button variant="secondary" disabled className="w-full">
             Connect YouTube
           </Button>
@@ -129,7 +129,7 @@ function PlatformCard({
       <div className="flex items-center gap-3">
         {tile}
         <div className="min-w-0 flex-1">
-          <h2 className="text-[17px] leading-6 font-semibold tracking-[-0.01em]">{name}</h2>
+          <h2 className="text-subhead leading-6 font-semibold tracking-[-0.01em]">{name}</h2>
         </div>
         {status}
       </div>
@@ -152,8 +152,8 @@ function RecentVideos({ videos }: { videos: TikTokVideo[] }) {
   return (
     <section className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
-        <h2 className="text-[20px] leading-7 font-bold tracking-[-0.02em]">Your recent TikTok videos</h2>
-        <p className="text-[14px] leading-5 text-muted-foreground">
+        <h2 className="text-[18px] sm:text-[20px] leading-7 font-bold tracking-[-0.02em]">Your recent TikTok videos</h2>
+        <p className="text-small leading-5 text-muted-foreground">
           You&apos;ll pick from these when you submit a clip to a campaign.
         </p>
       </div>
@@ -187,12 +187,12 @@ function RecentVideos({ videos }: { videos: TikTokVideo[] }) {
                 />
               )}
               <span className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-black/0" />
-              <span className="absolute left-2 top-2 rounded-full bg-black/45 px-2 py-0.5 text-[11px] font-medium text-white backdrop-blur-sm">
+              <span className="absolute left-2 top-2 rounded-full bg-black/45 px-2 py-0.5 text-fine font-medium text-white backdrop-blur-sm">
                 {timeAgo(video.createdAt)}
               </span>
               <span className="absolute inset-x-0 bottom-0 flex flex-col gap-1.5 p-3 text-white">
-                <span className="line-clamp-2 text-[13px] leading-[18px] font-medium">{video.title}</span>
-                <span className="flex items-center gap-3 text-[12px] text-white/80 tabular-nums">
+                <span className="line-clamp-2 text-caption leading-[18px] font-medium">{video.title}</span>
+                <span className="flex items-center gap-3 text-fine text-white/80 tabular-nums">
                   <span className="flex items-center gap-1">
                     <Eye className="size-3.5" />
                     {compact.format(video.viewCount)}

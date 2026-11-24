@@ -21,8 +21,8 @@ export function EmptyState({
       <span className="mb-4 inline-flex size-14 items-center justify-center rounded-full bg-brand text-brand-foreground [&_svg]:size-7">
         {icon}
       </span>
-      <h3 className="text-[17px] leading-6 font-semibold tracking-[-0.01em]">{title}</h3>
-      <p className="mt-1 max-w-sm text-[14px] leading-5 text-muted-foreground">{description}</p>
+      <h3 className="text-subhead leading-6 font-semibold tracking-[-0.01em]">{title}</h3>
+      <p className="mt-1 max-w-sm text-small leading-5 text-muted-foreground">{description}</p>
       {action && <div className="mt-5">{action}</div>}
     </div>
   );

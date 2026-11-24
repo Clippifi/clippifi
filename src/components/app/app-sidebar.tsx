@@ -35,7 +35,11 @@ type SidebarUser = { name: string; email: string; image?: string | null };
 
 export function AppSidebar({ user }: { user: SidebarUser }) {
   const pathname = usePathname();
-  const { state: sidebarState } = useSidebar();
+  const { state: sidebarState, isMobile, setOpenMobile } = useSidebar();
+  // On phones the sidebar is a drawer (opened from the tab bar's menu button): close it on navigation.
+  const closeOnPhone = () => {
+    if (isMobile) setOpenMobile(false);
+  };
   const router = useRouter();
 
   async function signOut() {
@@ -48,16 +52,14 @@ export function AppSidebar({ user }: { user: SidebarUser }) {
     <Sidebar collapsible="icon">
       {/* Logo and the collapse toggle live together, so the toggle never scrolls away.
           Expanded: one row, toggle beside the divider. Collapsed: a column, toggle under the symbol. */}
-      {/* Logo and the collapse toggle live together, so the toggle never scrolls away.
-          Expanded: one row, toggle beside the divider. Collapsed: a column, toggle under the symbol. */}
       <SidebarHeader className="group-data-[collapsible=icon]:px-4">
         <div className="flex items-center gap-1 group-data-[collapsible=icon]:flex-col">
           <SidebarMenu className="min-w-0 flex-1">
             <SidebarMenuItem>
               <SidebarMenuButton size="lg" asChild className="group-data-[collapsible=icon]:justify-center">
-                <Link href="/c">
+                <Link href="/c" onClick={closeOnPhone}>
                   <Logo className="size-6" />
-                  <span className="text-[17px] font-bold tracking-[-0.02em] text-foreground group-data-[collapsible=icon]:hidden">
+                  <span className="text-subhead font-bold tracking-[-0.02em] text-foreground group-data-[collapsible=icon]:hidden">
                     Clippifi
                   </span>
                 </Link>
@@ -83,7 +85,7 @@ export function AppSidebar({ user }: { user: SidebarUser }) {
                     tooltip={item.title}
                     isActive={isActive(item.href, pathname)}
                   >
-                    <Link href={item.href}>
+                    <Link href={item.href} onClick={closeOnPhone}>
                       <item.icon />
                       <span>{item.title}</span>
                     </Link>
@@ -112,7 +114,7 @@ export function AppSidebar({ user }: { user: SidebarUser }) {
                 <DropdownMenuLabel className="truncate font-normal text-muted-foreground">{user.email}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                  <Link href="/c/settings">
+                  <Link href="/c/settings" onClick={closeOnPhone}>
                     <Settings />
                     Settings
                   </Link>

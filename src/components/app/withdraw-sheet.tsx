@@ -108,7 +108,7 @@ export function WithdrawSheet({
       }
     >
       <div className="flex flex-col gap-2">
-        <label htmlFor="withdraw-amount" className="text-[14px] font-semibold">
+        <label htmlFor="withdraw-amount" className="text-small font-semibold">
           Amount in USD
         </label>
         <div className="relative">
@@ -131,7 +131,7 @@ export function WithdrawSheet({
             Max
           </Button>
         </div>
-        {amountCents === null && <p className="text-[13px] text-destructive">Enter an amount like 25 or 25.50.</p>}
+        {amountCents === null && <p className="text-caption text-destructive">Enter an amount like 25 or 25.50.</p>}
       </div>
 
       {message && block?.reason !== "no_account" && (
@@ -141,10 +141,10 @@ export function WithdrawSheet({
       )}
       {block?.reason === "no_account" && <Notice tone="info" title={message?.title}>{message?.body}</Notice>}
 
-      <dl className="divide-y divide-hairline rounded-inner border border-hairline text-[14px]">
+      <dl className="divide-y divide-hairline rounded-inner border border-hairline text-small">
         <div className="flex items-baseline justify-between gap-3 px-3.5 py-3">
           <dt className="text-muted-foreground">You&apos;ll receive about</dt>
-          <dd className="text-[17px] font-bold tabular-nums">{formatNGN(naira)}</dd>
+          <dd className="text-subhead font-bold tabular-nums">{formatNGN(naira)}</dd>
         </div>
         <div className="flex items-baseline justify-between gap-3 px-3.5 py-2.5">
           <dt className="text-muted-foreground">Transfer fee</dt>
@@ -159,7 +159,7 @@ export function WithdrawSheet({
           </div>
         )}
       </dl>
-      <p className="-mt-1 text-[12px] leading-4 text-muted-foreground">
+      <p className="-mt-1 text-fine leading-4 text-muted-foreground">
         An estimate at today&apos;s rate. The final amount may differ by up to 1%.
       </p>
     </ResponsiveDialog>

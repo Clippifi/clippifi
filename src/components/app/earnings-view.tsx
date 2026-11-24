@@ -113,7 +113,7 @@ export function EarningsView({
 
         {tab === "unlocking" ? (
           <section aria-label="When your money unlocks" className="flex flex-col gap-3">
-            <p className="text-[14px] text-muted-foreground">Each clip pays in 7-day rounds. A round unlocks 3 days after it ends.</p>
+            <p className="text-small text-muted-foreground">Each clip pays in 7-day rounds. A round unlocks 3 days after it ends.</p>
             <ul className="grid grid-cols-1 gap-3 lg:grid-cols-2">
               {byClip.map(({ clip, rounds: clipRounds }) => (
                 <li key={clip.id} className="min-w-0">
@@ -192,8 +192,8 @@ function ClipRounds({ clip, rounds, now }: { clip: Clip; rounds: EarningRound[];
           <Play className="size-4" />
         </span>
         <div className="min-w-0 flex-1">
-          <p className="truncate text-[15px] font-semibold">{clip.title}</p>
-          <p className="truncate text-[13px] text-muted-foreground">{campaign?.brand.name}</p>
+          <p className="truncate text-body font-semibold">{clip.title}</p>
+          <p className="truncate text-caption text-muted-foreground">{campaign?.brand.name}</p>
         </div>
       </div>
       <ol className="divide-y divide-hairline rounded-inner border border-hairline">
@@ -202,12 +202,12 @@ function ClipRounds({ clip, rounds, now }: { clip: Clip; rounds: EarningRound[];
             key={round.id}
             className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1.5 px-3 py-2.5 sm:grid-cols-[minmax(0,1fr)_auto_auto]"
           >
-            <span className="min-w-0 text-[13px] text-muted-foreground tabular-nums">
+            <span className="min-w-0 text-caption text-muted-foreground tabular-nums">
               <span className="font-medium text-foreground">Round {round.index}</span> · {short(round.startsAt)} – {short(round.endsAt)}
             </span>
             <span
               className={cn(
-                "col-start-2 row-start-1 text-right text-[15px] font-bold tabular-nums sm:col-start-3 sm:w-20",
+                "col-start-2 row-start-1 text-right text-body font-bold tabular-nums sm:col-start-3 sm:w-20",
                 round.state === "reversed" && "text-muted-foreground line-through",
               )}
             >
@@ -234,9 +234,9 @@ const WITHDRAWAL_STATUS = {
 function Withdrawals({ withdrawals }: { withdrawals: Withdrawal[] }) {
   return (
     <section className="flex min-w-0 flex-col gap-4 rounded-card bg-card p-5">
-      <h2 className="text-[17px] leading-6 font-semibold tracking-[-0.01em]">Withdrawals</h2>
+      <h2 className="text-subhead leading-6 font-semibold tracking-[-0.01em]">Withdrawals</h2>
       {withdrawals.length === 0 ? (
-        <p className="text-[14px] text-muted-foreground">Your withdrawals will show up here.</p>
+        <p className="text-small text-muted-foreground">Your withdrawals will show up here.</p>
       ) : (
         <ul className="divide-y divide-hairline rounded-inner border border-hairline">
           {withdrawals.map((w) => {
@@ -245,8 +245,8 @@ function Withdrawals({ withdrawals }: { withdrawals: Withdrawal[] }) {
               <li key={w.id} className="flex flex-col gap-2 px-3.5 py-3">
                 <div className="flex items-center gap-3">
                   <div className="min-w-0 flex-1">
-                    <p className="text-[15px] font-semibold tabular-nums">{formatNGN(w.naira)}</p>
-                    <p className="text-[13px] text-muted-foreground tabular-nums">
+                    <p className="text-body font-semibold tabular-nums">{formatNGN(w.naira)}</p>
+                    <p className="text-caption text-muted-foreground tabular-nums">
                       {formatUSD(w.amountCents)} · {formatDate(w.requestedAt, "UTC")}
                     </p>
                   </div>
@@ -254,7 +254,7 @@ function Withdrawals({ withdrawals }: { withdrawals: Withdrawal[] }) {
                 </div>
                 {w.status === "failed" && (
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                    <p className="text-[13px] leading-[18px] text-muted-foreground">{w.failureReason}</p>
+                    <p className="text-caption leading-[18px] text-muted-foreground">{w.failureReason}</p>
                     {/* SAMPLE: retries arrive with the engine (E5). */}
                     <Button
                       variant="secondary"
@@ -279,7 +279,7 @@ function PayoutAccountCard({ account, identityVerified, now }: { account: Payout
   const waiting = account && account.withdrawalsFrom.getTime() > now.getTime();
   return (
     <section className="flex min-w-0 flex-col gap-4 rounded-card bg-card p-5">
-      <h2 className="text-[17px] leading-6 font-semibold tracking-[-0.01em]">Payout account</h2>
+      <h2 className="text-subhead leading-6 font-semibold tracking-[-0.01em]">Payout account</h2>
       {account ? (
         <Link
           href="/c/earnings/payout-account"
@@ -289,17 +289,17 @@ function PayoutAccountCard({ account, identityVerified, now }: { account: Payout
             <Bank />
           </IconTile>
           <span className="min-w-0 flex-1">
-            <span className="block truncate text-[15px] font-semibold">
+            <span className="block truncate text-body font-semibold">
               {account.bank} •••• {account.last4}
             </span>
-            <span className="block truncate text-[13px] text-muted-foreground">{account.accountName}</span>
+            <span className="block truncate text-caption text-muted-foreground">{account.accountName}</span>
           </span>
           {waiting ? <Badge variant="info">From {day(account.withdrawalsFrom)}</Badge> : <Badge variant="success">Ready</Badge>}
           <ChevronRight className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
         </Link>
       ) : (
         <div className="flex flex-col items-start gap-3">
-          <p className="text-[14px] text-muted-foreground">Add the bank account your money should go to.</p>
+          <p className="text-small text-muted-foreground">Add the bank account your money should go to.</p>
           <Button asChild>
             <Link href="/c/earnings/payout-account">Add payout account</Link>
           </Button>
@@ -310,15 +310,15 @@ function PayoutAccountCard({ account, identityVerified, now }: { account: Payout
           <User />
         </IconTile>
         <span className="min-w-0 flex-1">
-          <span className="block text-[15px] font-semibold">Identity</span>
-          <span className="block text-[13px] text-muted-foreground">
+          <span className="block text-body font-semibold">Identity</span>
+          <span className="block text-caption text-muted-foreground">
             {identityVerified ? "Checked by our payment partner" : "Needed once, before your first payout"}
           </span>
         </span>
         {/* SAMPLE: the identity check opens with real payouts (E5); the payment partner runs it. */}
         {identityVerified ? <Badge variant="success">Verified</Badge> : <Badge variant="warning">To do</Badge>}
       </div>
-      <p className="text-[13px] leading-[18px] text-muted-foreground">
+      <p className="text-caption leading-[18px] text-muted-foreground">
         Nigerian bank accounts for now, in the same name as your verified identity. More countries are coming.
       </p>
     </section>

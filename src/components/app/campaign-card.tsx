@@ -24,9 +24,9 @@ export function BrandMark({ hue, className }: { hue: number; className?: string 
 // When platforms pay differently it shows the best one, marked "up to".
 export function RateChip({ campaign, className }: { campaign: Campaign; className?: string }) {
   return (
-    <Badge variant="success" className={cn("h-7 px-2.5 text-[14px] font-bold tabular-nums", className)}>
+    <Badge variant="success" className={cn("h-7 px-2.5 text-small font-bold tabular-nums", className)}>
       <span>
-        {ratesDiffer(campaign) && <span className="text-[11px] font-medium opacity-70">up to </span>}
+        {ratesDiffer(campaign) && <span className="text-fine font-medium opacity-70">up to </span>}
         {formatUSD(bestRateCents(campaign))}
         <span className="font-medium opacity-60">/1K</span>
       </span>
@@ -49,7 +49,7 @@ function BrandLine({ campaign, now }: { campaign: Campaign; now?: Date }) {
 // How many creators have joined.
 function CreatorCount({ count, className }: { count: number; className?: string }) {
   return (
-    <Badge className={cn("h-7 gap-0.5 bg-transparent px-1 text-[13px] text-muted-foreground tabular-nums", className)} aria-label={`${count} creators`}>
+    <Badge className={cn("h-7 gap-0.5 bg-transparent px-1 text-caption text-muted-foreground tabular-nums", className)} aria-label={`${count} creators`}>
       <User />
       {count}
     </Badge>
@@ -74,7 +74,7 @@ export function CampaignCard({ campaign, now, className }: { campaign: Campaign;
     <Link
       href={`/c/campaigns/${campaign.id}`}
       className={cn(
-        "group @container relative flex min-h-[330px] flex-col overflow-hidden rounded-card bg-card outline-none transition-transform duration-200 ease-out hover:-translate-y-0.5 focus-visible:ring-3 focus-visible:ring-ring/50",
+        "group @container relative flex flex-col sm:min-h-[330px] overflow-hidden rounded-card bg-card outline-none transition-transform duration-200 ease-out hover:-translate-y-0.5 focus-visible:ring-3 focus-visible:ring-ring/50",
         className,
       )}
     >
@@ -102,11 +102,11 @@ export function CampaignCard({ campaign, now, className }: { campaign: Campaign;
         )}
       </CampaignBanner>
       <div className="flex flex-col gap-2.5 p-4">
-        <div className="flex items-center gap-1.5 text-[13px] text-muted-foreground">
+        <div className="flex items-center gap-1.5 text-caption text-muted-foreground">
           <BrandLine campaign={campaign} now={now} />
           <PlatformIcons platforms={campaign.platforms} className="ml-auto shrink-0" />
         </div>
-        <h3 title={campaign.title} className="truncate text-[15px] leading-[22px] font-semibold tracking-[-0.01em]">
+        <h3 title={campaign.title} className="truncate text-body leading-[22px] font-semibold tracking-[-0.01em]">
           {campaign.title}
         </h3>
         <BudgetMeter
@@ -137,15 +137,15 @@ export function CampaignRow({ campaign, now, className }: { campaign: Campaign; 
           className="relative flex size-24 shrink-0 items-end justify-center overflow-hidden rounded-inner"
           style={{ backgroundImage: `linear-gradient(135deg, ${campaign.banner.from}, ${campaign.banner.to})` }}
         >
-          <span className="w-full bg-linear-to-t from-black/70 to-transparent pt-4 pb-1.5 text-center text-[12px] font-semibold text-white">
+          <span className="w-full bg-linear-to-t from-black/70 to-transparent pt-4 pb-1.5 text-center text-fine font-semibold text-white">
             {TYPE_LABEL[campaign.type]}
           </span>
         </span>
         <div className="flex min-h-24 min-w-0 flex-1 flex-col gap-1">
-          <div className="flex items-center gap-1.5 text-[13px] text-muted-foreground">
+          <div className="flex items-center gap-1.5 text-caption text-muted-foreground">
             <BrandLine campaign={campaign} now={now} />
           </div>
-          <h3 className="line-clamp-2 text-[15px] leading-[21px] font-semibold tracking-[-0.01em]">{campaign.title}</h3>
+          <h3 className="line-clamp-2 text-body leading-[21px] font-semibold tracking-[-0.01em]">{campaign.title}</h3>
           <div className="mt-auto flex flex-wrap items-center justify-between gap-1">
             <PlatformIcons platforms={campaign.platforms} />
             {campaign.joined ? (

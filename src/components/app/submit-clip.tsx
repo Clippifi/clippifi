@@ -123,8 +123,8 @@ export function SubmitClip({
                 style={{ backgroundImage: `linear-gradient(135deg, ${c.banner.from}, ${c.banner.to})` }}
               />
               <span className="min-w-0 flex-1">
-                <span className="block truncate text-[15px] font-semibold">{c.title}</span>
-                <span className="block truncate text-[13px] text-muted-foreground">{c.brand.name}</span>
+                <span className="block truncate text-body font-semibold">{c.title}</span>
+                <span className="block truncate text-caption text-muted-foreground">{c.brand.name}</span>
               </span>
               <RateChip campaign={c} className="hidden sm:inline-flex" />
             </label>
@@ -144,7 +144,7 @@ export function SubmitClip({
           <div className="flex flex-col gap-3">
             {!tiktokConnected && (
               <div className="flex flex-col gap-3 rounded-inner border border-dashed border-hairline p-3 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-[14px] leading-5 text-muted-foreground">Connect TikTok to see your own videos here. These are samples.</p>
+                <p className="text-small leading-5 text-muted-foreground">Connect TikTok to see your own videos here. These are samples.</p>
                 <ConnectTikTokButton className="shrink-0" />
               </div>
             )}
@@ -167,7 +167,7 @@ export function SubmitClip({
               placeholder="Paste one or more clip links, one per line"
               aria-label="Clip links"
               rows={4}
-              className="min-h-28 rounded-inner border-hairline bg-transparent px-3.5 py-3 text-[15px] md:text-[15px] dark:bg-transparent"
+              className="min-h-28 rounded-inner border-hairline bg-transparent px-3.5 py-3 text-body dark:bg-transparent"
             />
             {links.length > 0 && (
               <ul className="divide-y divide-hairline rounded-inner border border-hairline">
@@ -179,8 +179,8 @@ export function SubmitClip({
                       <ErrorCircle className="mt-px size-[18px] shrink-0 text-destructive" />
                     )}
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[14px] font-medium">{link.url}</span>
-                      <span className="block text-[13px] leading-[18px] text-muted-foreground">{link.ok ? "Ready to submit" : link.reason}</span>
+                      <span className="block truncate text-small font-medium">{link.url}</span>
+                      <span className="block text-caption leading-[18px] text-muted-foreground">{link.ok ? "Ready to submit" : link.reason}</span>
                     </span>
                   </li>
                 ))}
@@ -192,7 +192,7 @@ export function SubmitClip({
       </Step>
 
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-[13px] leading-[18px] text-muted-foreground">Keep every clip public for about 33 days to get paid in full.</p>
+        <p className="text-caption leading-[18px] text-muted-foreground">Keep every clip public for about 33 days to get paid in full.</p>
         <Button variant="brand" size="lg" disabled={count === 0} onClick={() => setSubmitted(count)} className="w-full shrink-0 sm:w-auto">
           <Upload />
           {count > 1 ? `Submit ${count} clips` : "Submit clip"}
@@ -206,15 +206,15 @@ export function SubmitClip({
 function ClipChecks({ checks }: { checks: ClipCheck[] }) {
   return (
     <div className="flex flex-col gap-2 border-t border-hairline pt-4">
-      <h3 className="text-[14px] font-semibold">Every clip is checked for</h3>
+      <h3 className="text-small font-semibold">Every clip is checked for</h3>
       <ul aria-live="polite" className="flex flex-col gap-2">
         {checks.map((check) => (
-          <li key={check.id} className="flex items-start gap-2.5 text-[14px] leading-5">
+          <li key={check.id} className="flex items-start gap-2.5 text-small leading-5">
             <CheckIcon state={check.state} />
             <span className={cn("min-w-0 flex-1", check.state === "idle" && "text-muted-foreground")}>
               {check.label}
               {check.detail && (
-                <span className={cn("block text-[13px] leading-[18px]", check.state === "fail" ? "text-destructive" : "text-muted-foreground")}>
+                <span className={cn("block text-caption leading-[18px]", check.state === "fail" ? "text-destructive" : "text-muted-foreground")}>
                   {check.detail}
                 </span>
               )}
@@ -236,8 +236,8 @@ function CheckIcon({ state }: { state: ClipCheck["state"] }) {
 function Step({ number, title, children }: { number: number; title: string; children: React.ReactNode }) {
   return (
     <section className="flex min-w-0 flex-col gap-3 rounded-card bg-card p-4 sm:p-5">
-      <h2 className="flex items-center gap-2.5 text-[17px] leading-6 font-semibold tracking-[-0.01em]">
-        <span className="flex size-7 items-center justify-center rounded-full border border-hairline text-[13px] tabular-nums">{number}</span>
+      <h2 className="flex items-center gap-2.5 text-subhead leading-6 font-semibold tracking-[-0.01em]">
+        <span className="flex size-7 items-center justify-center rounded-full border border-hairline text-caption tabular-nums">{number}</span>
         {title}
       </h2>
       {children}
@@ -258,8 +258,8 @@ function VideoRow({ video, now }: { video: RecentVideo; now: Date }) {
         <Play className="size-4" />
       </span>
       <span className="min-w-0 flex-1">
-        <span className={cn("block truncate text-[15px] font-semibold", disabled && "text-muted-foreground")}>{video.title}</span>
-        <span className="block truncate text-[13px] text-muted-foreground">
+        <span className={cn("block truncate text-body font-semibold", disabled && "text-muted-foreground")}>{video.title}</span>
+        <span className="block truncate text-caption text-muted-foreground">
           {video.alreadySubmitted ? (
             "Already submitted"
           ) : minutesLeft === 0 ? (

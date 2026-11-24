@@ -10,6 +10,7 @@ import {
   minutesLeftToSubmit,
   viewsToMinimum,
   earningsTier,
+  hourIn,
 } from "./format";
 
 describe("money", () => {
@@ -77,5 +78,14 @@ describe("earningsTier", () => {
     expect(earningsTier(41250)).toBe("$100+");
     expect(earningsTier(100000)).toBe("$1K+");
     expect(earningsTier(1_000_000)).toBe("$10K+");
+  });
+});
+
+describe("hourIn", () => {
+  it("reads the hour in the given time zone, not the server's", () => {
+    const noonUtc = new Date("2026-11-24T11:30:00Z");
+    expect(hourIn("UTC", noonUtc)).toBe(11);
+    expect(hourIn("Africa/Lagos", noonUtc)).toBe(12); // Lagos is UTC+1
+    expect(hourIn("Africa/Lagos", new Date("2026-11-24T23:30:00Z"))).toBe(0);
   });
 });

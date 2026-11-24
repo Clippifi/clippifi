@@ -92,6 +92,8 @@ off-white text, never pure white. Easier on the eyes and more professional.
 - **Page width:** every app page uses the same full width, edge to edge inside the page
   padding, so moving between Home, Discover, a campaign and My clips never changes the
   frame. Forms (payout account, settings) cap their own column inside it for readability.
+  The campaign page is the exception: it caps at 1280px, centred, because its hero and side
+  panel stretch awkwardly on very wide screens.
 - **Scrolling rails** (`ScrollRail`): on full-width pages each section is one sideways row
   at every size: swipe on phones, ← → buttons on larger screens, cards running off the
   edge to show there's more. Positioned children need a `relative` parent inside the
@@ -112,15 +114,22 @@ container? If yes, replace it with a shade difference.
 **Inter variable** (`font-sans`) with the optical-size axis on, so large headings get
 display spacing and small text stays open. Money and counts use `tabular-nums`.
 
-| Role | Size / line | Weight | Notes |
-|---|---|---|---|
-| Page title | 28 / 34 | 700 | tracking −0.025em (`PageHeader`) |
-| Section title | 20 / 28 | 700 | tracking −0.02em |
-| Card title | 17 / 24 | 600 | tracking −0.01em |
-| Body | 15 / 22 | 400 | |
-| Secondary | 14 / 20 | 400 | `muted-foreground` |
-| Meta | 13 / 18 | 400 | `muted-foreground` |
-| Chip | 12 / 16 | 500 | |
+Use the **type tokens**, never raw pixel sizes, for everything up to card titles. Each token
+is one step smaller on phones (under 768px), so small text stays small and the screen guides
+the eye instead of shouting. `cn()` knows them as font sizes.
+
+| Role | Token / class | Phone | Tablet up | Weight | Notes |
+|---|---|---|---|---|---|
+| Page title | `text-[24px] sm:text-[28px]` | 24 / 30 | 28 / 34 | 700 | tracking −0.025em (`PageHeader`) |
+| Section title | `text-[18px] sm:text-[20px]` | 18 | 20 / 28 | 700 | tracking −0.02em |
+| Card title | `text-subhead` | 16 / 22 | 17 / 24 | 600 | tracking −0.01em |
+| Body | `text-body` | 14 / 20 | 15 / 22 | 400 | |
+| Secondary | `text-small` | 13 / 18 | 14 / 20 | 400 | `muted-foreground` |
+| Meta, helper | `text-caption` | 12 / 16 | 13 / 18 | 400 | `muted-foreground` |
+| Fine print, chips | `text-fine` | 11 / 15 | 12 / 16 | 400–500 | legal notes, timestamps |
+
+Large money figures (hero balances, rates) step down on phones too (e.g. 30 → 40px).
+Text fields keep their own size, so phones don't zoom in when they're tapped.
 
 Hierarchy comes from weight and colour: titles in `foreground`, everything supporting in
 `muted-foreground`, so screens read calm and refined. Sentence case everywhere.

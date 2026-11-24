@@ -20,7 +20,7 @@ export function BudgetMeter({
   return (
     <div className={cn("flex flex-col gap-2", className)}>
       <div className="flex items-center justify-between gap-2">
-        <p className="shrink-0 text-[14px] whitespace-nowrap tabular-nums">
+        <p className="shrink-0 text-small whitespace-nowrap tabular-nums">
           <span className="font-semibold">{formatUSDCompact(spentCents)}</span>
           <span className="text-muted-foreground"> / {formatUSDCompact(budgetCents)}</span>
         </p>

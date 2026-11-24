@@ -109,14 +109,14 @@ function ClipCard({ clip, now, onOpen }: { clip: Clip; now: Date; onOpen: () => 
     >
       <ClipCover clip={clip} className="aspect-[3/4] w-[88px] self-start" />
       <span className="flex min-w-0 flex-1 flex-col gap-1.5 py-0.5">
-        <span className="flex items-center gap-1.5 text-[13px] text-muted-foreground">
+        <span className="flex items-center gap-1.5 text-caption text-muted-foreground">
           {campaign && <BrandMark hue={campaign.brand.hue} className="size-[18px]" />}
           <span className="truncate font-medium text-foreground">{campaign?.brand.name}</span>
           <span className="shrink-0 whitespace-nowrap">· {formatAge(clip.postedAt, now)}</span>
         </span>
-        <span className="line-clamp-2 text-[15px] leading-[21px] font-semibold tracking-[-0.01em]">{clip.title}</span>
+        <span className="line-clamp-2 text-body leading-[21px] font-semibold tracking-[-0.01em]">{clip.title}</span>
         {clip.status === "in_review" && (
-          <span className="text-[13px] text-muted-foreground">
+          <span className="text-caption text-muted-foreground">
             {reviewHoursLeft(clip.submittedAt, now) > 0
               ? `Brand decides within ${reviewHoursLeft(clip.submittedAt, now)}h`
               : "Being approved automatically"}
@@ -125,14 +125,14 @@ function ClipCard({ clip, now, onOpen }: { clip: Clip; now: Date; onOpen: () => 
         <span className="mt-auto flex flex-wrap items-center justify-between gap-x-2 gap-y-1 pt-1">
           <ClipStatusChip status={clip.status} />
           <span className="ml-auto flex shrink-0 items-center gap-2 tabular-nums">
-            <span className="flex items-center gap-1 text-[13px] text-muted-foreground">
+            <span className="flex items-center gap-1 text-caption text-muted-foreground">
               <Eye className="size-3.5" />
               {formatCompact(clip.views)}
             </span>
             <span
               title={clip.status === "in_review" ? "Earned so far, waiting for the brand's approval" : undefined}
               className={cn(
-                "text-[15px] font-bold",
+                "text-body font-bold",
                 clip.status === "in_review" ? "text-info" : clip.earnedCents > 0 ? "text-success" : "text-muted-foreground",
               )}
             >
@@ -183,13 +183,13 @@ function ClipSheet({ clip, now, onClose }: { clip: Clip; now: Date; onClose: () 
     >
       <div className="flex flex-wrap items-center gap-2">
         <ClipStatusChip status={clip.status} />
-        {campaign && <span className="truncate text-[13px] text-muted-foreground">{campaign.title}</span>}
+        {campaign && <span className="truncate text-caption text-muted-foreground">{campaign.title}</span>}
       </div>
       <dl className="grid grid-cols-3 divide-x divide-hairline rounded-inner border border-hairline">
         {stats.map((stat) => (
           <div key={stat.label} className="flex min-w-0 flex-col gap-0.5 px-3 py-3">
-            <dd className="truncate text-[15px] leading-[22px] font-bold tabular-nums">{stat.value}</dd>
-            <dt className="text-[12px] leading-4 text-muted-foreground">{stat.label}</dt>
+            <dd className="truncate text-body leading-[22px] font-bold tabular-nums">{stat.value}</dd>
+            <dt className="text-fine leading-4 text-muted-foreground">{stat.label}</dt>
           </div>
         ))}
       </dl>

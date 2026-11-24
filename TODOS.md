@@ -56,6 +56,8 @@
 
 ## Completed
 
+- **Design catch-up: D1 to D3 screens to the 2026-11-22 policy** (done 2026-11-22): take-home rates, payout limits, earnings tiers, waiting-for-approval earnings, identity row.
+
 ## Docs
 
 ### Archive the money-loop plan's review history
@@ -69,15 +71,3 @@
 **Effort:** S (human) / S (CC)
 **Priority:** P3
 **Depends on:** PRODUCT.md written.
-
-### Design catch-up: D1 to D3 screens to the 2026-11-22 policy
-
-**What:** Update the creator screens already designed (Discover cards, campaign page, Submit, My clips, Earnings, Withdraw) to the money policy agreed on 2026-11-22: take-home rates, new payout limits and frequency, earnings tiers instead of exact amounts on leaderboards, "waiting for approval" earnings with a 48-hour review timer, and KYC before the first payout.
-
-**Why:** The screens show the 2026-11-11 rules; the private PRODUCT.md and FOUNDATION.md hold the current ones.
-
-**Context:** Decided in /office-hours 2026-11-22 (D1 to D7). Today's docs-only session left the screens unchanged on purpose. Numbers live in the private repo only.
-
-**Effort:** M (human) / S (CC)
-**Priority:** P1 (before E1)
-**Depends on:** nothing; can run alongside D4.

@@ -10,7 +10,10 @@ import { SampleNotice } from "@/components/app/sample-notice";
 import { StatTile, StatTiles } from "@/components/app/stat-tile";
 import { ArrowRight, ChevronRight, Clapperboard, Eye, Megaphone, Wallet } from "@/components/icons";
 import { Button } from "@/components/ui/button";
-import { formatCompact, formatRate, formatUSD } from "@/lib/format";
+import { formatCompact, formatRate, formatUSD, hourIn } from "@/lib/format";
+
+// Our launch market is Nigeria; switch to each user's own time zone when we go global.
+const LAUNCH_TIME_ZONE = "Africa/Lagos";
 import {
   SAMPLE_NOW,
   sampleCampaigns,
@@ -38,11 +41,11 @@ export default async function HomePage() {
   return (
     <>
       <div className="flex flex-col gap-2 pt-2">
-        <h1 className="text-[28px] leading-[34px] font-bold tracking-[-0.025em]">
-          {greeting(new Date().getHours())}
+        <h1 className="text-[24px] leading-[30px] sm:text-[28px] sm:leading-[34px] font-bold tracking-[-0.025em]">
+          {greeting(hourIn(LAUNCH_TIME_ZONE))}
           {firstName ? `, ${firstName}` : ""}
         </h1>
-        <p className="text-[15px] text-muted-foreground">Pick up where you left off.</p>
+        <p className="text-body text-muted-foreground">Pick up where you left off.</p>
         <SampleNotice />
       </div>
 
@@ -53,8 +56,8 @@ export default async function HomePage() {
             <TikTokIcon />
           </IconTile>
           <div className="min-w-0 flex-1">
-            <h2 className="text-[17px] leading-6 font-semibold tracking-[-0.01em]">Connect your TikTok to start earning</h2>
-            <p className="text-[14px] leading-5 text-muted-foreground">We use it to confirm your clips are yours and count their views.</p>
+            <h2 className="text-subhead leading-6 font-semibold tracking-[-0.01em]">Connect your TikTok to start earning</h2>
+            <p className="text-small leading-5 text-muted-foreground">We use it to confirm your clips are yours and count their views.</p>
           </div>
           </div>
           <Button variant="brand" asChild className="w-full sm:w-auto">
@@ -103,8 +106,8 @@ export default async function HomePage() {
                   style={{ backgroundImage: `linear-gradient(135deg, ${c.banner.from}, ${c.banner.to})` }}
                 />
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-[15px] font-semibold">{c.title}</p>
-                  <p className="truncate text-[13px] text-muted-foreground tabular-nums">
+                  <p className="truncate text-body font-semibold">{c.title}</p>
+                  <p className="truncate text-caption text-muted-foreground tabular-nums">
                     {c.brand.name} · {ratesDiffer(c) ? "up to " : ""}{formatRate(bestRateCents(c), "short")} · {clips.length} clip{clips.length === 1 ? "" : "s"} · earned{" "}
                     {formatUSD(earned)}
                   </p>
@@ -132,8 +135,8 @@ export default async function HomePage() {
 function SectionTitle({ title, href, linkLabel }: { title: string; href: string; linkLabel: string }) {
   return (
     <div className="flex items-center justify-between">
-      <h2 className="text-[20px] leading-7 font-bold tracking-[-0.02em]">{title}</h2>
-      <Link href={href} className="flex items-center gap-0.5 text-[14px] font-medium text-muted-foreground transition-colors hover:text-foreground">
+      <h2 className="text-[18px] sm:text-[20px] leading-7 font-bold tracking-[-0.02em]">{title}</h2>
+      <Link href={href} className="flex items-center gap-0.5 text-small font-medium text-muted-foreground transition-colors hover:text-foreground">
         {linkLabel}
         <ChevronRight className="size-4" />
       </Link>

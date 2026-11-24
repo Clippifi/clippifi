@@ -11,7 +11,7 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { formatDay } from "@/lib/format";
 
-const fieldClass = "h-11 w-full rounded-inner border-hairline bg-transparent px-3.5 text-[15px] md:text-[15px] dark:bg-transparent";
+const fieldClass = "h-11 w-full rounded-inner border-hairline bg-transparent px-3.5 text-body dark:bg-transparent";
 const selectClass = `${fieldClass} data-[size=default]:h-11`;
 
 // Add or change the bank account withdrawals go to (FOUNDATION.md §9). The bank's own name
@@ -69,8 +69,8 @@ export function PayoutAccountForm({
     return (
       <section className="flex flex-col items-center gap-4 rounded-card bg-card p-6 text-center">
         <div>
-          <h2 className="text-[17px] leading-6 font-semibold">Check your email</h2>
-          <p className="mt-1 text-[14px] text-muted-foreground">
+          <h2 className="text-subhead leading-6 font-semibold">Check your email</h2>
+          <p className="mt-1 text-small text-muted-foreground">
             We sent a 6-digit code to <span className="font-medium text-foreground">{email}</span> to confirm this change.
           </p>
         </div>
@@ -106,7 +106,7 @@ export function PayoutAccountForm({
               <SelectItem value="NG">Nigeria</SelectItem>
             </SelectContent>
           </Select>
-          <p className="text-[13px] text-muted-foreground">More countries are coming. Your earnings stay safe in USD until yours is on.</p>
+          <p className="text-caption text-muted-foreground">More countries are coming. Your earnings stay safe in USD until yours is on.</p>
         </Field>
 
         <Field label="Bank">
@@ -138,7 +138,7 @@ export function PayoutAccountForm({
         </Field>
 
         {checking && (
-          <p className="flex items-center gap-2 text-[14px] text-muted-foreground" role="status">
+          <p className="flex items-center gap-2 text-small text-muted-foreground" role="status">
             <Spinner className="size-4 animate-spin" />
             Checking the account with {bank}…
           </p>
@@ -147,8 +147,8 @@ export function PayoutAccountForm({
           <div className="flex items-center gap-3 rounded-inner border border-hairline px-3.5 py-3" role="status">
             <CheckCircle className="size-5 shrink-0 text-success" />
             <div className="min-w-0">
-              <p className="text-[12px] text-muted-foreground">Name on this account</p>
-              <p className="truncate text-[15px] font-semibold">{resolved}</p>
+              <p className="text-fine text-muted-foreground">Name on this account</p>
+              <p className="truncate text-body font-semibold">{resolved}</p>
             </div>
           </div>
         )}
@@ -179,7 +179,7 @@ export function PayoutAccountForm({
 function Field({ label, htmlFor, children }: { label: string; htmlFor?: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={htmlFor} className="text-[14px] font-semibold">
+      <label htmlFor={htmlFor} className="text-small font-semibold">
         {label}
       </label>
       {children}

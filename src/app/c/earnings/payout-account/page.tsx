@@ -14,7 +14,7 @@ export default async function PayoutAccountPage() {
   return (
     <div className="mx-auto flex w-full max-w-xl flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <Link href="/c/earnings" className="flex w-fit items-center gap-1 text-[14px] font-medium text-muted-foreground transition-colors hover:text-foreground">
+        <Link href="/c/earnings" className="flex w-fit items-center gap-1 text-small font-medium text-muted-foreground transition-colors hover:text-foreground">
           <ChevronRight className="size-4 rotate-180" />
           Earnings
         </Link>

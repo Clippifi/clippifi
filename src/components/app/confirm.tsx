@@ -69,8 +69,8 @@ export function Confirm({
         <DrawerTrigger asChild>{trigger}</DrawerTrigger>
         <DrawerContent>
           <DrawerHeader className="text-left">
-            <DrawerTitle className="text-[20px] font-bold tracking-[-0.02em]">{title}</DrawerTitle>
-            <DrawerDescription className="text-[15px] leading-[22px]">{description}</DrawerDescription>
+            <DrawerTitle className="text-[18px] sm:text-[20px] font-bold tracking-[-0.02em]">{title}</DrawerTitle>
+            <DrawerDescription className="text-body leading-[22px]">{description}</DrawerDescription>
           </DrawerHeader>
           <DrawerFooter>{actions}</DrawerFooter>
         </DrawerContent>
@@ -83,8 +83,8 @@ export function Confirm({
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent showCloseButton={false}>
         <DialogHeader>
-          <DialogTitle className="text-[20px] font-bold tracking-[-0.02em]">{title}</DialogTitle>
-          <DialogDescription className="text-[15px] leading-[22px]">{description}</DialogDescription>
+          <DialogTitle className="text-[18px] sm:text-[20px] font-bold tracking-[-0.02em]">{title}</DialogTitle>
+          <DialogDescription className="text-body leading-[22px]">{description}</DialogDescription>
         </DialogHeader>
         <DialogFooter className="flex-col-reverse gap-2 sm:flex-row-reverse sm:justify-start">{actions}</DialogFooter>
       </DialogContent>
