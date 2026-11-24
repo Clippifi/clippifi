@@ -123,9 +123,10 @@ function ClipCard({ clip, now, onOpen }: { clip: Clip; now: Date; onOpen: () => 
               : "Being approved automatically"}
           </span>
         )}
-        <span className="mt-auto flex flex-wrap items-center justify-between gap-x-2 gap-y-1 pt-1">
+        {/* Always two lines, whatever the status label's length: the status, then views and amount. */}
+        <span className="mt-auto flex flex-col items-start gap-1.5 pt-1">
           <ClipStatusChip status={clip.status} />
-          <span className="ml-auto flex shrink-0 items-center gap-2 tabular-nums">
+          <span className="flex w-full items-center justify-between gap-2 tabular-nums">
             <span className="flex items-center gap-1 text-caption text-muted-foreground">
               <Eye className="size-3.5" />
               {formatCompact(clip.views)}
