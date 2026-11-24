@@ -90,7 +90,7 @@ export function EarningsView({
       {waiting.length > 0 && (
         <Notice tone="warning" title={`${formatUSD(waiting.reduce((s, r) => s + r.amountCents, 0))} is waiting on a clip`}>
           Fix the clips in My clips and it unlocks on schedule.{" "}
-          <Link href="/c/clips" className="font-semibold text-foreground underline underline-offset-4">
+          <Link href="/c/clips" className="tap-target font-semibold text-foreground underline underline-offset-4">
             Open My clips
           </Link>
         </Notice>

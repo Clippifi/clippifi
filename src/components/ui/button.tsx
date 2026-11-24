@@ -23,11 +23,12 @@ const buttonVariants = cva(
         link: "text-foreground underline-offset-4 hover:underline",
       },
       size: {
-        default: "h-10 gap-2 px-5 text-[15px] has-data-[icon=inline-end]:pr-4 has-data-[icon=inline-start]:pl-4",
+        // 44px on phones (thumb-sized, DESIGN.md → Accessibility), 40px from md up.
+        default: "h-11 gap-2 px-5 text-[15px] md:h-10 has-data-[icon=inline-end]:pr-4 has-data-[icon=inline-start]:pl-4",
         xs: "h-7 gap-1 px-3 text-xs [&_svg:not([class*='size-'])]:size-3.5",
         sm: "h-8 gap-1.5 px-3.5 text-sm [&_svg:not([class*='size-'])]:size-4",
         lg: "h-12 gap-2 px-6 text-base [&_svg:not([class*='size-'])]:size-5",
-        icon: "size-10",
+        icon: "size-11 md:size-10",
         "icon-xs": "size-7 [&_svg:not([class*='size-'])]:size-3.5",
         "icon-sm": "size-8 [&_svg:not([class*='size-'])]:size-4",
         "icon-lg": "size-12 [&_svg:not([class*='size-'])]:size-5",

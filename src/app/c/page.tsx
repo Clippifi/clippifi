@@ -136,7 +136,7 @@ function SectionTitle({ title, href, linkLabel }: { title: string; href: string;
   return (
     <div className="flex items-center justify-between">
       <h2 className="text-[18px] sm:text-[20px] leading-7 font-bold tracking-[-0.02em]">{title}</h2>
-      <Link href={href} className="flex items-center gap-0.5 text-small font-medium text-muted-foreground transition-colors hover:text-foreground">
+      <Link href={href} className="tap-target flex items-center gap-0.5 text-small font-medium text-muted-foreground transition-colors hover:text-foreground">
         {linkLabel}
         <ChevronRight className="size-4" />
       </Link>

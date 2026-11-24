@@ -478,3 +478,14 @@ body {
     --text-subhead--line-height: 24px;
   }
 }
+
+/* Small text links ("See all", "Show more"): a larger invisible tap area around the same
+   visible text, so thumbs can hit them (DESIGN.md → Accessibility). */
+@utility tap-target {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -12px -8px;
+  }
+}

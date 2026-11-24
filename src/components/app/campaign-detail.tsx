@@ -181,7 +181,7 @@ function CampaignHero({
           <button
             type="button"
             onClick={() => setExpanded((v) => !v)}
-            className="mt-0.5 rounded text-small font-medium text-white underline-offset-4 outline-none hover:underline focus-visible:ring-3 focus-visible:ring-white/50"
+            className="tap-target mt-0.5 rounded text-small font-medium text-white underline-offset-4 outline-none hover:underline focus-visible:ring-3 focus-visible:ring-white/50"
           >
             {expanded ? "Show less" : "Show more"}
           </button>

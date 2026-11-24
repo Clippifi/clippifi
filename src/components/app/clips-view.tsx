@@ -46,7 +46,7 @@ export function ClipsView({ clips, now }: { clips: Clip[]; now: Date }) {
       {needYou > 0 && filter !== "action" && (
         <Notice tone="warning" title={`${needYou} clip${needYou === 1 ? " needs" : "s need"} you`}>
           Fix {needYou === 1 ? "it" : "them"} to keep earning.{" "}
-          <button type="button" onClick={() => setFilter("action")} className="font-semibold text-foreground underline underline-offset-4">
+          <button type="button" onClick={() => setFilter("action")} className="tap-target font-semibold text-foreground underline underline-offset-4">
             Show me
           </button>
         </Notice>
