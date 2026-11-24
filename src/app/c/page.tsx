@@ -73,7 +73,7 @@ export default async function HomePage() {
         label="Lifetime earned"
         amount={formatUSD(summary.lifetimeCents)}
         action={
-          <Button variant="brand" asChild>
+          <Button variant="brand" asChild className="w-full sm:w-auto">
             <Link href="/c/earnings">
               <Wallet />
               Withdraw {formatUSD(summary.availableCents)}
