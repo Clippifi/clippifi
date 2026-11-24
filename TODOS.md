@@ -54,6 +54,17 @@
 **Priority:** P2
 **Depends on:** v1 money loop shipped.
 
+## Design
+
+### Bigger tap areas for tab controls on phones
+
+**What:** Raise segmented tabs (My clips filters, Earnings tabs, calculator platform tabs) to at least 36px with a 44px tap area on phones, and enlarge the 32px back and copy-link pills on the campaign page.
+
+**Why:** Found by /design-review 2026-11-24 (FINDING-008). They pass the 24px WCAG AA minimum but sit below the 44px thumb size DESIGN.md asks for.
+
+**Effort:** S (human) / S (CC)
+**Priority:** P3
+
 ## Completed
 
 - **Design catch-up: D1 to D3 screens to the 2026-11-22 policy** (done 2026-11-22): take-home rates, payout limits, earnings tiers, waiting-for-approval earnings, identity row.
